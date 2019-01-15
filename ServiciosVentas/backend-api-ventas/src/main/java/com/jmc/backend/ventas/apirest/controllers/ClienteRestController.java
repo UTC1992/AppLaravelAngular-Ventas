@@ -4,7 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +34,13 @@ public class ClienteRestController {
 		return clienteService.findAll();
 	}
 	
+	@GetMapping("/clientes/page/{page}")
+	public Page<Cliente> index(@PathVariable Integer page) {
+		Pageable pageable = PageRequest.of(page, 4);
+		return clienteService.findAll(pageable);
+	}
+	
+	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("clientes/{id}")
 	public Cliente show(@PathVariable Long id) {
 		return clienteService.findById(id);

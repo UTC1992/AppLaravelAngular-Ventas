@@ -55,7 +55,7 @@ public class Venta implements Serializable {
 	
 	
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="idVenta")
+	@JoinColumn(name="venta_id")
 	private List<DetalleVenta> detalleVenta;
 	
 	// pre persistencia de datos
