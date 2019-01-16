@@ -13,6 +13,8 @@ import {
   LayoutComponent
 } from './shared';
 
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
 
 
@@ -28,9 +30,13 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     BrowserModule,
     HomeModule,
     rootRouting,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    
   ],
-  providers: [],
+  providers: [
+    HttpClient
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

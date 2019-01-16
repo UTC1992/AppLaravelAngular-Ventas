@@ -1,7 +1,9 @@
 export class Usuario {
-    public username;
-    public password;
-    public name;
-    public empresa;
-    public id_emp;
+    public empresa_id: number;
+    public username: string;
+    public password: string;
+    public nombre: string;
+    public apellido: string;
+    public email: string;
+    public roles: string[] = [];
 }

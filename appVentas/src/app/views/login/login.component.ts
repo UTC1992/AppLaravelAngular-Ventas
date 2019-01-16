@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -10,68 +11,31 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  public email: string;
-  public password: string;
+  usuario: Usuario;
 
   constructor(
     private loginService:LoginService,
     private router:Router
-  ) { }
+  ) { 
+    this.usuario = new Usuario();
+
+  }
 
   ngOnInit() {
   }
 
   login(){
-    if(!this.username){
-      alert("Ingrese un email");
+    console.log(this.usuario);
+    if(this.usuario.username == null || this.usuario.password == null){
+      swal('Error Login', 'Email o password estan vacios!', 'error');
       return;
     }
-    if(!this.password){
-      alert("Ingrese su contraseña");
-      return;
-    }
-    let usuario=new Usuario();
-    usuario.username=this.username;
-    usuario.password=this.password;
 
-    this.loginService.autenticarUsuario(usuario).subscribe(
-      result=>{
-        if(result){
-          localStorage.setItem("token",result.access_token);
-          localStorage.setItem("token_type",result.token_type);
-          this.loginService.getUserDataAutenticate().subscribe(
-            res=>{
-              if(res){
-                localStorage.setItem("nombre",res.name);
-                localStorage.setItem("empresa",res.empresa);
-                localStorage.setItem("email",res.username);
-                localStorage.setItem("id_emp",res.id_emp);
-                //console.log("respuesta "+res.username);
-                location.reload();
-              }else{
-                alert("Su cuenta se encuentra bloqueada, comuníquese con soporte técnico");
-                this.CerrarSesion();
-              }
-            }
-          );
-        }
-      },  
-      error=>{
-        if(error){
-          alert("Credenciales incorrectas");
-        }
-      }
-    );
-  }
-  CerrarSesion(){
-    localStorage.removeItem("empresa");
-    localStorage.removeItem("email");
-    localStorage.removeItem("nombre");
-    localStorage.removeItem("token");
-    localStorage.removeItem("id_emp");
-    localStorage.removeItem("token_type");
-    location.reload();
-    }
+    this.loginService.login(this.usuario).subscribe(res =>{
+      console.log(res);
+      this.router.navigate(['/base']);
+      swal('Login', `Hola ${res.nombre}, has iniciado sesión con éxito`, 'success');
+    });
   }
 
 }
