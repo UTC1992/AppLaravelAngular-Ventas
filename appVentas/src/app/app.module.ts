@@ -7,8 +7,6 @@ import { AppComponent } from './app.component';
 
 import { HomeModule } from '../app/views/home/home.module';
 import {
-  FooterComponent,
-  HeaderComponent,
   SharedModule,
   LayoutComponent
 } from './shared';
@@ -21,8 +19,6 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    HeaderComponent,
     LayoutComponent
   ],
   imports: [

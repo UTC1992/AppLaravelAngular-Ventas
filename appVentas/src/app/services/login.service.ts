@@ -90,5 +90,12 @@ export class LoginService {
     return false;
   }
 
+  logout(): void{
+    this._token = null;
+    this._usuario = null;
+    sessionStorage.clear();
+    //sessionStorage.removeItem('usuario');
+    //sessionStorage.removeItem('token');
+  }
 
 }
