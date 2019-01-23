@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.auth.auth;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -36,11 +37,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration config= new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-		config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
-		config.setAllowCredentials(true);
-		config.setAllowedHeaders(Arrays.asList("Content-Type","Autorization"));
+		
+		CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedHeaders(Collections.singletonList("*"));
+        config.setAllowedMethods(Collections.singletonList("*"));
+        config.addAllowedOrigin("*");
+        config.setAllowCredentials(true);
 		
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
