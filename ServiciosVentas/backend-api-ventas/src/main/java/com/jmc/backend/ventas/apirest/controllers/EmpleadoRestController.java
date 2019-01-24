@@ -56,13 +56,30 @@ public class EmpleadoRestController {
 		return empleadoService.finById(id);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
+	@PutMapping("rol/asignar/{id}")
+	public Boolean asignRoleUser(@RequestBody Role rol, @PathVariable Long id) {
+		Usuario user= empleadoService.finById(id);
+		user.getRoles().add(rol);
+		user.setUpdatedAt(new Date());
+		empleadoService.save(user);
+		return true;
+	}
+	
+	@GetMapping("rol/eliminar/{id}")
+	@Secured({"ROLE_ROOT"})
+	public Boolean cleanRoles(@PathVariable Long id) {
+		Usuario user = empleadoService.finById(id);
+		user.getRoles().clear();
+		empleadoService.save(user);
+		return true;
+	}
+	
 	@PostMapping("/empleado")
 	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	public Usuario createUser(@RequestBody Usuario usuario) {
 		Long idRol=(long) 1;
 		String passEncrypt=passwordEncoder.encode(usuario.getPassword());
-		List<Role> lsRoles= usuario.getRoles();
-		usuario.getRoles().add(roleService.findById(idRol));
 		usuario.setPassword(passEncrypt);
 		return empleadoService.save(usuario);
 	}
