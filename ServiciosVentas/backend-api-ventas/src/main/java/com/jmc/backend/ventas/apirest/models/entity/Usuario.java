@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "users")
 public class Usuario implements Serializable {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,6 +45,8 @@ public class Usuario implements Serializable {
 
 	private String apellido;
 
+	private String dni;
+
 	@Column(unique = true)
 	private String email;
 
@@ -54,14 +58,31 @@ public class Usuario implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/// RELACIONES
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL,CascadeType.MERGE})
 	@JoinTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "user_id", "role_id" }) })
 	private List<Role> roles;
 
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	private List<Venta> lsVentas;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "usuario_id")
+	private List<Compra> lsCompras;
+
+	// END RELACIONES
+
+	
+	public Usuario() {
+		this.roles= new ArrayList<>();
+	}
+	
 	public Long getId() {
 		return id;
 	}
+
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -97,6 +118,14 @@ public class Usuario implements Serializable {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -145,6 +174,22 @@ public class Usuario implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<Venta> getLsVentas() {
+		return lsVentas;
+	}
+
+	public void setLsVentas(List<Venta> lsVentas) {
+		this.lsVentas = lsVentas;
+	}
+
+	public List<Compra> getLsCompras() {
+		return lsCompras;
+	}
+
+	public void setLsCompras(List<Compra> lsCompras) {
+		this.lsCompras = lsCompras;
 	}
 
 	/**

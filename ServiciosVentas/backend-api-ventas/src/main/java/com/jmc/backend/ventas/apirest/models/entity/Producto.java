@@ -41,6 +41,11 @@ public class Producto implements Serializable {
 
 	private CategoriaProducto categoriaProducto;
 
+	
+	public void prePersist() {
+		this.createdAt= new Date();
+	}
+	
 	public Long getIdProducto() {
 		return idProducto;
 	}

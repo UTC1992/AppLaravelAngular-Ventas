@@ -19,12 +19,12 @@ import com.jmc.backend.ventas.apirest.models.dao.IUsuarioDao;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
 
 @Service
-public class UsuarioService implements IUsuarioService, UserDetailsService {
+public class UsuarioServiceImplement implements IUsuarioService, UserDetailsService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
 
-	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+	private Logger logger = LoggerFactory.getLogger(UsuarioServiceImplement.class);
 
 	@Override
 	@Transactional(readOnly = true)

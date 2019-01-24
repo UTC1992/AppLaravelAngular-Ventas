@@ -36,12 +36,29 @@ public class TipoDocumento implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "updated_at")
 	private Date updatedAt;
-	
+
 	// relacion
-	@OneToMany (fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="idTipoDocumento")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "tipo_documento_id")
 	private List<Venta> ventas;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tipo_documento_id")
+	private List<Compra> lsCompras;
+
+	@Column(name = "empresa_id")
+	private Long idEmpresa;
+
+	
+	
+	public TipoDocumento() {
+		prePersist();
+	}
+
+	private void prePersist() {
+		this.createdAt= new Date();
+	}
+	
 	public Long getIdTipoDocumento() {
 		return idTipoDocumento;
 	}
@@ -82,8 +99,6 @@ public class TipoDocumento implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	
-
 	public List<Venta> getVentas() {
 		return ventas;
 	}
@@ -92,7 +107,21 @@ public class TipoDocumento implements Serializable {
 		this.ventas = ventas;
 	}
 
+	public List<Compra> getLsCompras() {
+		return lsCompras;
+	}
 
+	public void setLsCompras(List<Compra> lsCompras) {
+		this.lsCompras = lsCompras;
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
 
 	/**
 	 * 

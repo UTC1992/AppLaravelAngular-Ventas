@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,47 @@ public class Empresa implements Serializable {
 	@JoinTable(name = "empresa_modules", joinColumns = @JoinColumn(name = "empresa_id"), inverseJoinColumns = @JoinColumn(name = "module_id"), uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "empresa_id", "module_id" }) })
 	private List<Modulos> lsModulos;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<CategoriaProducto> lsCategoriasProductos;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<Provedor> lsProvedores;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<Producto> lsProductos;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<PuntoVenta> lsPuntosVenta;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<Configuracion> lsConfiguracion;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<TipoDocumento> lsTipoDoc;
+
+	// constructor inicializa las listas
+	public Empresa() {
+		this.usuarios = new ArrayList<>();
+		this.lsCategoriasProductos = new ArrayList<>();
+		this.lsModulos = new ArrayList<>();
+		this.lsProductos = new ArrayList<>();
+		this.lsProvedores = new ArrayList<>();
+		this.lsPuntosVenta = new ArrayList<>();
+		this.lsConfiguracion = new ArrayList<>();
+		this.lsTipoDoc= new ArrayList<>();
+	}
+
+	// prepersistencia crea la fecha de ingreso
+	public void prePersist() {
+		this.createdAt = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -103,6 +145,58 @@ public class Empresa implements Serializable {
 
 	public void setLsModulos(List<Modulos> lsModulos) {
 		this.lsModulos = lsModulos;
+	}
+
+	public List<CategoriaProducto> getLsCategoriasProductos() {
+		return lsCategoriasProductos;
+	}
+
+	public void setLsCategoriasProductos(List<CategoriaProducto> lsCategoriasProductos) {
+		this.lsCategoriasProductos = lsCategoriasProductos;
+	}
+
+	public List<Provedor> getLsProvedores() {
+		return lsProvedores;
+	}
+
+	public void setLsProvedores(List<Provedor> lsProvedores) {
+		this.lsProvedores = lsProvedores;
+	}
+
+	public List<Producto> getLsProductos() {
+		return lsProductos;
+	}
+
+	public void setLsProductos(List<Producto> lsProductos) {
+		this.lsProductos = lsProductos;
+	}
+
+	public List<PuntoVenta> getLsPuntosVenta() {
+		return lsPuntosVenta;
+	}
+
+	public void setLsPuntosVenta(List<PuntoVenta> lsPuntosVenta) {
+		this.lsPuntosVenta = lsPuntosVenta;
+	}
+
+	public List<Configuracion> getLsConfiguracion() {
+		return lsConfiguracion;
+	}
+
+	public void setLsConfiguracion(List<Configuracion> lsConfiguracion) {
+		this.lsConfiguracion = lsConfiguracion;
+	}
+
+	public List<TipoDocumento> getLsTipoDoc() {
+		return lsTipoDoc;
+	}
+
+	public void setLsTipoDoc(List<TipoDocumento> lsTipoDoc) {
+		this.lsTipoDoc = lsTipoDoc;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	/**

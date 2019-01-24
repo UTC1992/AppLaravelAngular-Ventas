@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -50,7 +51,8 @@ public class Cliente implements Serializable {
 
 	
 	// relacion uno a mucho
-	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinColumn(name="cliente_id")
 	private List<Venta> ventas;
 	
 	// constructor 
@@ -188,6 +190,10 @@ public class Cliente implements Serializable {
 		ventas.add(venta);
 	}
 
+	
+	
+	
+	
 	/**
 	 * 
 	 */
