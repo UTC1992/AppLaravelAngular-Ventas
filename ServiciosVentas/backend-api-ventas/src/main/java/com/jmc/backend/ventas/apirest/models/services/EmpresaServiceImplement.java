@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jmc.backend.ventas.apirest.models.dao.IEmpresaDao;
 import com.jmc.backend.ventas.apirest.models.entity.Empresa;
 import com.jmc.backend.ventas.apirest.models.entity.Modulos;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpresaService;
 
 @Service
 public class EmpresaServiceImplement implements IEmpresaService {

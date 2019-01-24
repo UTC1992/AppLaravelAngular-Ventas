@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jmc.backend.ventas.apirest.models.entity.Empresa;
 import com.jmc.backend.ventas.apirest.models.entity.Role;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
-import com.jmc.backend.ventas.apirest.models.services.IEmpleadoService;
-import com.jmc.backend.ventas.apirest.models.services.IEmpresaService;
-import com.jmc.backend.ventas.apirest.models.services.IRoleService;
 import com.jmc.backend.ventas.apirest.models.services.UsuarioServiceImplement;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpleadoService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpresaService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IRoleService;
 
 @CrossOrigin(origins = { "*" })
 @RestController

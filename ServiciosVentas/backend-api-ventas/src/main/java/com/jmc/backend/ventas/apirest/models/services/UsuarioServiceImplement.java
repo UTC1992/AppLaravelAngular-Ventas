@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jmc.backend.ventas.apirest.models.dao.IUsuarioDao;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IUsuarioService;
 
 @Service
 public class UsuarioServiceImplement implements IUsuarioService, UserDetailsService {

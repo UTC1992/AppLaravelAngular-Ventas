@@ -1,4 +1,4 @@
-package com.jmc.backend.ventas.apirest.models.services;
+package com.jmc.backend.ventas.apirest.models.services.Interfaces;
 
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
 

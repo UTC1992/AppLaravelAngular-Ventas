@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmc.backend.ventas.apirest.models.dao.ITipoDocumentoDao;
 import com.jmc.backend.ventas.apirest.models.entity.TipoDocumento;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.ITipoDocumentoService;
 
 @Service
 public class TipoDocumentoServiceImplement implements ITipoDocumentoService{

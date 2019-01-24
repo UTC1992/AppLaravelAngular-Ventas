@@ -45,12 +45,13 @@ public class PuntoVenta implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "punto_venta_id")
 	private List<Compra> lsCompras;
-	
-	@OneToMany(fetch= FetchType.LAZY)
-	@JoinColumn(name="punto_venta_id")
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "punto_venta_id")
 	private List<Producto> lsProductos;
 
-	private Long empresa_id;
+	@Column(name = "empresa_id")
+	private Long idEmpresa;;
 
 	public Long getId() {
 		return id;
@@ -124,12 +125,20 @@ public class PuntoVenta implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getEmpresa_id() {
-		return empresa_id;
+	public List<Producto> getLsProductos() {
+		return lsProductos;
 	}
 
-	public void setEmpresa_id(Long empresa_id) {
-		this.empresa_id = empresa_id;
+	public void setLsProductos(List<Producto> lsProductos) {
+		this.lsProductos = lsProductos;
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public List<Venta> getLsVentas() {

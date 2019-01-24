@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jmc.backend.ventas.apirest.models.entity.TipoDocumento;
-import com.jmc.backend.ventas.apirest.models.services.ITipoDocumentoService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.ITipoDocumentoService;
 
 @CrossOrigin(origins = { "*" })
 @RestController

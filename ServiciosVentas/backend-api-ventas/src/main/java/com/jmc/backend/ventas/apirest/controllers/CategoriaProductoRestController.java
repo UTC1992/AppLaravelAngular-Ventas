@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jmc.backend.ventas.apirest.models.entity.CategoriaProducto;
 import com.jmc.backend.ventas.apirest.models.entity.Empresa;
-import com.jmc.backend.ventas.apirest.models.services.ICategoriaProductoService;
-import com.jmc.backend.ventas.apirest.models.services.IEmpresaService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.ICategoriaProductoService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpresaService;
 
 @CrossOrigin(origins = { "*" })
 @RestController

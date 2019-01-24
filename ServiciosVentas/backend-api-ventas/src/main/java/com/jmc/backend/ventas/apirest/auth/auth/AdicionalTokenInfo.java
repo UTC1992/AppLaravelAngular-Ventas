@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.jmc.backend.ventas.apirest.models.entity.Role;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
-import com.jmc.backend.ventas.apirest.models.services.IUsuarioService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IUsuarioService;
 
 @Component
 public class AdicionalTokenInfo implements  TokenEnhancer{

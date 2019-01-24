@@ -34,6 +34,9 @@ public class Producto implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
 	
+	@Column(name="empresa_id")
+	private Long idEmpresa;
+	
 	@Column(name="updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
@@ -41,6 +44,7 @@ public class Producto implements Serializable {
 
 	private CategoriaProducto categoriaProducto;
 
+	
 	
 	public void prePersist() {
 		this.createdAt= new Date();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmc.backend.ventas.apirest.models.dao.IEmpleadoDao;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpleadoService;
 
 @Service
 public class EmpleadoServiceImplement implements IEmpleadoService {

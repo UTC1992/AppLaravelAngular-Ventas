@@ -31,7 +31,7 @@ public class Configuracion implements Serializable {
 	private Date updatedAt;
 
 	@Column(name = "empresa_id")
-	private Long empresaId;
+	private Long idEmpresa;
 
 	/// prpersiste fecha ce creacion
 	private void prePersist() {
@@ -78,12 +78,12 @@ public class Configuracion implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getEmpresaId() {
-		return empresaId;
+	public Long getIdEmpresa() {
+		return idEmpresa;
 	}
 
-	public void setEmpresaId(Long empresaId) {
-		this.empresaId = empresaId;
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	/**

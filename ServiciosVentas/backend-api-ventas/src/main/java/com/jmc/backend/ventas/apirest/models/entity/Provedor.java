@@ -42,16 +42,17 @@ public class Provedor implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
-	@OneToMany(fetch= FetchType.LAZY)
-	@JoinColumn(name="provedor_id")
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "provedor_id")
 	private List<Compra> lsCompras;
-	
-	private Long empresa_id;
 
-	
+	@Column(name = "empresa_id")
+	private Long idEmpresa;
+
 	private void prePersist() {
-		this.createdAt= new Date();
+		this.createdAt = new Date();
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -156,12 +157,20 @@ public class Provedor implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getEmpresa_id() {
-		return empresa_id;
+	public List<Compra> getLsCompras() {
+		return lsCompras;
 	}
 
-	public void setEmpresa_id(Long empresa_id) {
-		this.empresa_id = empresa_id;
+	public void setLsCompras(List<Compra> lsCompras) {
+		this.lsCompras = lsCompras;
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	/**

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmc.backend.ventas.apirest.models.dao.IRolesDao;
 import com.jmc.backend.ventas.apirest.models.entity.Role;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IRoleService;
 
 @Service
 public class RoleServiceImplement implements IRoleService{
