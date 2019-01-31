@@ -24,29 +24,50 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/clientes").permitAll()
-		.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
+		/*.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/clientes").hasRole("ADMIN")
 		.antMatchers("/api/clientes/**").hasRole("ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/empresa/modulos/{id}").hasAnyRole("USER","ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/empresa").hasRole("ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/empresa/admin/{id}").hasRole("ROOT")
 		.antMatchers(HttpMethod.GET, "/auth/usuario/roles/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/empresa/tipo/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/tipo/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/tipo/{id}").hasRole("ADMIN")
+		.antMatchers(HttpMethod.DELETE, "/api/tipo/{id}").hasRole("ADMIN")
+		.antMatchers("/api/tipo/**").hasRole("ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/tipo").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/empresa/categorias/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.GET, "/api/categorias/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.PUT, "/api/categorias/{id}").hasAnyRole("USER","ADMIN")
+		.antMatchers(HttpMethod.POST, "/api/categorias").hasAnyRole("USER","ADMIN")*/
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());
 	}
 	
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
+		/*
+		CorsConfiguration config= new CorsConfiguration();
+		config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+		config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+		config.setAllowCredentials(true);
+		config.setAllowedHeaders(Arrays.asList("Content-Type","Autorization"));
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+		return source;*/
 		
 		CorsConfiguration config = new CorsConfiguration();
         config.setAllowedHeaders(Collections.singletonList("*"));
         config.setAllowedMethods(Collections.singletonList("*"));
         config.addAllowedOrigin("*");
         config.setAllowCredentials(true);
-		
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;
+		
 		
 	}
 	

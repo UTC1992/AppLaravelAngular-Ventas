@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jmc.backend.ventas.apirest.models.dao.IClienteDao;
 import com.jmc.backend.ventas.apirest.models.entity.Cliente;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IClienteService;
 
 
 @Service

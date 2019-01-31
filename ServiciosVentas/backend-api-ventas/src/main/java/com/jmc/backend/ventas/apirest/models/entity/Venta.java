@@ -22,7 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="ventas")
+@Table(name = "ventas")
 public class Venta implements Serializable {
 
 	@Id
@@ -37,7 +37,7 @@ public class Venta implements Serializable {
 	private Double subTotalVenta;
 	private Double ivaVenta;
 	private Double totalPagarVenta;
-	private String estadoVenta;
+	private Boolean estadoVenta;
 	private String observacion;
 
 	@Temporal(TemporalType.DATE)
@@ -47,30 +47,38 @@ public class Venta implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "updated_at")
 	private Date updatedAt;
-	
+
 	// relaciones
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Cliente cliente;
-	
-	
-	
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name="venta_id")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tipo_documento_id")
+	private TipoDocumento tipoDocumento;
+	private Long punto_venta_id;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "venta_id")
 	private List<DetalleVenta> detalleVenta;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Usuario usuario;
+
 	// pre persistencia de datos
 	@PrePersist
 	public void prePersist() {
 		createdAt = new Date();
 	}
 
-	
 	// constructor
 	public Venta() {
-		this.detalleVenta=new ArrayList<DetalleVenta>();
+		this.detalleVenta = new ArrayList<>();
 	}
 
+	public Long getPunto_venta_id() {
+		return punto_venta_id;
+	}
 
+	public void setPunto_venta_id(Long punto_venta_id) {
+		this.punto_venta_id = punto_venta_id;
+	}
 
 	// get and set
 	public Long getIdVenta() {
@@ -137,11 +145,11 @@ public class Venta implements Serializable {
 		this.totalPagarVenta = totalPagarVenta;
 	}
 
-	public String getEstadoVenta() {
+	public Boolean getEstadoVenta() {
 		return estadoVenta;
 	}
 
-	public void setEstadoVenta(String estadoVenta) {
+	public void setEstadoVenta(Boolean estadoVenta) {
 		this.estadoVenta = estadoVenta;
 	}
 
@@ -169,15 +177,11 @@ public class Venta implements Serializable {
 		this.observacion = observacion;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	
-
+	/*
+	 * public Cliente getCliente() { return cliente; }
+	 * 
+	 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
+	 */
 	public List<DetalleVenta> getDetalleVenta() {
 		return detalleVenta;
 	}
@@ -185,11 +189,26 @@ public class Venta implements Serializable {
 	public void setDetalleVenta(List<DetalleVenta> detalleVenta) {
 		this.detalleVenta = detalleVenta;
 	}
-	
+
 	public void addItemVenta(DetalleVenta detalle) {
 		this.detalleVenta.add(detalle);
 	}
 
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	/**
 	 * 

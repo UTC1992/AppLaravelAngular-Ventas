@@ -3,9 +3,12 @@ package com.jmc.backend.ventas.apirest.models.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +23,11 @@ public class DetalleVenta implements Serializable {
 	private Double totalDetalle;
 	private Double ivaDetalle;
 
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="producto_id")
+	private Producto producto;
+	
 	public Long getIdDetalleVenta() {
 		return idDetalleVenta;
 	}
@@ -61,9 +69,17 @@ public class DetalleVenta implements Serializable {
 	}
 
 	
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
 	// metodos de acciones 
-	public Long calcularImporte() {
-		return cantidad.longValue();
+	public Double getImporte() {
+		return cantidad.doubleValue() * producto.getPrecioVentaProducto();
 	}
 	/**
 	 * 
