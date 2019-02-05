@@ -46,6 +46,16 @@ public class Usuario implements Serializable {
 	private String apellido;
 
 	private String dni;
+	private String direccion;
+	private String telefono;
+	private String celular;
+	private Boolean discapacidad;
+	private String carnet;
+	@Column(name = "fecha_nacimiento")
+	@Temporal(TemporalType.DATE)
+	private Date fechaNacimiento;
+	private Integer edad;
+	private String genero;
 
 	@Column(unique = true)
 	private String email;
@@ -83,6 +93,70 @@ public class Usuario implements Serializable {
 	}
 
 	
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public Boolean getDiscapacidad() {
+		return discapacidad;
+	}
+
+	public void setDiscapacidad(Boolean discapacidad) {
+		this.discapacidad = discapacidad;
+	}
+
+	public String getCarnet() {
+		return carnet;
+	}
+
+	public void setCarnet(String carnet) {
+		this.carnet = carnet;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Integer getEdad() {
+		return edad;
+	}
+
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
