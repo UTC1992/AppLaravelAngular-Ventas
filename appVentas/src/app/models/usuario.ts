@@ -5,5 +5,7 @@ export class Usuario {
     public nombre: string;
     public apellido: string;
     public email: string;
+    public dni: string;
+    public enabled: boolean;
     public roles: string[] = [];
 }

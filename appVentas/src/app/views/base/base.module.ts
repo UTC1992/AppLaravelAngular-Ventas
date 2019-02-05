@@ -1,23 +1,24 @@
 // Angular
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { CardsComponent } from './cards/cards.component';
-
-
+import { InicioComponent } from './inicio/inicio.component';
 
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
+import { UsuarioComponent } from './usuario/usuario.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     BaseRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    CardsComponent,
+    InicioComponent,
+    UsuarioComponent,
   ]
 })
 export class BaseModule { }

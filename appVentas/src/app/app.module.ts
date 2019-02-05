@@ -10,6 +10,7 @@ import {
   SharedModule,
   LayoutComponent
 } from './shared';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
@@ -28,6 +29,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     rootRouting,
     SharedModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule 
     
   ],
   providers: [
