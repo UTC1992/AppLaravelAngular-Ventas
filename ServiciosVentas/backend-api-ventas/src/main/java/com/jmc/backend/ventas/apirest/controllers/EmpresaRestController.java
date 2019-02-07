@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jmc.backend.ventas.apirest.models.entity.Empresa;
 import com.jmc.backend.ventas.apirest.models.entity.Modulos;
+import com.jmc.backend.ventas.apirest.models.entity.Role;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IEmpresaService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IRoleService;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -31,6 +33,8 @@ public class EmpresaRestController {
 	@Autowired
 	private IEmpresaService empresaService;
 	
+	@Autowired
+	private IRoleService roleService;
 
 	
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
@@ -70,5 +74,12 @@ public class EmpresaRestController {
 	@Secured({"ROLE_ROOT"})
 	public Empresa getAllDataEmpresa(@PathVariable Long id) {
 		return  empresaService.findById(id);
+	}
+	
+	@GetMapping("empresa/roles")
+	@Secured({"ROLE_ROOT"})
+	public List<Role> getRoles(){
+		
+		return roleService.findAll();
 	}
 }

@@ -12,7 +12,7 @@
       </ol>
 </section>
 <button data-toggle="modal" data-target="#exampleModal" 
-class="btn btn-primary" id="" >Crear nuevo usuario</button>
+class="btn btn-primary btn-ms" id="" >Crear nuevo usuario</button>
 <br>
 <br>
 <div class="box">
@@ -42,20 +42,20 @@ class="btn btn-primary" id="" >Crear nuevo usuario</button>
                   <td>{{usuario.nombre}}</td>
                   <td>{{usuario.apellido}}</td>
                   <td>{{usuario.dni}}</td>
-                  <td></td>
+                  <td>{{usuario.celular}}</td>
                   <td>{{usuario.email}}</td>
                   <td>{{usuario.username}}</td>
                   <td>
-                  <label *ngFor="let rol of usuario.roles">
+                  <span class="badge badge-secondary" *ngFor="let rol of usuario.roles">
                       {{rol.authority}} <br>
-                  </label>
+                  </span>
                   </td>
                   <td>
                     <div style="width: 150px;">
-                        <button type="button"  class="btn btn-info" data-toggle="modal" data-target="#exampleModalEdit" style="margin-right: 5px;">
+                        <button type="button"  class="btn btn-info btn-xs" data-toggle="modal" data-target="#exampleModalEdit" style="margin-right: 5px;">
                             Editar
                           </button>
-                          <button type="button" class="btn btn-danger" (click)="deleteTecnico(usuario.id)">Eliminar</button>
+                          <button type="button" class="btn btn-danger btn-xs" (click)="deleteTecnico(usuario.id)">Eliminar</button>
                     </div>
                       
                   </td>

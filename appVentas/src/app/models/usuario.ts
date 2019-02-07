@@ -1,5 +1,5 @@
 export class Usuario {
-    public empresa_id: number;
+    public idEmpresa: number;
     public username: string;
     public password: string;
     public nombre: string;
@@ -8,4 +8,7 @@ export class Usuario {
     public dni: string;
     public enabled: boolean;
     public roles: string[] = [];
+    public direccion: string;
+    public cedula: string;
+    public telefono: string;
 }

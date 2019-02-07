@@ -23,6 +23,10 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mostrarUsers();
+  }
+
+  mostrarUsers(){
     this.usuarioService.getUsuarios().subscribe(response => {
       console.log(response);
       this.usuarios = response;
@@ -44,7 +48,16 @@ export class UsuarioComponent implements OnInit {
   }
 
   crearUsuario(){
-
+    console.log(this.formCreateUser.value);
+    this.usuarioService.create(this.formCreateUser.value).subscribe(response => {
+      console.log(response);
+      if(response){
+        console.log('Usuario guardado');
+      } else {
+        console.log('Usuario error al guardar');
+      }
+      this.ngOnInit();
+    });
   }
 
 }

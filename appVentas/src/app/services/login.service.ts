@@ -62,7 +62,7 @@ export class LoginService {
     this._usuario.nombre = datosToken.nombre_usuario;
     this._usuario.apellido = datosToken.apellido_usuario;
     this._usuario.email = datosToken.email;
-    this._usuario.empresa_id = datosToken.empresa;
+    this._usuario.idEmpresa = datosToken.empresa;
     this._usuario.username = datosToken.user_name;
     this._usuario.roles = datosToken.authorities;
 

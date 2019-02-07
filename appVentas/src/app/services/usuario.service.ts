@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private urlEndPoint: string = 'http://localhost:8090/api/empresa/empleado/';
+  private urlEndPoint: string = 'http://localhost:8090/api';
   
   private httpHeaders = new HttpHeaders({
     'Content-Type':'application/json'
@@ -47,11 +48,31 @@ export class UsuarioService {
 
   getUsuarios(): Observable<Usuario[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<Usuario[]>(this.urlEndPoint + usuario.empresa_id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<Usuario[]>(this.urlEndPoint +'/empresa/empleado/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
     .pipe(catchError( e => {
       this.isNoAutorizado(e);
       return throwError(e);
     })
+    );
+  }
+
+  create(usuario: Usuario): Observable<Usuario>{
+    return this.http.post(this.urlEndPoint+'/empleado', usuario, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      map((response: any) => response.usuario as Usuario),
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
     );
   }
 
