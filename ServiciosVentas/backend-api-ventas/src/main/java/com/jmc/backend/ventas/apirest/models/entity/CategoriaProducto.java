@@ -36,10 +36,10 @@ public class CategoriaProducto implements Serializable {
 	private Date updatedAt;
 
 	@Column(name = "empresa_id")
-	private Long empresaId;
+	private Long idEmpresa;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_categoria")
+	@JoinColumn(name = "categoria_id")
 	private List<Producto> lsProducto;
 
 	public CategoriaProducto() {
@@ -76,12 +76,12 @@ public class CategoriaProducto implements Serializable {
 		return descripcionCategoria;
 	}
 
-	public Long getEmpresaId() {
-		return empresaId;
+	public Long getIdEmpresa() {
+		return idEmpresa;
 	}
 
-	public void setEmpresaId(Long empresaId) {
-		this.empresaId = empresaId;
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public void setDescripcionCategoria(String descripcionCategoria) {

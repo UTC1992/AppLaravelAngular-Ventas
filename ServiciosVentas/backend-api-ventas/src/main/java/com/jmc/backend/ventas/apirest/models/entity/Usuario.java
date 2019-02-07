@@ -86,13 +86,20 @@ public class Usuario implements Serializable {
 	
 	public Usuario() {
 		this.roles= new ArrayList<>();
+		this.lsVentas= new ArrayList<>();
+		this.lsCompras= new ArrayList<>();
+		prePersist();
+	}
+	
+	
+	private void prePersist() {
+		this.createdAt= new Date();
 	}
 	
 	public Long getId() {
 		return id;
 	}
 
-	
 
 	public String getDireccion() {
 		return direccion;

@@ -46,6 +46,10 @@ public class Producto implements Serializable {
 
 	
 	
+	public Producto() {
+		prePersist();
+	}
+
 	public void prePersist() {
 		this.createdAt= new Date();
 	}
