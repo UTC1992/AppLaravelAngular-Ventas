@@ -2,6 +2,7 @@ package com.jmc.backend.ventas.apirest.models.services;
 
 import java.util.List;
 
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ public class CategoriaProductoServiceImplement implements ICategoriaProductoServ
 	@Autowired
 	private ICategoriasDao categoriasDao;
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<CategoriaProducto> findAll() {
 		// TODO Auto-generated method stub
 		
@@ -24,7 +25,7 @@ public class CategoriaProductoServiceImplement implements ICategoriaProductoServ
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public CategoriaProducto findById(Long id) {
 		// TODO Auto-generated method stub
 		return categoriasDao.findById(id).orElse(null);
@@ -44,5 +45,6 @@ public class CategoriaProductoServiceImplement implements ICategoriaProductoServ
 		categoriasDao.deleteById(id);
 		return true;
 	}
+
 
 }
