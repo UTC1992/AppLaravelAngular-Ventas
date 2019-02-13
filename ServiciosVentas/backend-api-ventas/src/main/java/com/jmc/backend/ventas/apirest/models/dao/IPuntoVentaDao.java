@@ -11,4 +11,7 @@ public interface IPuntoVentaDao extends JpaRepository<PuntoVenta, Long> {
 
 	@Query("select p from PuntoVenta p where p.idEmpresa=?1")
 	public List<PuntoVenta> findAllByIdEmpresaQuery(Long idEmpresa);
+	
+	@Query("select p from PuntoVenta p where p.nombre=?1 and p.idEmpresa?2")
+	public PuntoVenta findByName(String nombre,Long id);
 }

@@ -10,4 +10,5 @@ public interface IPuntoVentaService {
 	public PuntoVenta findById(Long id);
 	public PuntoVenta save(PuntoVenta puntoVenta);
 	public Boolean delete(Long id);
+	public PuntoVenta findByName(String name,Long id);
 }

@@ -46,5 +46,11 @@ public class CategoriaProductoServiceImplement implements ICategoriaProductoServ
 		return true;
 	}
 
+	@Override
+	public CategoriaProducto findByNameCategoria(String nombre, Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return categoriasDao.findByNombreCategoriaQuery(nombre, idEmpresa);
+	}
+
 
 }

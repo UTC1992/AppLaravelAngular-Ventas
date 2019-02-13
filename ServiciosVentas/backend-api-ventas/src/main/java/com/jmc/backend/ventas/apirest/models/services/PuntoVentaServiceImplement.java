@@ -49,4 +49,10 @@ public class PuntoVentaServiceImplement implements IPuntoVentaService {
 		 return true;
 	}
 
+	@Override
+	public PuntoVenta findByName(String nombre, Long id) {
+		// TODO Auto-generated method stub
+		return puntoDao.findByName(nombre,id);
+	}
+
 }

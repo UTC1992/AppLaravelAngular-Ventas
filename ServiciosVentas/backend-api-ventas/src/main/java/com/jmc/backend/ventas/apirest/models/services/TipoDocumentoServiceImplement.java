@@ -41,4 +41,10 @@ public class TipoDocumentoServiceImplement implements ITipoDocumentoService{
 		return true;
 	}
 
+	@Override
+	public TipoDocumento findByName(String nombre, Long id) {
+		// TODO Auto-generated method stub
+		return tipoDocumentoDao.findByName(nombre, id);
+	}
+
 }

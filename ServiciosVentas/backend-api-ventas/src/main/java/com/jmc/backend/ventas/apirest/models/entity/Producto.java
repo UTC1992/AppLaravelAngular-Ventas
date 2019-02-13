@@ -58,6 +58,14 @@ public class Producto implements Serializable {
 		return idProducto;
 	}
 
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
 	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
