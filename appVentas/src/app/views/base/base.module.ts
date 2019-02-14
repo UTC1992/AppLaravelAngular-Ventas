@@ -8,17 +8,20 @@ import { InicioComponent } from './inicio/inicio.component';
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     BaseRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     InicioComponent,
     UsuarioComponent,
-  ]
+  ],
+  
 })
 export class BaseModule { }

@@ -15,12 +15,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
-
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalcreateComponent } from './views/base/modalcreate/modalcreate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    LayoutComponent,
+    ModalcreateComponent
+    
   ],
   imports: [
     AppRoutingModule,
@@ -30,12 +33,15 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    ModalModule.forRoot()
     
   ],
   providers: [
-    HttpClient
+    HttpClient,
+    BsModalRef
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ ModalcreateComponent ]
 })
 export class AppModule { }

@@ -12,7 +12,7 @@
       </ol>
 </section>
 <button data-toggle="modal" data-target="#exampleModal" 
-class="btn btn-primary btn-ms" id="" >Crear nuevo usuario</button>
+class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear nuevo usuario</button>
 <br>
 <br>
 <div class="box">
@@ -52,10 +52,8 @@ class="btn btn-primary btn-ms" id="" >Crear nuevo usuario</button>
                   </td>
                   <td>
                     <div style="width: 150px;">
-                        <button type="button"  class="btn btn-info btn-xs" data-toggle="modal" data-target="#exampleModalEdit" style="margin-right: 5px;">
-                            Editar
-                          </button>
-                          <button type="button" class="btn btn-danger btn-xs" (click)="deleteTecnico(usuario.id)">Eliminar</button>
+                        <button type="button"  class="btn btn-info btn-xs" (click)="openModalEdit(template, usuario.id)">Editar</button>
+                          <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(usuario.id)">Eliminar</button>
                     </div>
                       
                   </td>
@@ -66,180 +64,87 @@ class="btn btn-primary btn-ms" id="" >Crear nuevo usuario</button>
     </div>
 </div>
 
-<!-- Modal CREAR (click)="open(usuario.id)"-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>  
-              <h4 class="modal-title" id="exampleModalLabel"><b>Crear un nuevo Usuario</b></h4>
+<ng-template #template>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>  
+        <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+    </div>
+    
+    <form [formGroup]="formCreateUser"  (ngSubmit)="enviarDatosUsuario()" >
+        <div class="modal-body">
+            <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3">Cédula:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  placeholder="" formControlName="dni"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="control-label col-md-3">Nombre:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  placeholder="" value="" formControlName="nombre">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Apellido:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"   placeholder="" formControlName="apellido"> 
+                </div>
+            </div>
+            <div class="form-group" >
+                <label  class="control-label col-md-3">Teléfono:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  placeholder="" formControlName="telefono"> 
+                </div>
                 
             </div>
-            
-            <form [formGroup]="formCreateUser"  (ngSubmit)="crearUsuario()" >
-                <div class="modal-body">
-                    <div class="form-horizontal">
-                      <div class="form-group">
-                          <label class="control-label col-md-3">Cédula:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="dni"> 
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label  class="control-label col-md-3">Nombre:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" value="" formControlName="nombre">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label class="control-label col-md-3">Apellido:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"   placeholder="" formControlName="apellido"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label  class="control-label col-md-3">Teléfono:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="telefono"> 
-                          </div>
-                          
-                      </div>
-                      <div class="form-group" >
-                          <label  class="control-label col-md-3">Dirección:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="direccion"> 
-                          </div>
-                          
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Email:</label>
-                          <div class="col-md-7">
-                              <input type="email" class="form-control"  placeholder="" formControlName="email"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Estado:</label>
-                          <div class="col-md-7">
-                              <label class="form-check-inline">
-                                  Activo
-                                  <input class="form-check-input" type="radio" formControlName="enabled" [value]="true" >
-                              </label>
-                              <label class="form-check-inline">
-                                  Inactivo
-                                  <input class="form-check-input" type="radio" formControlName="enabled" [value]="false">
-                              </label> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Username:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="username"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Password:</label>
-                          <div class="col-md-7">
-                              <input type="password" class="form-control"  placeholder="" formControlName="password"> 
-                          </div>
-                      </div>
-                    </div>
+            <div class="form-group" >
+                <label  class="control-label col-md-3">Dirección:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  placeholder="" formControlName="direccion"> 
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" [disabled]="formCreateUser.invalid" class="btn btn-success">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal EDITAR-->
-<div class="modal fade" id="exampleModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>  
-              <h4 class="modal-title" id="exampleModalLabel"><b>Editar datos del Usuario</b></h4>
                 
             </div>
-            
-            <form [formGroup]="formCreateUser"  (ngSubmit)="editarUsuario()" >
-                <div class="modal-body">
-                    <div class="form-horizontal">
-                      <div class="form-group">
-                          <label class="control-label col-md-3">Cédula:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="dni"> 
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label  class="control-label col-md-3">Nombre:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" value="" formControlName="nombre">
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <label class="control-label col-md-3">Apellido:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"   placeholder="" formControlName="apellido"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label  class="control-label col-md-3">Teléfono:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="telefono"> 
-                          </div>
-                          
-                      </div>
-                      <div class="form-group" >
-                          <label  class="control-label col-md-3">Dirección:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="direccion"> 
-                          </div>
-                          
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Email:</label>
-                          <div class="col-md-7">
-                              <input type="email" class="form-control"  placeholder="" formControlName="email"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Estado:</label>
-                          <div class="col-md-7">
-                              <label class="form-check-inline">
-                                  Activo
-                                  <input class="form-check-input" type="radio" formControlName="enabled" [value]="true" >
-                              </label>
-                              <label class="form-check-inline">
-                                  Inactivo
-                                  <input class="form-check-input" type="radio" formControlName="enabled" [value]="false">
-                              </label> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Username:</label>
-                          <div class="col-md-7">
-                              <input type="text" class="form-control"  placeholder="" formControlName="username"> 
-                          </div>
-                      </div>
-                      <div class="form-group" >
-                          <label class="control-label col-md-3">Password:</label>
-                          <div class="col-md-7">
-                              <input type="password" class="form-control"  placeholder="" formControlName="password"> 
-                          </div>
-                      </div>
-                    </div>
+            <div class="form-group" >
+                <label class="control-label col-md-3">Email:</label>
+                <div class="col-md-7">
+                    <input type="email" class="form-control"  placeholder="" formControlName="email"> 
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" [disabled]="formCreateUser.invalid" class="btn btn-success">Guardar</button>
+            </div>
+            <div class="form-group" >
+                <label class="control-label col-md-3">Estado:</label>
+                <div class="col-md-7">
+                    <label class="form-check-inline">
+                        Activo
+                        <input class="form-check-input" type="radio" formControlName="enabled" [value]="true" >
+                    </label>
+                    <label class="form-check-inline">
+                        Inactivo
+                        <input class="form-check-input" type="radio" formControlName="enabled" [value]="false">
+                    </label> 
                 </div>
-            </form>
+            </div>
+            <div class="form-group" >
+                <label class="control-label col-md-3">Username:</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control"  placeholder="" formControlName="username"> 
+                </div>
+            </div>
+            <div class="form-group" >
+                <label class="control-label col-md-3">Password:</label>
+                <div class="col-md-7">
+                    <input type="password" class="form-control"  placeholder="" formControlName="password"> 
+                </div>
+            </div>
+            </div>
         </div>
-    </div>
-</div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+        <button type="submit" [disabled]="formCreateUser.invalid"
+        class="btn btn-success" >Guardar</button>
+        </div>
+    </form>
+          
+</ng-template>

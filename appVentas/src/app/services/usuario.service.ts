@@ -76,4 +76,43 @@ export class UsuarioService {
     );
   }
 
+  edit(usuario: Usuario, id: number): Observable<Usuario>{
+    return this.http.put<Usuario>(this.urlEndPoint+'/empleado/'+id, usuario, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      map((response: any) => response.usuario as Usuario),
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
+  delete(id: number): Observable<Usuario>{
+    return this.http.delete<Usuario>(this.urlEndPoint+'/empleado/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  getUsuarioById(id: number): Observable<Usuario>{
+    let usuario = this.loginService.usuario;
+    return this.http.get<Usuario>(this.urlEndPoint +'/empleado/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
 }
