@@ -16,13 +16,11 @@ import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http'
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
-import { ModalcreateComponent } from './views/base/modalcreate/modalcreate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    ModalcreateComponent
     
   ],
   imports: [
@@ -42,6 +40,5 @@ import { ModalcreateComponent } from './views/base/modalcreate/modalcreate.compo
     BsModalRef
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ ModalcreateComponent ]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import { Observable, from, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { httpFactory } from '@angular/http/src/http_module';
 import { Usuario } from '../models/usuario';
+import { Rol } from '../models/rol';
 
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
@@ -108,6 +109,24 @@ export class UsuarioService {
   getUsuarioById(id: number): Observable<Usuario>{
     let usuario = this.loginService.usuario;
     return this.http.get<Usuario>(this.urlEndPoint +'/empleado/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  addRol(rol: Rol, id: number): Observable<Usuario>{
+    return this.http.put<Usuario>(this.urlEndPoint+'/rol/asignar/'+id, rol, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  deleteRol(id: number): Observable<Usuario>{
+    return this.http.get<Usuario>(this.urlEndPoint+'/rol/eliminar/'+id, {headers: this.agregarAuthorizationHeader()})
     .pipe(catchError( e => {
       this.isNoAutorizado(e);
       return throwError(e);

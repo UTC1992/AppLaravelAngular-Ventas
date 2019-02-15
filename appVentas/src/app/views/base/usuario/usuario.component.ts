@@ -6,6 +6,7 @@ import { LoginService } from '../../../services/login.service';
 import swal from 'sweetalert2';
 
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
+import { Rol } from '../../../models/rol';
 
 @Component({
   selector: 'app-usuario',
@@ -15,6 +16,7 @@ import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 export class UsuarioComponent implements OnInit {
 
   formCreateUser: FormGroup;
+  formRol: FormGroup;
   formEdit: FormGroup;
   public usuarios: Usuario[];
 
@@ -22,8 +24,15 @@ export class UsuarioComponent implements OnInit {
   idEmpresa: any;
   usuario: Usuario;
   usuarioEdit: Usuario;
+  idUsuario: number;
 
   tipoAccion: string;
+  titleRol: any;
+  rolesList: any[] = [];
+
+  rolUser: boolean;
+  rolAdmin: boolean;
+  rolRoot: boolean;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -36,11 +45,13 @@ export class UsuarioComponent implements OnInit {
     this.usuario = this.loginService.usuario;
     this.idEmpresa = this.usuario.idEmpresa;
     this.iniciarFormulario();
+    this.iniciarFormularioRol();
     
   }
   
   ngOnInit() {
     this.mostrarUsers();
+    this.llenarRoles();
   }
   
   openModalCreate(template: TemplateRef<any>) {
@@ -111,7 +122,7 @@ export class UsuarioComponent implements OnInit {
           console.log('Usuario guardado');
           this.mostrarUsers();
           this.cerrarModal();
-          swal('Éxito', 'Usuario creado con exito!', 'info');
+          swal('Éxito', 'Usuario creado con exito!', 'success');
         } else {
           console.log('Usuario error al guardar');
         }
@@ -124,7 +135,7 @@ export class UsuarioComponent implements OnInit {
           console.log('Usuario modificado');
           this.mostrarUsers();
           this.cerrarModal();
-          swal('Éxito', 'Usuario editado con exito!', 'info');
+          swal('Éxito', 'Usuario editado con exito!', 'success');
         } else {
           console.log('Usuario error al editar');
         }
@@ -144,7 +155,7 @@ export class UsuarioComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar usuario!'
+      confirmButtonText: 'Si, eliminar Usuario!'
     }).then((result) => {
       if (result.value) {
         this.usuarioService.delete(id).subscribe(response => {
@@ -159,9 +170,89 @@ export class UsuarioComponent implements OnInit {
           }
         });
       }
-    })
+    });
   }
 
-  
+  iniciarFormularioRol(){
+    this.formRol = this.formBuilder.group({
+      rol: ['', Validators.required],
+    });
+  }
+
+  llenarRoles(){
+    this.rolesList = [];
+    this.rolesList.push({id: 1, authority: "ROLE_USER", add: true, del: false});
+    this.rolesList.push({id: 2, authority: "ROLE_ADMIN", add: true, del: false});
+    this.rolesList.push({id: 3, authority: "ROLE_ROOT", add: true, del: false});
+  }
+
+  validarRoles(usuario: Usuario){
+    console.log("Roles asignados a usuario ==> ");
+    console.log(usuario.roles);
+    for(var i = 0; i < usuario.roles.length; i++){
+      for(var j = 0; j < this.rolesList.length; j++){
+        if(usuario.roles[i]['authority'] == this.rolesList[j]['authority']){
+          this.rolesList[j]['add'] = false; 
+          this.rolesList[j]['del'] = true; 
+        }
+      }
+    }
+  }
+
+  mostrarRoles(templateRol: TemplateRef<any>, usuario: Usuario) {
+    this.llenarRoles();
+    this.validarRoles(usuario);
+    console.log("Lista de roles de app ==> ");
+    console.log(this.rolesList);
+    this.idUsuario = usuario.id;
+    this.titleRol = "Eliga el rol a asignar:";
+    this.modalRef = this.modalService.show(templateRol);
+  }
+
+  asignarRol(rol: Rol){
+      this.usuarioService.addRol(rol, this.idUsuario).subscribe(response => {
+        console.log(response);
+        if(response){
+          console.log('Rol asignado');
+          this.mostrarUsers();
+          this.llenarRoles();
+          this.cerrarModal();
+          swal('Éxito', 'Rol asignado con exito!', 'success');
+        } else {
+          console.log('Rol error al asignar');
+        }
+      });
+  }
+
+  confirmarLimpiarRoles(){
+    swal({
+      title: '¿Está seguro?',
+      text: "Se eliminarán todos los roles asignados",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar Roles!'
+    }).then((result) => {
+      if (result.value) {
+        this.eliminarRol();
+      }
+    });
+  }
+
+  eliminarRol(){
+    this.usuarioService.deleteRol(this.idUsuario).subscribe(response => {
+      console.log(response);
+      if(response){
+        console.log('Rol eliminado');
+        this.mostrarUsers();
+        this.llenarRoles();
+        this.cerrarModal();
+        swal('Roles Eliminados', 'Roles eliminados con exito!', 'success');
+      } else {
+        console.log('Rol error al eliminar');
+      }
+    });
+}
 
 }
