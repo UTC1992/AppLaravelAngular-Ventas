@@ -226,8 +226,12 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENÚ</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#/base/inicio"><i class="fa fa-link"></i> <span>Inicio</span></a></li>
-        <li><a href="#/base/usuario" ><i class="fa fa-link"></i> <span>Usuarios</span></a></li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['/base/inicio']"><i class="fa fa-link"></i> <span>Inicio</span></a>
+        </li>
+        <li routerLinkActive="active">
+          <a  [routerLink]="['/base/usuario']"><i class="fa fa-link"></i> <span>Usuarios</span></a>
+        </li>
         
       </ul>
       <!-- /.sidebar-menu -->
