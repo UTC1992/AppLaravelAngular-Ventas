@@ -56,29 +56,82 @@ public class CategoriaProductoRestController {
 	
 	@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/categorias/{id}")
-	public CategoriaProducto getById(@PathVariable Long id) {
-		
-		return categoriaService.findById(id);
+	public ResponseEntity<?> getById(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			CategoriaProducto categoria= categoriaService.findById(id);
+			if(categoria==null) {
+				response.put("mensaje", "Categoria con  ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<CategoriaProducto>(categoria, HttpStatus.OK);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	@PostMapping("/categorias")
-	public CategoriaProducto create(@RequestBody CategoriaProducto categoria) {
-		return categoriaService.save(categoria);
+	public ResponseEntity<?> create(@RequestBody CategoriaProducto categoria) {
+		
+		Map<String, Object> response = new HashMap<>();
+		try {
+			
+			CategoriaProducto catExist= categoriaService.findByNameCategoria(categoria.getNombreCategoria(), categoria.getIdEmpresa());
+			if(catExist!=null) {
+				response.put("error", "Ya existe una categoria ingresada con el mismo nombre");	
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			CategoriaProducto categoriaNew= categoriaService.save(categoria);
+			response.put("mensaje", "La categoria ha sido creada con éxito!");
+			response.put("usuario", categoriaNew);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al insertar categoria en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	@PutMapping("/categorias/{id}")
-	public CategoriaProducto update(@RequestBody CategoriaProducto categoria, @PathVariable Long id) {
-		CategoriaProducto categoriaActual= categoriaService.findById(id);
-		
-		categoriaActual.setNombreCategoria(categoria.getNombreCategoria());
-		categoriaActual.setDescripcionCategoria(categoria.getDescripcionCategoria());
-		categoriaActual.setUpdatedAt(new Date());
-		return categoriaService.save(categoriaActual);
+	public ResponseEntity<?> update(@RequestBody CategoriaProducto categoria, @PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			CategoriaProducto categoriaActual=categoriaService.findById(id);
+			if(categoriaActual==null) {
+				response.put("mensaje", "Error: no se pudo editar, la categoria de producto con ID: "
+						.concat(id.toString().concat(" no existe en la base de datos!")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			categoriaActual.setNombreCategoria(categoria.getNombreCategoria());
+			categoriaActual.setDescripcionCategoria(categoria.getDescripcionCategoria());
+			categoriaActual.setUpdatedAt(new Date());
+			CategoriaProducto categoriaEditada=categoriaService.save(categoriaActual);
+			response.put("mensaje", "La categoria ha sido actualizada con éxito!");
+			response.put("categoria", categoriaEditada);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar la categoria en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	@DeleteMapping("/categorias/{id}")
-	public Boolean delete(@PathVariable Long id) {
-		
-		return categoriaService.delete(id);
+	public ResponseEntity<?>  delete(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			categoriaService.delete(id);
+			response.put("mensaje", "Usuario eliminado con éxito!");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al eliminar la categoria de la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

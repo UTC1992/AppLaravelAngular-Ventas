@@ -10,4 +10,5 @@ public interface ICategoriaProductoService {
 	public CategoriaProducto findById(Long id);
 	public CategoriaProducto save(CategoriaProducto categoria);
 	public Boolean delete(Long id);
+	public CategoriaProducto findByNameCategoria(String nombre, Long idEmpresa);
 }

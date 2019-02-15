@@ -10,4 +10,5 @@ public interface ITipoDocumentoService {
 	public TipoDocumento findById(Long id);
 	public TipoDocumento save(TipoDocumento tipo);
 	public Boolean delete(Long id);
+	public TipoDocumento findByName(String nombre, Long id);
 }

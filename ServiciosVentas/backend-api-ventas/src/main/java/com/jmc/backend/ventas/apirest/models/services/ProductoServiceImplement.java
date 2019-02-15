@@ -46,4 +46,10 @@ public class ProductoServiceImplement implements IProductoService {
 		return true;
 	}
 
+	@Override
+	public Producto findByName(String nombre, Long id) {
+		// TODO Auto-generated method stub
+		return productoDao.findByName(nombre, id);
+	}
+
 }
