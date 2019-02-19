@@ -9,9 +9,11 @@ import com.jmc.backend.ventas.apirest.models.entity.PuntoVenta;
 
 public interface IPuntoVentaDao extends JpaRepository<PuntoVenta, Long> {
 
-	@Query("select p from PuntoVenta p where p.idEmpresa=?1")
+	@Query("select pv from PuntoVenta pv where pv.idEmpresa=?1")
 	public List<PuntoVenta> findAllByIdEmpresaQuery(Long idEmpresa);
 	
-	@Query("select p from PuntoVenta p where p.nombre=?1 and p.idEmpresa?2")
-	public PuntoVenta findByName(String nombre,Long id);
+	@Query("select pv from PuntoVenta pv where pv.nombre=?1 and pv.idEmpresa=?2")
+	public PuntoVenta findByNameQuery(String nombre,Long id);
+	
+	
 }
