@@ -29,15 +29,14 @@ import com.jmc.backend.ventas.apirest.models.services.Interfaces.IProductoServic
 public class ProductoRestController {
 
 	@Autowired
-	
 	private IProductoService productoService;
 	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
 	@GetMapping("/productos/all/{id}")
-	public ResponseEntity<?> index(@PathVariable Long idEmpresa) {
+	public ResponseEntity<?> index(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			List<Producto> lsProductos= productoService.findAll(idEmpresa);
+			List<Producto> lsProductos= productoService.findAll(id);
 			if(lsProductos.isEmpty()) {
 				response.put("mensaje", "No existen registros en la base de datos");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
@@ -104,6 +103,12 @@ public class ProductoRestController {
 			}
 			productoActual.setDescripcionProducto(producto.getDescripcionProducto());
 			productoActual.setUpdatedAt(new Date());
+			productoActual.setCategoriaProducto(producto.getCategoriaProducto());
+			productoActual.setCodigoProducto(producto.getCodigoProducto());
+			productoActual.setEstadoProducto(producto.getEstadoProducto());
+			productoActual.setNombreProducto(producto.getNombreProducto());
+			productoActual.setObservaciones(producto.getObservaciones());
+			
 			Producto productoEdit= productoService.save(productoActual);
 			response.put("mensaje", "Producto actualizado con éxito!");
 			response.put("producto", productoEdit);

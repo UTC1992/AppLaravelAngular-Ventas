@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,12 +31,20 @@ public class Producto implements Serializable {
 	private Double utilidadProducto;
 	private Boolean estadoProducto;
 	private String Observaciones;
+	
+	//@Lob
+	//private byte[] imagen;
+	
 	@Column(name="created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
 	
 	@Column(name="empresa_id")
 	private Long idEmpresa;
+	
+	@Column(name="id_tipo_producto")
+	private Long idTipoProducto;
+
 	
 	@Column(name="updated_at")
 	@Temporal(TemporalType.DATE)
@@ -58,7 +67,11 @@ public class Producto implements Serializable {
 		return idProducto;
 	}
 
-	
+	/*
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}*/
+
 	public String getObservaciones() {
 		return Observaciones;
 	}
