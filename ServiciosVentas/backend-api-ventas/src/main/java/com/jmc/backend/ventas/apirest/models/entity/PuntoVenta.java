@@ -51,7 +51,7 @@ public class PuntoVenta implements Serializable {
 	private List<Producto> lsProductos;
 
 	@Column(name = "empresa_id")
-	private Long idEmpresa;;
+	private Long idEmpresa;
 
 	public Long getId() {
 		return id;

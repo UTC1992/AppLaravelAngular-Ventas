@@ -22,6 +22,7 @@ export class PuntoVentaComponent implements OnInit {
   formCreate: FormGroup;
   formEdit: FormGroup;
   public sucursales: PuntoVenta[];
+  puntoEdit: PuntoVenta;
 
   idEmpresa: any;
   usuario: Usuario;
@@ -60,6 +61,18 @@ export class PuntoVentaComponent implements OnInit {
     });
   }
 
+  iniciarFormularioEdit(){
+    this.formCreate = this.formBuilder.group({
+      nombre: [this.puntoEdit.nombre, Validators.required],
+      descripcion: [this.puntoEdit.descripcion, Validators.required],
+      direccion: [this.puntoEdit.direccion, Validators.required],
+      provincia:[this.puntoEdit.provincia, Validators.required],
+      ciudad:[this.puntoEdit.ciudad, Validators.required],
+      telefono:[this.puntoEdit.telefono, Validators.required],
+      idEmpresa:[this.idEmpresa, Validators.required]
+    });
+  }
+
   mostrarPuntosVenta(){
     this.puntosService.getPustosVenta().subscribe(response => {
       console.log(response);
@@ -72,6 +85,20 @@ export class PuntoVentaComponent implements OnInit {
     this.tipoAccion = "create";
     this.titleModal = "Crear un punto de venta";
     this.modalRef = this.modalService.show(template);
+  }
+
+  openModalEdit(template: TemplateRef<any>, id) {
+    this.titleModal = "Editar datos del usuario";
+    this.tipoAccion = "edit";
+    this.puntosService.getPuntoVentaById(id).subscribe(response =>{
+      if(response != null){
+        this.puntoEdit = response;
+        this.iniciarFormularioEdit();
+        this.modalRef = this.modalService.show(template);
+      }
+      
+    });
+    
   }
 
   enviarDatos(){
@@ -90,11 +117,53 @@ export class PuntoVentaComponent implements OnInit {
         }
       });
     }
+    if(this.tipoAccion == "edit"){
+      this.puntosService.edit(this.formCreate.value, this.puntoEdit.id).subscribe(response => {
+        console.log(response);
+        if(response){
+          console.log('Punto de venta actualizado');
+          this.mostrarPuntosVenta();
+          this.cerrarModal();
+          swal('Éxito', 'Punto de venta modificado con exito!', 'success');
+        } else {
+          console.log('Punto de venta error al modificar');
+        }
+      });
+    }
   }
 
   cerrarModal(){
     this.modalRef.hide();
   }
 
+  confirmarEliminar(id){
+    swal({
+      title: '¿Está seguro?',
+      text: "Se eliminará el punto de venta",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+        this.eliminarPuntoVenta(id);
+      }
+    });
+  }
+
+  eliminarPuntoVenta(id){
+    this.puntosService.delete(id).subscribe(response => {
+      console.log(response);
+      if(response){
+        swal(
+          'Eliminado!',
+          'El Punto de Venta a sido eliminado.',
+          'success'
+        )
+        this.mostrarPuntosVenta();
+      }
+    });
+  }
 
 }

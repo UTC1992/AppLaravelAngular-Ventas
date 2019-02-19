@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jmc.backend.ventas.apirest.models.dao.IEmpresaDao;
 import com.jmc.backend.ventas.apirest.models.dao.IPuntoVentaDao;
-import com.jmc.backend.ventas.apirest.models.entity.Empresa;
 import com.jmc.backend.ventas.apirest.models.entity.PuntoVenta;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IPuntoVentaService;
 
@@ -52,7 +51,7 @@ public class PuntoVentaServiceImplement implements IPuntoVentaService {
 	@Override
 	public PuntoVenta findByName(String nombre, Long id) {
 		// TODO Auto-generated method stub
-		return puntoDao.findByName(nombre,id);
+		return puntoDao.findByNameQuery(nombre, id);
 	}
 
 }

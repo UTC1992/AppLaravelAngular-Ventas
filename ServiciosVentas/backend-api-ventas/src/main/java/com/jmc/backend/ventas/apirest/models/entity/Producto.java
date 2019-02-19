@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 @Entity
 @Table(name = "productos")
@@ -29,7 +28,8 @@ public class Producto implements Serializable {
 	private Double precioCostoProducto;
 	private Double precioVentaProducto;
 	private Double utilidadProducto;
-	private String estadoProducto;
+	private Boolean estadoProducto;
+	private String Observaciones;
 	@Column(name="created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
@@ -56,6 +56,19 @@ public class Producto implements Serializable {
 	
 	public Long getIdProducto() {
 		return idProducto;
+	}
+
+	
+	public String getObservaciones() {
+		return Observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		Observaciones = observaciones;
+	}
+
+	public void setEstadoProducto(Boolean estadoProducto) {
+		this.estadoProducto = estadoProducto;
 	}
 
 	public Long getIdEmpresa() {
@@ -110,6 +123,10 @@ public class Producto implements Serializable {
 		this.stockMinProducto = stockMinProducto;
 	}
 
+	public Boolean getEstadoProducto() {
+		return estadoProducto;
+	}
+
 	public Double getPrecioCostoProducto() {
 		return precioCostoProducto;
 	}
@@ -132,14 +149,6 @@ public class Producto implements Serializable {
 
 	public void setUtilidadProducto(Double utilidadProducto) {
 		this.utilidadProducto = utilidadProducto;
-	}
-
-	public String getEstadoProducto() {
-		return estadoProducto;
-	}
-
-	public void setEstadoProducto(String estadoProducto) {
-		this.estadoProducto = estadoProducto;
 	}
 
 	public String getImagen() {

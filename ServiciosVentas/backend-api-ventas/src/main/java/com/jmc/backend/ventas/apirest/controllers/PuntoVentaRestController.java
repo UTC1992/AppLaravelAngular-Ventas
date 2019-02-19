@@ -32,11 +32,12 @@ public class PuntoVentaRestController {
 	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	@GetMapping("/punto/all/{id}")
-	public ResponseEntity<?>  getAll(@PathVariable Long idEmpresa){
+	public ResponseEntity<?>  getAll(@PathVariable Long id){
 		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			List<PuntoVenta> lsPuntos= puntoVentaService.findAll(idEmpresa);
+			//Long idm=(long) 1;
+			List<PuntoVenta> lsPuntos= puntoVentaService.findAll(id);
 			if(lsPuntos.isEmpty()) {
 				response.put("mensaje", "No existen registros en la base de datos");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);

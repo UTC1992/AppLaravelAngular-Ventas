@@ -32,6 +32,7 @@ class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear
                 <th scope="col">Provincia</th>
                 <th scope="col">Ciudad</th>
                 <th scope="col">Teléfono</th>
+                <th scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -44,7 +45,7 @@ class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear
                 <td>{{item.ciudad}}</td>
                 <td>{{item.telefono}}</td>
                 <td>
-                  <div style="width: 200px;">
+                  <div style="width: 150px;">
                       <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.id)">Editar</button>
                       <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.id)">Eliminar</button>
                   </div>  
@@ -116,32 +117,3 @@ class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear
         
 </ng-template>
 
-<ng-template #templateRol>
-  <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>  
-      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleRol }}</b></h4>
-  </div>
-  <div class="modal-body">
-      <div class="form-horizontal">
-          <table class="table">
-              <tr>
-                  <th>Roles</th>
-                  <th>Acciones</th>
-              </tr>
-              <tr *ngFor="let rol of rolesList">
-                  <td>{{ rol.authority }}</td>
-                  <td>
-                      <button class="btn btn-primary btn-xs" *ngIf="rol.add" (click)="asignarRol(rol)" >Añadir</button>
-                      <button class="btn btn-primary btn-xs" *ngIf="rol.del" disabled>Añadir</button>
-                  </td>
-              </tr>
-          </table>
-      </div>
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-info" (click)="confirmarLimpiarRoles()" data-dismiss="modal">Limpiar roles</button>
-      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
-  </div>
-</ng-template>

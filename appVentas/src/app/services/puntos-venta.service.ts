@@ -61,7 +61,7 @@ export class PuntosVentaService {
   create(punto: PuntoVenta): Observable<PuntoVenta>{
     return this.http.post(this.urlEndPoint+'/punto', punto, {headers: this.agregarAuthorizationHeader()})
     .pipe(
-      map((response: any) => response.punto as PuntoVenta),
+      map((response: any) => response),
       catchError(e => {
         if(this.isNoAutorizado(e)){
           return throwError(e);
@@ -77,5 +77,45 @@ export class PuntosVentaService {
       })
     );
   }
+
+  delete(id: number): Observable<PuntoVenta>{
+    return this.http.delete<PuntoVenta>(this.urlEndPoint+'/punto/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  getPuntoVentaById(id: number): Observable<PuntoVenta>{
+    let usuario = this.loginService.usuario;
+    return this.http.get<PuntoVenta>(this.urlEndPoint +'/punto/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  edit(punto: PuntoVenta, id: number): Observable<PuntoVenta>{
+    return this.http.put<PuntoVenta>(this.urlEndPoint+'/punto/'+id, punto, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      map((response: any) => response),
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
 
 }
