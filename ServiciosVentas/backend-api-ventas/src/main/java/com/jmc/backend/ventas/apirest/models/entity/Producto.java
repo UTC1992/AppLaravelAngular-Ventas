@@ -5,21 +5,24 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 
 @Entity
 @Table(name = "productos")
 public class Producto implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProducto;
 	private String codigoProducto;
 	private String nombreProducto;
@@ -30,66 +33,64 @@ public class Producto implements Serializable {
 	private Double precioVentaProducto;
 	private Double utilidadProducto;
 	private Boolean estadoProducto;
-	private String Observaciones;
-	
-	//@Lob
-	//private byte[] imagen;
-	
-	@Column(name="created_at")
+	private String observaciones;
+
+	// @Lob
+	// private byte[] imagen;
+
+	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	
-	@Column(name="empresa_id")
+
+	@Column(name = "empresa_id")
 	private Long idEmpresa;
-	
-	@Column(name="id_tipo_producto")
+
+	@Column(name = "id_tipo_producto")
 	private Long idTipoProducto;
 
-	
-	@Column(name="updated_at")
+	@Column(name = "updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
-	private String Imagen;
+	//private String Imagen;
 
-	private CategoriaProducto categoriaProducto;
-
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="id_categoria_producto")
+	private CategoriaProducto categoria;
 	
 	
+	@Column(name="categoria_id")
+	private Long idCategoria;
+
+
+	public Long getIdTipoProducto() {
+		return idTipoProducto;
+	}
+
+	public void setIdTipoProducto(Long idTipoProducto) {
+		this.idTipoProducto = idTipoProducto;
+	}
+
+
+	public CategoriaProducto getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaProducto categoria) {
+		this.categoria = categoria;
+	}
+
 	public Producto() {
 		prePersist();
 	}
 
 	public void prePersist() {
-		this.createdAt= new Date();
+		this.createdAt = new Date();
 	}
+
 	
+
 	public Long getIdProducto() {
 		return idProducto;
-	}
-
-	/*
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}*/
-
-	public String getObservaciones() {
-		return Observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		Observaciones = observaciones;
-	}
-
-	public void setEstadoProducto(Boolean estadoProducto) {
-		this.estadoProducto = estadoProducto;
-	}
-
-	public Long getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Long idEmpresa) {
-		this.idEmpresa = idEmpresa;
 	}
 
 	public void setIdProducto(Long idProducto) {
@@ -136,10 +137,6 @@ public class Producto implements Serializable {
 		this.stockMinProducto = stockMinProducto;
 	}
 
-	public Boolean getEstadoProducto() {
-		return estadoProducto;
-	}
-
 	public Double getPrecioCostoProducto() {
 		return precioCostoProducto;
 	}
@@ -164,20 +161,20 @@ public class Producto implements Serializable {
 		this.utilidadProducto = utilidadProducto;
 	}
 
-	public String getImagen() {
-		return Imagen;
+	public Boolean getEstadoProducto() {
+		return estadoProducto;
 	}
 
-	public void setImagen(String imagen) {
-		Imagen = imagen;
+	public void setEstadoProducto(Boolean estadoProducto) {
+		this.estadoProducto = estadoProducto;
 	}
 
-	public CategoriaProducto getCategoriaProducto() {
-		return categoriaProducto;
+	public String getObservaciones() {
+		return observaciones;
 	}
 
-	public void setCategoriaProducto(CategoriaProducto categoriaProducto) {
-		this.categoriaProducto = categoriaProducto;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public Date getCreatedAt() {
@@ -188,6 +185,14 @@ public class Producto implements Serializable {
 		this.createdAt = createdAt;
 	}
 
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -195,6 +200,16 @@ public class Producto implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+
 
 	/**
 	 * 

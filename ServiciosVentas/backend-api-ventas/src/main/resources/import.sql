@@ -32,10 +32,16 @@ INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',2);
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',3);
 
-INSERT INTO `tipo_producto` (nombre,descripcion,created_at) VALUES ('PANEL', '2019-01-01',"Comestible");
-INSERT INTO `tipo_producto` (nombre,descripcion,created_at) VALUES ('PANEL', '2019-01-01',"Servicio");
-INSERT INTO `tipo_producto` (nombre,descripcion,created_at) VALUES ('PANEL', '2019-01-01',"Almacenable");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Comestible");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Servicio");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Almacenable");
 
+
+
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('VIVERES','Productos comestibles',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('ELECTRODOMESTICOS','Productos de casa',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('LEGUNBRES','Productos vegetales',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('BEBIDAS','Proeuctos de bebidas',1);
 
 INSERT INTO `provincias` (nombre,) VALUES ('Azuay');
 INSERT INTO `provincias` (nombre,) VALUES ('Bolívar');

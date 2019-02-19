@@ -38,8 +38,7 @@ public class CategoriaProducto implements Serializable {
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "categoria_id")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="categoria")
 	private List<Producto> lsProducto;
 
 	public CategoriaProducto() {

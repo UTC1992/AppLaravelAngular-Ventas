@@ -51,12 +51,12 @@ public class ProductoRestController {
 	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
 	@GetMapping("/productos/{id}")
-	public ResponseEntity<?> show(@PathVariable Long idProducto){
+	public ResponseEntity<?> show(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Producto product= productoService.findById(idProducto);
+			Producto product= productoService.findById(id);
 			if(product==null) {
-				response.put("mensaje", "Producto con ID: ".concat(idProducto.toString().concat(" no existe en la base de datos!")));
+				response.put("mensaje", "Producto con ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 			return new ResponseEntity<Producto>(product, HttpStatus.OK);
@@ -103,12 +103,20 @@ public class ProductoRestController {
 			}
 			productoActual.setDescripcionProducto(producto.getDescripcionProducto());
 			productoActual.setUpdatedAt(new Date());
-			productoActual.setCategoriaProducto(producto.getCategoriaProducto());
+			productoActual.setIdCategoria(producto.getIdCategoria());
 			productoActual.setCodigoProducto(producto.getCodigoProducto());
 			productoActual.setEstadoProducto(producto.getEstadoProducto());
 			productoActual.setNombreProducto(producto.getNombreProducto());
 			productoActual.setObservaciones(producto.getObservaciones());
-			
+			productoActual.setIdEmpresa(producto.getIdEmpresa());
+			productoActual.setIdTipoProducto(producto.getIdTipoProducto());
+			productoActual.setPrecioCostoProducto(producto.getPrecioCostoProducto());
+			productoActual.setPrecioVentaProducto(producto.getPrecioVentaProducto());
+			productoActual.setStockMinProducto(producto.getStockMinProducto());
+			productoActual.setStockProducto(producto.getStockProducto());
+			productoActual.setUtilidadProducto(producto.getUtilidadProducto());
+			productoActual.setUpdatedAt(new Date());
+		
 			Producto productoEdit= productoService.save(productoActual);
 			response.put("mensaje", "Producto actualizado con éxito!");
 			response.put("producto", productoEdit);
