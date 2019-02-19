@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { InicioComponent } from './inicio/inicio.component';
 import { UsuarioComponent } from './usuario/usuario.component';
-
+import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
+import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,20 @@ const routes: Routes = [
         component: UsuarioComponent,
         data: {
           title: 'Usuarios'
+        }
+      },
+      {
+        path: 'puntos-venta',
+        component: PuntoVentaComponent,
+        data: {
+          title: 'Puntos de Venta'
+        }
+      },
+      {
+        path: 'categoria-producto',
+        component: CategoriaProductoComponent,
+        data: {
+          title: 'Categoría de productos'
         }
       }
     ]

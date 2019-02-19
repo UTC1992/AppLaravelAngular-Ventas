@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.jmc.backend.ventas.apirest.models.entity.PuntoVenta;
-import com.jmc.backend.ventas.apirest.models.entity.Usuario;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IPuntoVentaService;
 
 @CrossOrigin(origins = { "*" })
@@ -29,7 +28,7 @@ import com.jmc.backend.ventas.apirest.models.services.Interfaces.IPuntoVentaServ
 public class PuntoVentaRestController {
 
 	@Autowired
-	private IPuntoVentaService puntoVenta;
+	private IPuntoVentaService puntoVentaService;
 	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
 	@GetMapping("/punto/all/{id}")
@@ -37,7 +36,7 @@ public class PuntoVentaRestController {
 		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			List<PuntoVenta> lsPuntos= puntoVenta.findAll(idEmpresa);
+			List<PuntoVenta> lsPuntos= puntoVentaService.findAll(idEmpresa);
 			if(lsPuntos.isEmpty()) {
 				response.put("mensaje", "No existen registros en la base de datos");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
@@ -56,7 +55,7 @@ public class PuntoVentaRestController {
 	public ResponseEntity<?> getById(@PathVariable Long id) {
 		Map<String,Object> response= new HashMap<>();
 		try {
-		PuntoVenta puntoFind= puntoVenta.findById(id);
+		PuntoVenta puntoFind= puntoVentaService.findById(id);
 		if(puntoFind==null) {
 			response.put("mensaje", "Punto de venta con ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
@@ -77,12 +76,12 @@ public class PuntoVentaRestController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			PuntoVenta newPunto= null;
-			PuntoVenta exist= this.puntoVenta.findByName(puntoVenta.getNombre(),puntoVenta.getId());
+			PuntoVenta exist= this.puntoVentaService.findByName(puntoVenta.getNombre(),puntoVenta.getId());
 			if(exist!=null) {
 				response.put("error", "Punto de venta ya existe en la base de datos");	
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
-			newPunto= this.puntoVenta.save(puntoVenta);
+			newPunto= this.puntoVentaService.save(puntoVenta);
 			response.put("mensaje", "Punto de venta ha sido creado con éxito!");
 			response.put("PuntoVenta", newPunto);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
@@ -100,7 +99,7 @@ public class PuntoVentaRestController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			
-			PuntoVenta puntoActual =  puntoVenta.findById(id);
+			PuntoVenta puntoActual =  puntoVentaService.findById(id);
 			if(puntoActual==null) {
 				response.put("mensaje", "Error: no se pudo editar, punto de venta con ID: "
 						.concat(id.toString().concat(" no existe en la base de datos!")));
@@ -112,7 +111,7 @@ public class PuntoVentaRestController {
 			puntoActual.setDireccion(punto.getDireccion());
 			puntoActual.setProvincia(punto.getProvincia());
 			puntoActual.setUpdatedAt(new Date());
-			PuntoVenta puntoEditado=puntoVenta.save(puntoActual);
+			PuntoVenta puntoEditado=puntoVentaService.save(puntoActual);
 			response.put("mensaje", "Punto de venta ha sido actualizado con éxito!");
 			response.put("PuntoVenta", puntoEditado);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
@@ -130,7 +129,7 @@ public class PuntoVentaRestController {
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			puntoVenta.delete(id);
+			puntoVentaService.delete(id);
 			response.put("mensaje", "Punto de venta eliminado con éxito!");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		} catch (DataAccessException e) {

@@ -1,0 +1,147 @@
+<section class="content-header text-center">
+  <h1>
+      <b>XYZ</b>
+      <!--<small>Descripción</small>-->
+  </h1>
+  <h3>
+      {{ subTitlePagina }}
+  </h3>
+  <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+      <li class="active">Here</li>
+    </ol>
+</section>
+<button data-toggle="modal" data-target="#exampleModal" 
+class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear nuevo punto </button>
+<br>
+<br>
+<div class="box">
+  <div class="box-header with-border">
+      <h3 class="box-title text-center"><b>Usuarios</b></h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+      <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-striped table-sm"style="font-family: calibri; font-size: 12pt;">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Provincia</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Teléfono</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of sucursales">
+                <td>{{item.id}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.descripcion}}</td>
+                <td>{{item.direccion}}</td>
+                <td>{{item.provincia}}</td>
+                <td>{{item.ciudad}}</td>
+                <td>{{item.telefono}}</td>
+                <td>
+                  <div style="width: 200px;">
+                      <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.id)">Editar</button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.id)">Eliminar</button>
+                  </div>  
+                </td>
+              </tr>
+            </tbody>
+          </table>  
+      </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>  
+      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+  </div>
+  
+  <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
+    <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+              <label class="control-label col-md-3">Nombre:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="nombre"> 
+              </div>
+          </div>
+          <div class="form-group">
+              <label  class="control-label col-md-3">Descripción:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" value="" formControlName="descripcion">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-md-3">Dirección:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"   placeholder="" formControlName="direccion"> 
+              </div>
+          </div>
+          <div class="form-group" >
+              <label  class="control-label col-md-3">Provincia:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="provincia"> 
+              </div>
+              
+          </div>
+          <div class="form-group" >
+              <label  class="control-label col-md-3">Ciudad:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="ciudad"> 
+              </div>
+              
+          </div>
+          <div class="form-group" >
+              <label class="control-label col-md-3">Teléfono:</label>
+              <div class="col-md-7">
+                  <input type="email" class="form-control"  placeholder="" formControlName="telefono"> 
+              </div>
+          </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="submit" [disabled]="formCreate.invalid"
+      class="btn btn-success" >Guardar</button>
+      </div>
+  </form>
+        
+</ng-template>
+
+<ng-template #templateRol>
+  <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>  
+      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleRol }}</b></h4>
+  </div>
+  <div class="modal-body">
+      <div class="form-horizontal">
+          <table class="table">
+              <tr>
+                  <th>Roles</th>
+                  <th>Acciones</th>
+              </tr>
+              <tr *ngFor="let rol of rolesList">
+                  <td>{{ rol.authority }}</td>
+                  <td>
+                      <button class="btn btn-primary btn-xs" *ngIf="rol.add" (click)="asignarRol(rol)" >Añadir</button>
+                      <button class="btn btn-primary btn-xs" *ngIf="rol.del" disabled>Añadir</button>
+                  </td>
+              </tr>
+          </table>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-info" (click)="confirmarLimpiarRoles()" data-dismiss="modal">Limpiar roles</button>
+      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+  </div>
+</ng-template>

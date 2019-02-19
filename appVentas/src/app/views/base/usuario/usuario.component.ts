@@ -1,12 +1,14 @@
 import { Component, OnInit, TemplateRef  } from '@angular/core';
-import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from 'src/app/models/usuario';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
 import { LoginService } from '../../../services/login.service';
-import swal from 'sweetalert2';
+import { UsuarioService } from '../../../services/usuario.service';
+
+import { Usuario } from 'src/app/models/usuario';
+import { Rol } from '../../../models/rol';
 
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
-import { Rol } from '../../../models/rol';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',

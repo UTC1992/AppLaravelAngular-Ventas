@@ -9,6 +9,8 @@ import { InicioComponent } from './inicio/inicio.component';
 import { BaseRoutingModule } from './base-routing.module';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
+import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 
 @NgModule({
   imports: [
@@ -21,6 +23,8 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
   declarations: [
     InicioComponent,
     UsuarioComponent,
+    PuntoVentaComponent,
+    CategoriaProductoComponent,
   ],
   
 })
