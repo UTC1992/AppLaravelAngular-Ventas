@@ -58,4 +58,62 @@ export class CategoriaProductoService {
     );
   }
 
+  create(punto: CategoriaProducto): Observable<CategoriaProducto>{
+    return this.http.post(this.urlEndPoint+'/categorias', punto, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      map((response: any) => response),
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
+  delete(id: number): Observable<CategoriaProducto>{
+    return this.http.delete<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  getPuntoVentaById(id: number): Observable<CategoriaProducto>{
+    return this.http.get<CategoriaProducto>(this.urlEndPoint +'/categorias/'+id, {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
+  edit(categoria: CategoriaProducto, id: number): Observable<CategoriaProducto>{
+    return this.http.put<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id, categoria, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      map((response: any) => response),
+      catchError(e => {
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+        }
+
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
 }

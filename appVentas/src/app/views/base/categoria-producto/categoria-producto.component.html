@@ -26,27 +26,19 @@
               <thead>
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Nombres</th>
+                  <th scope="col">Nombre de Categoría</th>
                   <th scope="col">Descripción</th>
-                  <th scope="col">Dirección</th>
-                  <th scope="col">Provincia</th>
-                  <th scope="col">Ciudad</th>
-                  <th scope="col">Teléfono</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of sucursales">
-                  <td>{{item.id}}</td>
-                  <td>{{item.nombre}}</td>
-                  <td>{{item.descripcion}}</td>
-                  <td>{{item.direccion}}</td>
-                  <td>{{item.provincia}}</td>
-                  <td>{{item.ciudad}}</td>
-                  <td>{{item.telefono}}</td>
+                <tr *ngFor="let item of categorias">
+                  <td>{{item.idCategoriaProducto}}</td>
+                  <td>{{item.nombreCategoria}}</td>
+                  <td>{{item.descripcionCategoria}}</td>
                   <td>
                     <div style="width: 200px;">
-                        <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.id)">Editar</button>
-                        <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.id)">Eliminar</button>
+                        <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.idCategoriaProducto)">Editar</button>
+                        <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.idCategoriaProducto)">Eliminar</button>
                     </div>  
                   </td>
                 </tr>
@@ -70,39 +62,13 @@
             <div class="form-group">
                 <label class="control-label col-md-3">Nombre:</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="nombre"> 
+                    <input type="text" class="form-control"  placeholder="" formControlName="nombreCategoria"> 
                 </div>
             </div>
             <div class="form-group">
                 <label  class="control-label col-md-3">Descripción:</label>
                 <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" value="" formControlName="descripcion">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-3">Dirección:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"   placeholder="" formControlName="direccion"> 
-                </div>
-            </div>
-            <div class="form-group" >
-                <label  class="control-label col-md-3">Provincia:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="provincia"> 
-                </div>
-                
-            </div>
-            <div class="form-group" >
-                <label  class="control-label col-md-3">Ciudad:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="ciudad"> 
-                </div>
-                
-            </div>
-            <div class="form-group" >
-                <label class="control-label col-md-3">Teléfono:</label>
-                <div class="col-md-7">
-                    <input type="email" class="form-control"  placeholder="" formControlName="telefono"> 
+                    <input type="text" class="form-control"  placeholder="" value="" formControlName="descripcionCategoria">
                 </div>
             </div>
           </div>

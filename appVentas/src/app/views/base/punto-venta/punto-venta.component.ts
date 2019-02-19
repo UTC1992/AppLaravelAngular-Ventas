@@ -88,7 +88,7 @@ export class PuntoVentaComponent implements OnInit {
   }
 
   openModalEdit(template: TemplateRef<any>, id) {
-    this.titleModal = "Editar datos del usuario";
+    this.titleModal = "Editar datos del punto de venta";
     this.tipoAccion = "edit";
     this.puntosService.getPuntoVentaById(id).subscribe(response =>{
       if(response != null){
