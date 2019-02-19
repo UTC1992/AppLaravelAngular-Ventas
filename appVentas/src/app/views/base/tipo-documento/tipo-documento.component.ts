@@ -1,26 +1,26 @@
-import { Component, OnInit, TemplateRef  } from '@angular/core';
+import { Component, OnInit, TemplateRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
+import { TipoDocumentoService } from '../../../services/tipo-documento.service';
 import { LoginService } from '../../../services/login.service';
-import { CategoriaProductoService } from '../../../services/categoria-producto.service';
 
 import { Usuario } from 'src/app/models/usuario';
-import { CategoriaProducto } from '../../../models/categoria-producto';
+import { TipoDocumento } from '../../../models/tipo-documento';
 
-import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 import swal from 'sweetalert2';
+import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-categoria-producto',
-  templateUrl: './categoria-producto.component.html',
-  styleUrls: ['./categoria-producto.component.scss']
+  selector: 'app-tipo-documento',
+  templateUrl: './tipo-documento.component.html',
+  styleUrls: ['./tipo-documento.component.scss']
 })
-export class CategoriaProductoComponent implements OnInit {
-
+export class TipoDocumentoComponent implements OnInit {
+  
   formCreate: FormGroup;
   formEdit: FormGroup;
-  public categorias: CategoriaProducto[];
-  categoriaEdit: CategoriaProducto;
+  public tiposDocumentos: TipoDocumento[];
+  tipoDocEdit: TipoDocumento;
 
   idEmpresa: any;
   usuario: Usuario;
@@ -31,7 +31,7 @@ export class CategoriaProductoComponent implements OnInit {
   subTitlePagina: string;
 
   constructor(
-    private categoriaService: CategoriaProductoService,
+    private tipoDocService: TipoDocumentoService,
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private modalService: BsModalService,
@@ -40,36 +40,35 @@ export class CategoriaProductoComponent implements OnInit {
     this.iniciarFormulario();
     this.usuario = this.loginService.usuario;
     this.idEmpresa = this.usuario.idEmpresa;
-
   }
 
   ngOnInit() {
-    this.subTitlePagina = "Categorías para los productos";
-    this.mostrarCategorias();
+    this.subTitlePagina = "Tipos de documentos / comprobantes";
+    this.mostrarTiposDocumento();
   }
 
   iniciarFormulario(){
     this.formCreate = this.formBuilder.group({
-      nombreCategoria: ['', Validators.required],
-      descripcionCategoria: ['', Validators.required],
+      nombreDocumento: ['', Validators.required],
+      descripcion: ['', Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
   }
 
   iniciarFormularioEdit(){
     this.formCreate = this.formBuilder.group({
-      nombreCategoria: [this.categoriaEdit.nombreCategoria, Validators.required],
-      descripcionCategoria: [this.categoriaEdit.descripcionCategoria, Validators.required],
+      nombreDocumento: [this.tipoDocEdit.nombreDocumento, Validators.required],
+      descripcion: [this.tipoDocEdit.descripcion, Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
   }
 
-  mostrarCategorias(){
-    this.categoriaService.getCategorias().subscribe(response => {
+  mostrarTiposDocumento(){
+    this.tipoDocService.getTipoDocumentos().subscribe(response => {
       console.log(response);
-      this.categorias = response;
+      this.tiposDocumentos = response;
     }, error => {
-      this.categorias = [];
+      this.tiposDocumentos = [];
       console.log(error.error.mensaje);
     });
   }  
@@ -77,16 +76,16 @@ export class CategoriaProductoComponent implements OnInit {
   openModalCreate(template: TemplateRef<any>) {
     this.iniciarFormulario();
     this.tipoAccion = "create";
-    this.titleModal = "Crear nueva categoría";
+    this.titleModal = "Crear nuevo tipo de documento";
     this.modalRef = this.modalService.show(template);
   }
 
   openModalEdit(template: TemplateRef<any>, id) {
-    this.titleModal = "Editar datos del punto de venta";
+    this.titleModal = "Editar datos del tipo de documento";
     this.tipoAccion = "edit";
-    this.categoriaService.getPuntoVentaById(id).subscribe(response =>{
+    this.tipoDocService.getTipoDocumentoById(id).subscribe(response =>{
       if(response != null){
-        this.categoriaEdit = response;
+        this.tipoDocEdit = response;
         this.iniciarFormularioEdit();
         this.modalRef = this.modalService.show(template);
       }
@@ -97,28 +96,28 @@ export class CategoriaProductoComponent implements OnInit {
     console.log(this.formCreate.value);
     console.log("Tipo de accion ==> "+this.tipoAccion);
     if(this.tipoAccion == "create"){
-      this.categoriaService.create(this.formCreate.value).subscribe(response => {
+      this.tipoDocService.create(this.formCreate.value).subscribe(response => {
         console.log(response);
         if(response){
-          console.log('Categoria guardada');
-          this.mostrarCategorias();
+          console.log('Tipo de documento guardado');
+          this.mostrarTiposDocumento();
           this.cerrarModal();
-          swal('Éxito', 'Categoría creada con exito!', 'success');
+          swal('Éxito', 'Tipo de documento creado con exito!', 'success');
         } else {
-          console.log('Categoria error al guardar');
+          console.log('Tipo de documento error al guardar');
         }
       });
     }
     if(this.tipoAccion == "edit"){
-      this.categoriaService.edit(this.formCreate.value, this.categoriaEdit.idCategoriaProducto).subscribe(response => {
+      this.tipoDocService.edit(this.formCreate.value, this.tipoDocEdit.idTipoDocumento).subscribe(response => {
         console.log(response);
         if(response){
-          console.log('Categoria actualizada');
-          this.mostrarCategorias();
+          console.log('Tipo de documento modificado');
+          this.mostrarTiposDocumento();
           this.cerrarModal();
-          swal('Éxito', 'Categoría modificada con exito!', 'success');
+          swal('Éxito', 'Tipo de documento modificado con exito!', 'success');
         } else {
-          console.log('Categoria error al modificar');
+          console.log('Tipo de documento error al modificar');
         }
       });
     }
@@ -132,7 +131,7 @@ export class CategoriaProductoComponent implements OnInit {
   confirmarEliminar(id){
     swal({
       title: '¿Está seguro?',
-      text: "Se eliminará la categoría",
+      text: "Se eliminará el tipo de documento",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -140,21 +139,21 @@ export class CategoriaProductoComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
     }).then((result) => {
       if (result.value) {
-        this.eliminarCategoria(id);
+        this.eliminarTipoDocumento(id);
       }
     });
   }
 
-  eliminarCategoria(id){
-    this.categoriaService.delete(id).subscribe(response => {
+  eliminarTipoDocumento(id){
+    this.tipoDocService.delete(id).subscribe(response => {
       console.log(response);
       if(response){
         swal(
           'Eliminado!',
-          'La categoría a sido eliminada.',
+          'El tipo de documento a sido eliminado.',
           'success'
         )
-        this.mostrarCategorias();
+        this.mostrarTiposDocumento();
       }
     });
   }

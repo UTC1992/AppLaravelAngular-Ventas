@@ -5,6 +5,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
 import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
+import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,13 @@ const routes: Routes = [
         component: CategoriaProductoComponent,
         data: {
           title: 'Categoría de productos'
+        }
+      },
+      {
+        path: 'tipo-documento',
+        component: TipoDocumentoComponent,
+        data: {
+          title: 'Tipo de documentos'
         }
       }
     ]

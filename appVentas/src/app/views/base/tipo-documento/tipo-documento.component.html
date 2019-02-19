@@ -1,0 +1,85 @@
+<section class="content-header text-center">
+  <h1>
+      <b>XYZ</b>
+      <!--<small>Descripción</small>-->
+  </h1>
+  <h3>
+      {{ subTitlePagina }}
+  </h3>
+  <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+      <li class="active">Here</li>
+    </ol>
+</section>
+<button data-toggle="modal" data-target="#exampleModal" 
+class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear un nuevo tipo de documento </button>
+<br>
+<br>
+<div class="box">
+  <div class="box-header with-border">
+      <h3 class="box-title text-center"><b>Usuarios</b></h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+      <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-striped table-sm"style="font-family: calibri; font-size: 12pt;">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre del documento</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tiposDocumentos">
+                <td>{{item.idTipoDocumento}}</td>
+                <td>{{item.nombreDocumento}}</td>
+                <td>{{item.descripcion}}</td>
+                <td>
+                  <div style="width: 150px;">
+                      <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.idTipoDocumento)">Editar</button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.idTipoDocumento)">Eliminar</button>
+                  </div>  
+                </td>
+              </tr>
+            </tbody>
+          </table>  
+      </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>  
+      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+  </div>
+  
+  <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
+    <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+              <label class="control-label col-md-3">Nombre:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="nombreDocumento"> 
+              </div>
+          </div>
+          <div class="form-group">
+              <label  class="control-label col-md-3">Descripción:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" value="" formControlName="descripcion">
+              </div>
+          </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="submit" [disabled]="formCreate.invalid"
+      class="btn btn-success" >Guardar</button>
+      </div>
+  </form>
+        
+</ng-template>
+

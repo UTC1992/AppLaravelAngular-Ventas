@@ -10,8 +10,6 @@ import { PuntoVenta } from '../../../models/punto-venta';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
-import { from } from 'rxjs';
-
 @Component({
   selector: 'app-punto-venta',
   templateUrl: './punto-venta.component.html',
@@ -77,6 +75,9 @@ export class PuntoVentaComponent implements OnInit {
     this.puntosService.getPustosVenta().subscribe(response => {
       console.log(response);
       this.sucursales = response;
+    }, error => {
+      this.sucursales = [];
+      console.log(error.error.mensaje);
     });
   }
 

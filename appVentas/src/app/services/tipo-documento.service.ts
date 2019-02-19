@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { PuntoVenta } from '../models/punto-venta';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { TipoDocumento } from '../models/tipo-documento';
+
 import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PuntosVentaService {
+export class TipoDocumentoService {
 
   private urlEndPoint: string = 'http://localhost:8090/api';
 
@@ -47,9 +48,9 @@ export class PuntosVentaService {
     }
   }
 
-  getPustosVenta(): Observable<PuntoVenta[]>{
+  getTipoDocumentos(): Observable<TipoDocumento[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<PuntoVenta[]>(this.urlEndPoint +'/punto/all/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<TipoDocumento[]>(this.urlEndPoint +'/empresa/tipo/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
     .pipe(catchError( e => {
       this.isNoAutorizado(e);
       return throwError(e);
@@ -57,8 +58,8 @@ export class PuntosVentaService {
     );
   }
 
-  create(punto: PuntoVenta): Observable<PuntoVenta>{
-    return this.http.post(this.urlEndPoint+'/punto', punto, {headers: this.agregarAuthorizationHeader()})
+  create(documento: TipoDocumento): Observable<TipoDocumento>{
+    return this.http.post(this.urlEndPoint+'/tipo', documento, {headers: this.agregarAuthorizationHeader()})
     .pipe(
       map((response: any) => response),
       catchError(e => {
@@ -77,8 +78,8 @@ export class PuntosVentaService {
     );
   }
 
-  delete(id: number): Observable<PuntoVenta>{
-    return this.http.delete<PuntoVenta>(this.urlEndPoint+'/punto/'+id, {headers: this.agregarAuthorizationHeader()})
+  delete(id: number): Observable<TipoDocumento>{
+    return this.http.delete<TipoDocumento>(this.urlEndPoint+'/tipo/'+id, {headers: this.agregarAuthorizationHeader()})
     .pipe(catchError( e => {
       this.isNoAutorizado(e);
       return throwError(e);
@@ -86,9 +87,8 @@ export class PuntosVentaService {
     );
   }
 
-  getPuntoVentaById(id: number): Observable<PuntoVenta>{
-    let usuario = this.loginService.usuario;
-    return this.http.get<PuntoVenta>(this.urlEndPoint +'/punto/'+id, {headers: this.agregarAuthorizationHeader()})
+  getTipoDocumentoById(id: number): Observable<TipoDocumento>{
+    return this.http.get<TipoDocumento>(this.urlEndPoint +'/tipo/'+id, {headers: this.agregarAuthorizationHeader()})
     .pipe(catchError( e => {
       this.isNoAutorizado(e);
       return throwError(e);
@@ -96,8 +96,8 @@ export class PuntosVentaService {
     );
   }
 
-  edit(punto: PuntoVenta, id: number): Observable<PuntoVenta>{
-    return this.http.put<PuntoVenta>(this.urlEndPoint+'/punto/'+id, punto, {headers: this.agregarAuthorizationHeader()})
+  edit(documento: TipoDocumento, id: number): Observable<TipoDocumento>{
+    return this.http.put<TipoDocumento>(this.urlEndPoint+'/tipo/'+id, documento, {headers: this.agregarAuthorizationHeader()})
     .pipe(
       map((response: any) => response),
       catchError(e => {
@@ -115,6 +115,5 @@ export class PuntosVentaService {
       })
     );
   }
-
 
 }
