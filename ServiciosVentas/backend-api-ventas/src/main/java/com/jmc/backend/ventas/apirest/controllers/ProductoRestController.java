@@ -78,6 +78,8 @@ public class ProductoRestController {
 				response.put("error", "Ya existe un producto con el mimso nombre en la base de datos");	
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
+			
+			producto.setUtilidadProducto(producto.calcularUtilidad());
 			newProduct= productoService.save(producto);
 			response.put("mensaje", "El producto ha sido creado con éxito!");
 			response.put("PuntoVenta", newProduct);
@@ -91,25 +93,25 @@ public class ProductoRestController {
 	
 	@Secured({"ROLE_ROOT","ROLE_ADMIN"})
 	@PutMapping("/productos/{id}")
-	public ResponseEntity<?> update(@RequestBody Producto producto, @PathVariable Long idProducto){
+	public ResponseEntity<?> update(@RequestBody Producto producto, @PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
 			
-			Producto productoActual=productoService.findById(idProducto);
+			Producto productoActual=productoService.findById(id);
 			if(productoActual==null) {
 				response.put("mensaje", "Error: no se pudo editar, Producto con ID: "
-						.concat(idProducto.toString().concat(" no existe en la base de datos!")));
+						.concat(id.toString().concat(" no existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 			productoActual.setDescripcionProducto(producto.getDescripcionProducto());
 			productoActual.setUpdatedAt(new Date());
-			productoActual.setIdCategoria(producto.getIdCategoria());
+			productoActual.setCategoria(producto.getCategoria());
 			productoActual.setCodigoProducto(producto.getCodigoProducto());
 			productoActual.setEstadoProducto(producto.getEstadoProducto());
 			productoActual.setNombreProducto(producto.getNombreProducto());
 			productoActual.setObservaciones(producto.getObservaciones());
 			productoActual.setIdEmpresa(producto.getIdEmpresa());
-			productoActual.setIdTipoProducto(producto.getIdTipoProducto());
+			productoActual.setTipoProducto(producto.getTipoProducto());
 			productoActual.setPrecioCostoProducto(producto.getPrecioCostoProducto());
 			productoActual.setPrecioVentaProducto(producto.getPrecioVentaProducto());
 			productoActual.setStockMinProducto(producto.getStockMinProducto());

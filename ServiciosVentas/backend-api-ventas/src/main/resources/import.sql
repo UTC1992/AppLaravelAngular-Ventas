@@ -36,6 +36,7 @@ INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '20
 INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Servicio");
 INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Almacenable");
 
+INSERT INTO `punto_venta` (ciudad,direccion,empresa_id,provincia,nombre) VALUES ('Quito', 'Los Zauces',1,"Pichicnha","Tienda Los Sauces");
 
 
 INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('VIVERES','Productos comestibles',1);

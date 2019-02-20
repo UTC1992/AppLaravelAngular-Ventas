@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "categoria_producto")
 public class CategoriaProducto implements Serializable {
@@ -38,12 +40,11 @@ public class CategoriaProducto implements Serializable {
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="categoria")
-	private List<Producto> lsProducto;
+	
 
 	public CategoriaProducto() {
 		this.prePersist();
-		this.lsProducto = new ArrayList<>();
+		//this.lsProducto = new ArrayList<>();
 	}
 
 	
@@ -103,13 +104,6 @@ public class CategoriaProducto implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Producto> getLsProducto() {
-		return lsProducto;
-	}
-
-	public void setLsProducto(List<Producto> lsProducto) {
-		this.lsProducto = lsProducto;
-	}
 
 	/**
 	 * 

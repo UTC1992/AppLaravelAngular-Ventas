@@ -52,4 +52,10 @@ public class ProductoServiceImplement implements IProductoService {
 		return productoDao.findByNameQuery(nombre, id);
 	}
 
+	@Override
+	public List<Producto> findDemo() {
+		// TODO Auto-generated method stub
+		return productoDao.findAll();
+	}
+
 }

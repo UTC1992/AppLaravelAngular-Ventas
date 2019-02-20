@@ -10,12 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jmc.backend.ventas.apirest.models.entity.statics.TipoProducto;
 
 @Entity
 @Table(name = "productos")
@@ -45,31 +48,37 @@ public class Producto implements Serializable {
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
-	@Column(name = "id_tipo_producto")
-	private Long idTipoProducto;
 
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 	//private String Imagen;
 
+	
+	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name="id_categoria_producto")
+	@JoinColumn(name="categoria_id")
 	private CategoriaProducto categoria;
 	
 	
-	@Column(name="categoria_id")
-	private Long idCategoria;
+	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="tipo_producto_id")
+	private TipoProducto tipoProducto;
+	
+	
 
 
-	public Long getIdTipoProducto() {
-		return idTipoProducto;
+	public Producto() {
+		//prePersist();
 	}
 
-	public void setIdTipoProducto(Long idTipoProducto) {
-		this.idTipoProducto = idTipoProducto;
+	@PrePersist
+	public void prePersist() {
+		this.createdAt = new Date();
 	}
 
+	
 
 	public CategoriaProducto getCategoria() {
 		return categoria;
@@ -79,15 +88,13 @@ public class Producto implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public Producto() {
-		prePersist();
+	public TipoProducto getTipoProducto() {
+		return tipoProducto;
 	}
 
-	public void prePersist() {
-		this.createdAt = new Date();
+	public void setTipoProducto(TipoProducto tipoProducto) {
+		this.tipoProducto = tipoProducto;
 	}
-
-	
 
 	public Long getIdProducto() {
 		return idProducto;
@@ -201,14 +208,10 @@ public class Producto implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getIdCategoria() {
-		return idCategoria;
+	//calcula ganancia venta de producto
+	public Double calcularUtilidad() {
+		return (this.precioVentaProducto)-(this.precioCostoProducto);
 	}
-
-	public void setIdCategoria(Long idCategoria) {
-		this.idCategoria = idCategoria;
-	}
-
 
 
 	/**

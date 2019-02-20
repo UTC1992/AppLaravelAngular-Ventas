@@ -40,9 +40,7 @@ public class TipoProducto implements Serializable {
 	 * relación one to many
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_tipo_producto")
-	private List<Producto> lsProductos;
+	
 
 	public TipoProducto() {
 		prePersist();
@@ -90,14 +88,6 @@ public class TipoProducto implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public List<Producto> getLsProductos() {
-		return lsProductos;
-	}
-
-	public void setLsProductos(List<Producto> lsProductos) {
-		this.lsProductos = lsProductos;
 	}
 
 	/**
