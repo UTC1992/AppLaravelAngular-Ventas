@@ -31,3 +31,48 @@ INSERT INTO `empresa_modules` (empresa_id, module_id) VALUES (1, 3);
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',1);
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',2);
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',3);
+
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Comestible");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Servicio");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Almacenable");
+
+INSERT INTO `punto_venta` (ciudad,direccion,empresa_id,provincia,nombre) VALUES ('Quito', 'Los Zauces',1,"Pichicnha","Tienda Los Sauces");
+
+
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('VIVERES','Productos comestibles',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('ELECTRODOMESTICOS','Productos de casa',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('LEGUNBRES','Productos vegetales',1);
+INSERT INTO `categoria_producto` (nombre_categoria,descripcion_categoria,empresa_id) VALUES ('BEBIDAS','Proeuctos de bebidas',1);
+
+INSERT INTO `provincias` (nombre,) VALUES ('Azuay');
+INSERT INTO `provincias` (nombre,) VALUES ('Bolívar');
+INSERT INTO `provincias` (nombre) VALUES ('Cañar');
+INSERT INTO `provincias` (nombre) VALUES ('Carchi');
+INSERT INTO `provincias` (nombre) VALUES ('Chimborazo');
+INSERT INTO `provincias` (nombre) VALUES ('Cotopaxi');
+INSERT INTO `provincias` (nombre) VALUES ('El Oro');
+INSERT INTO `provincias` (nombre) VALUES ('Esmeraldas');
+INSERT INTO `provincias` (nombre) VALUES ('Galápagos');
+INSERT INTO `provincias` (nombre) VALUES ('Guayas');
+INSERT INTO `provincias` (nombre) VALUES ('Imbabura');
+INSERT INTO `provincias` (nombre) VALUES ('Loja');
+INSERT INTO `provincias` (nombre) VALUES ('Los Ríos');
+INSERT INTO `provincias` (nombre) VALUES ('Manabí');
+INSERT INTO `provincias` (nombre) VALUES ('Morona Santiago');
+INSERT INTO `provincias` (nombre) VALUES ('Napo');
+INSERT INTO `provincias` (nombre) VALUES ('Orellana');
+INSERT INTO `provincias` (nombre) VALUES ('Pastaza');
+INSERT INTO `provincias` (nombre) VALUES ('Pichincha');
+INSERT INTO `provincias` (nombre) VALUES ('Santa Elena');
+INSERT INTO `provincias` (nombre) VALUES ('Santo Domingo de los Tsáchilas');
+INSERT INTO `provincias` (nombre) VALUES ('Sucumbíos');
+INSERT INTO `provincias` (nombre) VALUES ('Tungurahua');
+INSERT INTO `provincias` (nombre) VALUES ('Zamora Chinchipe');
+
+
+
+INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Quito',19);
+INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Sangolqui',19);
+INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Latacunga',6);
+INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Salcedo',6);
+

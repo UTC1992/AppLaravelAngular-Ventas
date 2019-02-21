@@ -49,7 +49,13 @@ public class ProductoServiceImplement implements IProductoService {
 	@Override
 	public Producto findByName(String nombre, Long id) {
 		// TODO Auto-generated method stub
-		return productoDao.findByName(nombre, id);
+		return productoDao.findByNameQuery(nombre, id);
+	}
+
+	@Override
+	public List<Producto> findDemo() {
+		// TODO Auto-generated method stub
+		return productoDao.findAll();
 	}
 
 }

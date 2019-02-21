@@ -5,20 +5,27 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jmc.backend.ventas.apirest.models.entity.statics.TipoProducto;
 
 @Entity
 @Table(name = "productos")
 public class Producto implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProducto;
 	private String codigoProducto;
 	private String nombreProducto;
@@ -29,54 +36,68 @@ public class Producto implements Serializable {
 	private Double precioVentaProducto;
 	private Double utilidadProducto;
 	private Boolean estadoProducto;
-	private String Observaciones;
-	@Column(name="created_at")
+	private String observaciones;
+
+	// @Lob
+	// private byte[] imagen;
+
+	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	
-	@Column(name="empresa_id")
+
+	@Column(name = "empresa_id")
 	private Long idEmpresa;
-	
-	@Column(name="updated_at")
+
+
+	@Column(name = "updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
-	private String Imagen;
-
-	private CategoriaProducto categoriaProducto;
+	//private String Imagen;
 
 	
+	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="categoria_id")
+	private CategoriaProducto categoria;
 	
+	
+	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="tipo_producto_id")
+	private TipoProducto tipoProducto;
+	
+	
+
+
 	public Producto() {
-		prePersist();
+		//prePersist();
 	}
 
+	@PrePersist
 	public void prePersist() {
-		this.createdAt= new Date();
+		this.createdAt = new Date();
 	}
+
 	
+
+	public CategoriaProducto getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaProducto categoria) {
+		this.categoria = categoria;
+	}
+
+	public TipoProducto getTipoProducto() {
+		return tipoProducto;
+	}
+
+	public void setTipoProducto(TipoProducto tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+
 	public Long getIdProducto() {
 		return idProducto;
-	}
-
-	
-	public String getObservaciones() {
-		return Observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		Observaciones = observaciones;
-	}
-
-	public void setEstadoProducto(Boolean estadoProducto) {
-		this.estadoProducto = estadoProducto;
-	}
-
-	public Long getIdEmpresa() {
-		return idEmpresa;
-	}
-
-	public void setIdEmpresa(Long idEmpresa) {
-		this.idEmpresa = idEmpresa;
 	}
 
 	public void setIdProducto(Long idProducto) {
@@ -123,10 +144,6 @@ public class Producto implements Serializable {
 		this.stockMinProducto = stockMinProducto;
 	}
 
-	public Boolean getEstadoProducto() {
-		return estadoProducto;
-	}
-
 	public Double getPrecioCostoProducto() {
 		return precioCostoProducto;
 	}
@@ -151,20 +168,20 @@ public class Producto implements Serializable {
 		this.utilidadProducto = utilidadProducto;
 	}
 
-	public String getImagen() {
-		return Imagen;
+	public Boolean getEstadoProducto() {
+		return estadoProducto;
 	}
 
-	public void setImagen(String imagen) {
-		Imagen = imagen;
+	public void setEstadoProducto(Boolean estadoProducto) {
+		this.estadoProducto = estadoProducto;
 	}
 
-	public CategoriaProducto getCategoriaProducto() {
-		return categoriaProducto;
+	public String getObservaciones() {
+		return observaciones;
 	}
 
-	public void setCategoriaProducto(CategoriaProducto categoriaProducto) {
-		this.categoriaProducto = categoriaProducto;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public Date getCreatedAt() {
@@ -175,6 +192,14 @@ public class Producto implements Serializable {
 		this.createdAt = createdAt;
 	}
 
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -182,6 +207,12 @@ public class Producto implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	//calcula ganancia venta de producto
+	public Double calcularUtilidad() {
+		return (this.precioVentaProducto)-(this.precioCostoProducto);
+	}
+
 
 	/**
 	 * 

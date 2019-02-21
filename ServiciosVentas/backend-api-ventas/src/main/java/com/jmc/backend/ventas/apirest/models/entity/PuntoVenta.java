@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +54,15 @@ public class PuntoVenta implements Serializable {
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
+	
+	public PuntoVenta() {
+		this.lsProductos= new ArrayList<>();
+		this.lsCompras= new ArrayList<>();
+		prePersist();
+	}
+	private void prePersist() {
+		this.createdAt= new Date();
+	}
 	public Long getId() {
 		return id;
 	}

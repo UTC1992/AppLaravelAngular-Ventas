@@ -36,7 +36,7 @@ public class PuntoVentaRestController {
 		
 		Map<String, Object> response = new HashMap<>();
 		try {
-			//Long idm=(long) 1;
+			
 			List<PuntoVenta> lsPuntos= puntoVentaService.findAll(id);
 			if(lsPuntos.isEmpty()) {
 				response.put("mensaje", "No existen registros en la base de datos");
@@ -77,7 +77,7 @@ public class PuntoVentaRestController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			PuntoVenta newPunto= null;
-			PuntoVenta exist= this.puntoVentaService.findByName(puntoVenta.getNombre(),puntoVenta.getId());
+			PuntoVenta exist= this.puntoVentaService.findByName(puntoVenta.getNombre(),puntoVenta.getIdEmpresa());
 			if(exist!=null) {
 				response.put("error", "Punto de venta ya existe en la base de datos");	
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
@@ -111,6 +111,7 @@ public class PuntoVentaRestController {
 			puntoActual.setDescripcion(punto.getDescripcion());
 			puntoActual.setDireccion(punto.getDireccion());
 			puntoActual.setProvincia(punto.getProvincia());
+			puntoActual.setTelefono(punto.getTelefono());
 			puntoActual.setUpdatedAt(new Date());
 			PuntoVenta puntoEditado=puntoVentaService.save(puntoActual);
 			response.put("mensaje", "Punto de venta ha sido actualizado con éxito!");

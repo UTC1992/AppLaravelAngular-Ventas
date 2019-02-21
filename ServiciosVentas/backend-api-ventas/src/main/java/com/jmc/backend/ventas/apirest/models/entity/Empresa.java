@@ -73,7 +73,9 @@ public class Empresa implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<TipoDocumento> lsTipoDoc;
+	
 
+	
 	// constructor inicializa las listas
 	public Empresa() {
 		this.usuarios = new ArrayList<>();
