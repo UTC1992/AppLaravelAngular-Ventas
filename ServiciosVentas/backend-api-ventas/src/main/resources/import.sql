@@ -32,9 +32,9 @@ INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',2);
 INSERT INTO `menu_modules` (nombre,created_at, module_id) VALUES ('PANEL', '2019-01-01',3);
 
-INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Comestible");
-INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Servicio");
-INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('PANEL', '2019-01-01',"Almacenable");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('Comestible', '2019-01-01',"Comestible");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('Servicio', '2019-01-01',"Servicio");
+INSERT INTO `tipo_producto` (nombre,created_at,descripcion) VALUES ('Almacenable', '2019-01-01',"Almacenable");
 
 INSERT INTO `punto_venta` (ciudad,direccion,empresa_id,provincia,nombre) VALUES ('Quito', 'Los Zauces',1,"Pichicnha","Tienda Los Sauces");
 
