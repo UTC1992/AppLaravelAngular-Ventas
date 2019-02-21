@@ -14,5 +14,8 @@ public interface IClienteService {
 	public Cliente findById(Long Id);
 	public Cliente save(Cliente cliente);
 	public void delete(Long id);
+	public Cliente findByEmail(String email, Long idEmpresa);
+	public Cliente findByCedula(String cedula, Long idEmpresa);
+	public Cliente findByRuc(String ruc, Long idEmpresa);
 
 }

@@ -55,5 +55,26 @@ public class ClienteServiceImplement implements IClienteService {
 		clienteDao.deleteById(ID);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Cliente findByEmail(String email, Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return clienteDao.findByEmailQuery(email, idEmpresa);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Cliente findByCedula(String cedula, Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return clienteDao.findByCedulaQuery(cedula, idEmpresa);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Cliente findByRuc(String ruc, Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return clienteDao.findByRucQuery(ruc, idEmpresa);
+	}
+
 	
 }

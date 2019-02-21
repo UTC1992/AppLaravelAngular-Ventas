@@ -19,56 +19,65 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
-@Table(name="clientes")
+@Table(name = "clientes")
 public class Cliente implements Serializable {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCliente;
-	
+
 	private String nombres;
 	private String apellidos;
+	@Column(length = 11, unique = true)
 	private String cedula;
+	@Column(length = 14, unique = true)
 	private String ruc;
 	private String direccion;
 	private String ciudad;
 	private String provincia;
 	private String observaciones;
+	private String sitioWeb;
+
+	@Column(length = 50, unique = true)
 	private String email;
 	private String telefono;
 
-
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	
-	@Column(name="updated_at")
+
+	@Column(name = "updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
-	
 	// relacion uno a mucho
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="cliente_id")
-	private List<Venta> ventas;
-	
-	// constructor 
-	
-	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "cliente_id")
+	private List<Venta> lsVentas;
+
+	@Column(name = "empresa_id")
+	private Long idEmpresa;
+
+	// constructor
+
 	// pre persistencia de datos
 	@PrePersist
 	public void prePersist() {
-		createdAt=new Date();
-	}
-	
-	
-	public Cliente() {
-		ventas= new ArrayList<Venta>();
+		createdAt = new Date();
 	}
 
+	public Cliente() {
+		lsVentas = new ArrayList<Venta>();
+	}
+
+	public String getSitioWeb() {
+		return sitioWeb;
+	}
+
+	public void setSitioWeb(String sitioWeb) {
+		this.sitioWeb = sitioWeb;
+	}
 
 	public long getIdCliente() {
 		return idCliente;
@@ -130,6 +139,14 @@ public class Cliente implements Serializable {
 		return provincia;
 	}
 
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
@@ -157,7 +174,7 @@ public class Cliente implements Serializable {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
 	public String getTelefono() {
 		return telefono;
 	}
@@ -173,27 +190,19 @@ public class Cliente implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
-	public List<Venta> getVentas() {
-		return ventas;
+	public List<Venta> getLsVentas() {
+		return lsVentas;
 	}
 
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
+	public void setLsVentas(List<Venta> lsVentas) {
+		this.lsVentas = lsVentas;
 	}
 
-	
 	public void addVenta(Venta venta) {
-		ventas.add(venta);
+		lsVentas.add(venta);
 	}
 
-	
-	
-	
-	
 	/**
 	 * 
 	 */
