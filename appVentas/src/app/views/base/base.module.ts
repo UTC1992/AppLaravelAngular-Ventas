@@ -12,6 +12,7 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
 import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
+import { ProductoComponent } from './producto/producto.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.componen
     PuntoVentaComponent,
     CategoriaProductoComponent,
     TipoDocumentoComponent,
+    ProductoComponent,
   ],
   
 })

@@ -1,0 +1,177 @@
+<section class="content-header text-center">
+  <h1>
+      <b>XYZ</b>
+      <!--<small>Descripción</small>-->
+  </h1>
+  <h3>
+      {{ subTitlePagina }}
+  </h3>
+  <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+      <li class="active">Here</li>
+    </ol>
+</section>
+<button data-toggle="modal" data-target="#exampleModal" 
+class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear nuevo punto </button>
+<br>
+<br>
+<div class="box">
+  <div class="box-header with-border">
+      <h3 class="box-title text-center"><b>Usuarios</b></h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+      <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-striped table-sm"style="font-family: calibri; font-size: 12pt;">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Stock Min</th>
+                <th scope="col">Costo</th>
+                <th scope="col">PVP</th>
+                <th scope="col">Utilidad</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of productos">
+                <td>{{item.idProducto}}</td>
+                <td>{{item.codigoProducto}}</td>
+                <td>{{item.nombreProducto}}</td>
+                <td>{{item.descripcionProducto}}</td>
+                <td>{{item.stockProducto}}</td>
+                <td>{{item.stockMinProducto}}</td>
+                <td>{{item.precioCostoProducto}}</td>
+                <td>{{item.precioVentaProducto}}</td>
+                <td>{{item.utilidadProducto}}</td>
+                <td>{{item.estadoProducto}}</td>
+                <td>{{item.observaciones}}</td>
+                <td>{{item.categoria.nombreCategoria}}</td>
+                <td>{{item.tipoProducto.nombre}}</td>
+                <td>
+                  <div style="width: 150px;">
+                      <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.idProducto)">Editar</button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.idProducto)">Eliminar</button>
+                  </div>  
+                </td>
+              </tr>
+            </tbody>
+          </table>  
+      </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>  
+      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+  </div>
+  
+  <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
+    <div class="modal-body">
+        <div class="form-horizontal">
+          <div class="form-group">
+              <label class="control-label col-md-3">Código:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="codigoProducto"> 
+              </div>
+          </div>
+          <div class="form-group">
+              <label  class="control-label col-md-3">Nombre:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" value="" formControlName="nombreProducto">
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-md-3">Descripción:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"   placeholder="" formControlName="descripcionProducto"> 
+              </div>
+          </div>
+          <div class="form-group" >
+              <label  class="control-label col-md-3">Stock:</label>
+              <div class="col-md-7">
+                  <input type="number" class="form-control"  placeholder="" formControlName="stockProducto"> 
+              </div>
+              
+          </div>
+          <div class="form-group" >
+              <label  class="control-label col-md-3">Stock mínimo:</label>
+              <div class="col-md-7">
+                  <input type="number" class="form-control"  placeholder="" formControlName="stockMinProducto"> 
+              </div>
+              
+          </div>
+          <div class="form-group" >
+              <label class="control-label col-md-3">Costo:</label>
+              <div class="col-md-7">
+                  <input type="text" class="form-control"  placeholder="" formControlName="precioCostoProducto"> 
+              </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">P.V.P.:</label>
+            <div class="col-md-7">
+                <input type="text" class="form-control"  placeholder="" formControlName="precioVentaProducto"> 
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">Utilidad:</label>
+            <div class="col-md-7">
+                <input type="text" class="form-control"  placeholder="" formControlName="utilidadProducto"> 
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">Estado:</label>
+            <div class="col-md-7">
+                <label class="form-check-inline">
+                    Activo
+                    <input class="form-check-input" type="radio" formControlName="estadoProducto" [value]="true" >
+                </label>
+                <label class="form-check-inline">
+                    Inactivo
+                    <input class="form-check-input" type="radio" formControlName="estadoProducto" [value]="false">
+                </label> 
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">Observaciones:</label>
+            <div class="col-md-7">
+                <textarea rows="3" class="form-control"  placeholder="" formControlName="observaciones"></textarea>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">Categoría:</label>
+            <div class="col-md-7">
+              <label class="form-control col-lg-3" *ngFor="let item of categorias">
+                  {{ item.nombreCategoria }}
+                  <input class="form-check-input" type="radio" formControlName="categoria" [checked]="item.elegido" [value]="item">
+              </label>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="control-label col-md-3">Tipo:</label>
+            <div class="col-md-7">
+                <input type="email" class="form-control"  placeholder="" formControlName="tipoProducto"> 
+            </div>
+          </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="submit" [disabled]="formCreate.invalid"
+      class="btn btn-success" >Guardar</button>
+      </div>
+  </form>
+        
+</ng-template>
+
