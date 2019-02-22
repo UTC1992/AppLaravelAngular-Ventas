@@ -117,4 +117,13 @@ export class ProductoService {
     );
   }
 
+  getTipoProductos(): Observable<TipoProducto[]>{
+    return this.http.get<TipoProducto[]>(this.urlEndPoint +'/tipo_producto', {headers: this.agregarAuthorizationHeader()})
+    .pipe(catchError( e => {
+      this.isNoAutorizado(e);
+      return throwError(e);
+    })
+    );
+  }
+
 }

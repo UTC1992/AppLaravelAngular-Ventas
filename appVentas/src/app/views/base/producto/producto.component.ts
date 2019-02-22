@@ -25,8 +25,7 @@ export class ProductoComponent implements OnInit {
   public productos: Producto[];
   productoEdit: Producto;
   public categorias: CategoriaProducto[];
-
-  tipoProducto: TipoProducto;
+  public tipoProductos: TipoProducto[];
 
   idEmpresa: any;
   usuario: Usuario;
@@ -51,19 +50,12 @@ export class ProductoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subTitlePagina = "Sucursales";
+    this.subTitlePagina = "Productos";
     this.mostrarProductos();
     //this.obtenerCategorias();
   }
 
   iniciarFormulario(){
-
-    this.tipoProducto = {
-      id:1,
-      nombre: "Comestible",
-      Descripcion: "Comestible"
-    };
-
     this.formCreate = this.formBuilder.group({
       codigoProducto: ['', Validators.required],
       nombreProducto: ['', Validators.required],
@@ -76,19 +68,12 @@ export class ProductoComponent implements OnInit {
       estadoProducto:['', Validators.required],
       observaciones:['', Validators.required],
       categoria:['', Validators.required],
-      tipoProducto:[this.tipoProducto,],
+      tipoProducto:['', Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
   }
 
   iniciarFormularioEdit(){
-
-    this.tipoProducto = {
-      id:1,
-      nombre: "Comestible",
-      Descripcion: "Comestible"
-    };
-
     this.formCreate = this.formBuilder.group({
       codigoProducto: [this.productoEdit.codigoProducto, Validators.required],
       nombreProducto: [this.productoEdit.nombreProducto, Validators.required],
@@ -119,6 +104,7 @@ export class ProductoComponent implements OnInit {
   openModalCreate(template: TemplateRef<any>) {
     this.iniciarFormulario();
     this.obtenerCategorias();
+    this.obtenerTipoProductos();
     this.tipoAccion = "create";
     this.titleModal = "Crear un nuevo producto";
     this.modalRef = this.modalService.show(template);
@@ -131,7 +117,8 @@ export class ProductoComponent implements OnInit {
       if(response != null){
         this.productoEdit = response;
         this.iniciarFormularioEdit();
-        this.modificarCategoriasParaEditarProducto();
+        this.modificarCategoriasParaEditar();
+        this.modificarTipoProductosParaEditar();
         this.modalRef = this.modalService.show(template);
       }
       
@@ -149,14 +136,34 @@ export class ProductoComponent implements OnInit {
     });
   }
 
-  modificarCategoriasParaEditarProducto(){
-    this.categorias;
+  modificarCategoriasParaEditar(){
     for(let i = 0; i < this.categorias.length; i++){
       //console.log(this.categorias[i].nombreCategoria);
       if(this.productoEdit.categoria.idCategoriaProducto == this.categorias[i].idCategoriaProducto){
         this.categorias[i].elegido = true;
       } else {
         this.categorias[i].elegido = false;
+      }
+    }
+  }
+
+  obtenerTipoProductos(){
+    this.productoServices.getTipoProductos().subscribe(response => {
+      console.log(response);
+      this.tipoProductos = response;
+    }, error => {
+      this.tipoProductos = [];
+      console.log(error.error.mensaje);
+    });
+  }
+
+  modificarTipoProductosParaEditar(){
+    for(let i = 0; i < this.tipoProductos.length; i++){
+      //console.log(this.categorias[i].nombreCategoria);
+      if(this.productoEdit.tipoProducto.id == this.tipoProductos[i].id){
+        this.tipoProductos[i].elegido = true;
+      } else {
+        this.tipoProductos[i].elegido = false;
       }
     }
   }

@@ -126,7 +126,7 @@ public class CategoriaProductoRestController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			categoriaService.delete(id);
-			response.put("mensaje", "Usuario eliminado con éxito!");
+			response.put("mensaje", "Categoria eliminada con éxito!");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar la categoria de la base de datos");

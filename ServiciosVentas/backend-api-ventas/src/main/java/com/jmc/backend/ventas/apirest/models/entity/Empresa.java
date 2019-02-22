@@ -74,6 +74,11 @@ public class Empresa implements Serializable {
 	@JoinColumn(name = "empresa_id")
 	private List<TipoDocumento> lsTipoDoc;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "empresa_id")
+	private List<Cliente> lsClientes;
+	
+	
 
 	
 	// constructor inicializa las listas
@@ -86,6 +91,7 @@ public class Empresa implements Serializable {
 		this.lsPuntosVenta = new ArrayList<>();
 		this.lsConfiguracion = new ArrayList<>();
 		this.lsTipoDoc= new ArrayList<>();
+		this.lsClientes= new ArrayList<>();
 	}
 
 	// prepersistencia crea la fecha de ingreso
@@ -200,6 +206,16 @@ public class Empresa implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+
+	public List<Cliente> getLsClientes() {
+		return lsClientes;
+	}
+
+	public void setLsClientes(List<Cliente> lsClientes) {
+		this.lsClientes = lsClientes;
+	}
+
 
 	/**
 	 * 
