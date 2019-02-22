@@ -1,13 +1,13 @@
 /* Populate tabla clientes */
-INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at) VALUES('Andrés', 'Guzmán', 'profesor@bolsadeideas.com', '1721856776','quito','09766776655','2019-01-01');
-INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at) VALUES('mnauel', 'chimbo', 'profeso44@bolsadeideas.com', '1721856776','quito','09766776655','2019-01-01');
+
 
 INSERT INTO `empresas` (enabled,nombre,created_at) VALUES (1,'EMPRESA 1','2019-01-01');
 
 INSERT INTO `users` (username, password, enabled, nombre, apellido, email,created_at,empresa_id) VALUES ('admin1','$2a$10$UMYzRzlYtEit3TjcR26Ah.zJDwHYwUH9q1Asay7fjDv4EA.Qv5Syy',1, 'Andres', 'Guzman','profesor@bolsadeideas.com','2019-01-01',1);
 INSERT INTO `users` (username, password, enabled, nombre, apellido, email,created_at,empresa_id) VALUES ('admin','$2a$10$s29t6glPVn.W9nxAYH6UheUUUnCIZTEWkl7bnHDtUpSJ0G.hFMGCG',1, 'John', 'Doe','jhon.doe@bolsadeideas.com','2019-01-01',1);
 
-
+INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at,empresa_id) VALUES('Andrés', 'Guzmán', 'profesor@bolsadeideas.com', '1721856776','quito','09766776655','2019-01-01',1);
+INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at,empresa_id) VALUES('mnauel', 'chimbo', 'profeso44@bolsadeideas.com', '1721856775','quito','09766776655','2019-01-01',1);
 
 INSERT INTO `authorities` (authority) VALUES ('ROLE_USER');
 INSERT INTO `authorities` (authority) VALUES ('ROLE_ADMIN');

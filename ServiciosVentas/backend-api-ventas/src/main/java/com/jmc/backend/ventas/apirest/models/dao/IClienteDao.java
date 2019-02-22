@@ -1,5 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -7,6 +9,9 @@ import com.jmc.backend.ventas.apirest.models.entity.Cliente;
 
 public interface IClienteDao extends JpaRepository<Cliente, Long> {
 
+	@Query("select c from Cliente c where c.idEmpresa=?1")
+	public List<Cliente> findByEmpresaQuery(Long idEmpresa);
+	
 	@Query("select c from Cliente c where c.email=?1 and c.idEmpresa=?2")
 	public Cliente findByEmailQuery(String email, Long idEmpresa);
 	

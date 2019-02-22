@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,9 +26,15 @@ public class Provedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
+	private String apellido;
 	private String ruc;
-	private String dni;
+	private String cedula;
+	private String direccion1;
+	private String direccion2;
 	private String telefono;
+	private String Provincia;
+	private String ciudad;
+	private String sitioWeb;
 	private String celular;
 	private String email;
 	private String cuenta1;
@@ -49,6 +57,13 @@ public class Provedor implements Serializable {
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
+	
+	
+	public Provedor() {
+		this.lsCompras= new ArrayList<>();
+	}
+
+	@PrePersist
 	private void prePersist() {
 		this.createdAt = new Date();
 	}
@@ -69,6 +84,14 @@ public class Provedor implements Serializable {
 		this.nombre = nombre;
 	}
 
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
 	public String getRuc() {
 		return ruc;
 	}
@@ -77,13 +100,6 @@ public class Provedor implements Serializable {
 		this.ruc = ruc;
 	}
 
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
 
 	public String getTelefono() {
 		return telefono;
@@ -91,6 +107,55 @@ public class Provedor implements Serializable {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public String getDireccion1() {
+		return direccion1;
+	}
+
+	public void setDireccion1(String direccion1) {
+		this.direccion1 = direccion1;
+	}
+
+	public String getDireccion2() {
+		return direccion2;
+	}
+
+	public void setDireccion2(String direccion2) {
+		this.direccion2 = direccion2;
+	}
+
+	public String getProvincia() {
+		return Provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		Provincia = provincia;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public String getSitioWeb() {
+		return sitioWeb;
+	}
+
+	public void setSitioWeb(String sitioWeb) {
+		this.sitioWeb = sitioWeb;
 	}
 
 	public String getCelular() {

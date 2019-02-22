@@ -7,9 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -24,154 +21,139 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.jmc.backend.ventas.apirest.models.entity.Cliente;
-import com.jmc.backend.ventas.apirest.models.services.Interfaces.IClienteService;
+import com.jmc.backend.ventas.apirest.models.entity.Provedor;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IProvedorService;
 
 @CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/api")
-public class ClienteRestController {
+public class ProvedorRestController {
 
 	@Autowired
-	private IClienteService clienteService;
-
+	private IProvedorService provedorService;
+	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
-	@GetMapping("/clientes/all/{id}")
-	public ResponseEntity<?>  getAll(@PathVariable Long id) {
+	@GetMapping("/provedores/all/{id}")
+	public ResponseEntity<?> index(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			List<Cliente> lsClientes = clienteService.findAll(id);
-			if (lsClientes.isEmpty()) {
+			List<Provedor> lsProvedores= provedorService.findAll(id);
+			if(lsProvedores.isEmpty()) {
 				response.put("mensaje", "No existen registros en la base de datos");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<List<Cliente>>(lsClientes, HttpStatus.OK);
-
+			return new ResponseEntity<List<Provedor>>(lsProvedores, HttpStatus.OK);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
-
+	
 	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
-	@GetMapping("/clientes/page/{page}")
-	public Page<Cliente> index(@PathVariable Integer page) {
-		Pageable pageable = PageRequest.of(page, 4);
-		return clienteService.findAll(pageable);
-	}
-
-
-	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
-	@GetMapping("clientes/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
+	@GetMapping("/provedores/{id}")
+	public ResponseEntity<?> show(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Cliente cliente = clienteService.findById(id);
-			if (cliente == null) {
-				response.put("mensaje",
-						"Cliente con  ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			Provedor provedor= provedorService.findById(id);
+			if(provedor==null) {
+				response.put("mensaje", "Provedor con ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
-			return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+			return new ResponseEntity<Provedor>(provedor, HttpStatus.OK);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
-
-	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
-	@PostMapping("/clientes")
-	public ResponseEntity<?> create(@RequestBody Cliente cliente) {
+	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
+	@PostMapping("/provedores")
+	public ResponseEntity<?> create(@RequestBody Provedor provedor){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Cliente exist=null;
-			exist= clienteService.findByEmail(cliente.getEmail(), cliente.getIdEmpresa());
+			Provedor exist= null;
+			exist= provedorService.findByCedula(provedor.getCedula(), provedor.getIdEmpresa());
 			if(exist!=null) {
 				response.put("mensaje",
-						"Cliente con  Email: ".concat(cliente.getEmail().toString().concat(" ya existe en la base de datos!")));
+						"Provedor con  Cedula: ".concat(provedor.getCedula().toString().concat(" ya existe en la base de datos!")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}	
+			exist=null;
+			exist = provedorService.findByEmail(provedor.getEmail(), provedor.getIdEmpresa());
+			if(exist!=null) {
+				response.put("mensaje",
+						"Provedor con  Email: ".concat(provedor.getCedula().toString().concat(" ya existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 			exist=null;
-			exist= clienteService.findByCedula(cliente.getCedula(), cliente.getIdEmpresa());
+			exist = provedorService.findByRuc(provedor.getRuc(), provedor.getIdEmpresa());
 			if(exist!=null) {
 				response.put("mensaje",
-						"Cliente con  Cédula: ".concat(cliente.getCedula().toString().concat(" ya existe en la base de datos!")));
+						"Provedor con  Ruc: ".concat(provedor.getCedula().toString().concat(" ya existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
-			exist=null;
-			exist= clienteService.findByRuc(cliente.getRuc(), cliente.getIdEmpresa());
-			if(exist!=null) {
-				response.put("mensaje",
-						"Cliente con  Ruc: ".concat(cliente.getRuc().toString().concat(" ya existe en la base de datos!")));
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-			}
-			Cliente newCliente= clienteService.save(cliente);
-			response.put("mensaje", "El cliente ha sido creada con éxito!");
-			response.put("cliente", newCliente);
+			Provedor newProvedor= provedorService.save(provedor);
+			response.put("mensaje", "El provedor ha sido creada con éxito!");
+			response.put("provedor", newProvedor);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al insertar cliente en la base de datos");
+			response.put("mensaje", "Error al insertar provedor en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
-	@PutMapping("clientes/{id}")
-	public ResponseEntity<?> update(@RequestBody Cliente cliente,@PathVariable Long id)
-	{
+	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
+	@PutMapping("/provedores/{id}")
+	public ResponseEntity<?> update(@RequestBody Provedor provedor, @PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Cliente clienteActual = clienteService.findById(id);
-			if(clienteActual==null) {
-				response.put("mensaje", "Error: no se pudo editar, el cliente con ID: "
+			Provedor provedorActual= provedorService.findById(id);
+			if(provedorActual==null) {
+				response.put("mensaje", "Error: no se pudo editar, el provedor con ID: "
 						.concat(id.toString().concat(" no existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
-			clienteActual.setNombres(cliente.getNombres());
-			clienteActual.setApellidos(cliente.getApellidos());
-			clienteActual.setCedula(cliente.getCedula());
-			clienteActual.setDireccion(cliente.getDireccion());
-			clienteActual.setCiudad(cliente.getCiudad());
-			clienteActual.setRuc(cliente.getRuc());
-			clienteActual.setEmail(cliente.getEmail());
-			clienteActual.setTelefono(cliente.getTelefono());
-			clienteActual.setIdEmpresa(cliente.getIdEmpresa());
-			clienteActual.setSitioWeb(cliente.getSitioWeb());
-			clienteActual.setProvincia(cliente.getProvincia());
-			clienteActual.setObservaciones(cliente.getObservaciones());
-			clienteActual.setUpdatedAt(new Date());
-			Cliente clienteEditado=clienteService.save(clienteActual);
-			response.put("mensaje", "La categoria ha sido actualizada con éxito!");
-			response.put("categoria", clienteEditado);
+			
+			provedorActual.setCedula(provedor.getCedula());
+			provedorActual.setNombre(provedor.getNombre());
+			provedorActual.setApellido(provedor.getApellido());
+			provedorActual.setCelular(provedor.getCelular());
+			provedorActual.setCiudad(provedor.getCiudad());
+			provedorActual.setProvincia(provedor.getProvincia());
+			provedorActual.setDireccion1(provedor.getDireccion1());
+			provedorActual.setDireccion2(provedor.getDireccion2());
+			provedorActual.setCuenta1(provedor.getCuenta1());
+			provedorActual.setCuenta2(provedor.getCuenta2());
+			provedorActual.setEmail(provedor.getEmail());
+			provedorActual.setEstado(provedor.getEstado());
+			provedorActual.setObservacion(provedor.getObservacion());
+			provedorActual.setUpdatedAt(new Date());
+			Provedor newProvedor= provedorService.save(provedorActual);
+			response.put("mensaje", "El provedor ha sido actualizada con éxito!");
+			response.put("provedor", newProvedor);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al actualizar el cliente en la base de datos");
+			response.put("mensaje", "Error al actualizar el provedor en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-
 	}
-
-	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
-	@DeleteMapping("/clientes/{id}")
-	public  ResponseEntity<?> delete(@PathVariable Long id)
-	{
+	
+	@Secured({"ROLE_ADMIN","ROLE_ROOT"})
+	@DeleteMapping("/provedores/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
-			clienteService.delete(id);
-			response.put("mensaje", "Cliente eliminado con éxito!");
+			provedorService.delete(id);
+			response.put("mensaje", "Provedor eliminado con éxito!");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar el cliente de la base de datos");
+			response.put("mensaje", "Error al eliminar el provedor de la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 }
