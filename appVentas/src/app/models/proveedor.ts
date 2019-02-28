@@ -1,0 +1,20 @@
+export class Proveedor{
+    public id: number;
+    public idEmpresa: number;
+	public nombre: string;
+	public apellido: string;
+	public ruc: string;
+	public cedula: string;
+	public direccion1: string;
+	public direccion2: string;
+	public telefono: string;
+	public provincia: string;
+	public ciudad: string;
+	public sitioWeb: string;
+	public celular: string;
+	public email: string;
+	public cuenta1: string;
+	public cuenta2: string;
+	public estado: boolean;
+	public observacion: string;
+}

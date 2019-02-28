@@ -22,9 +22,9 @@ public class ClienteServiceImplement implements IClienteService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Cliente> findAll() {
+	public List<Cliente> findAll(Long idEmpresa) {
 		// TODO Auto-generated method stub
-		return (List<Cliente>) clienteDao.findAll();
+		return (List<Cliente>) clienteDao.findByEmpresaQuery(idEmpresa);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.jmc.backend.ventas.apirest.models.entity.Cliente;
 
 public interface IClienteService {
 	
-	public List<Cliente> findAll();
+	public List<Cliente> findAll(Long idEmpresa);
 	public Page<Cliente> findAll(Pageable pageable);
 	public Cliente findById(Long Id);
 	public Cliente save(Cliente cliente);

@@ -13,6 +13,8 @@ import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
 import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
 import { ProductoComponent } from './producto/producto.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { ProductoComponent } from './producto/producto.component';
     CategoriaProductoComponent,
     TipoDocumentoComponent,
     ProductoComponent,
+    ProveedorComponent,
+    ClienteComponent,
   ],
   
 })

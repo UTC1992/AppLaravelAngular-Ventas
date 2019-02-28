@@ -7,6 +7,8 @@ import { PuntoVentaComponent } from './punto-venta/punto-venta.component';
 import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
 import { ProductoComponent } from './producto/producto.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 const routes: Routes = [
   {
@@ -59,6 +61,20 @@ const routes: Routes = [
         component: ProductoComponent,
         data: {
           title: 'Productos'
+        }
+      },
+      {
+        path: 'proveedor',
+        component: ProveedorComponent,
+        data: {
+          title: 'Proveedores'
+        }
+      },
+      {
+        path: 'cliente',
+        component: ClienteComponent,
+        data: {
+          title: 'Clientes'
         }
       }
     ]

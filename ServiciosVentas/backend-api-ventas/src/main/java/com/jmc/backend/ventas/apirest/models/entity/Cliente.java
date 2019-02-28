@@ -29,17 +29,13 @@ public class Cliente implements Serializable {
 
 	private String nombres;
 	private String apellidos;
-	@Column(length = 11, unique = true)
 	private String cedula;
-	@Column(length = 14, unique = true)
 	private String ruc;
 	private String direccion;
 	private String ciudad;
 	private String provincia;
 	private String observaciones;
 	private String sitioWeb;
-
-	@Column(length = 50, unique = true)
 	private String email;
 	private String telefono;
 
