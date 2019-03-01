@@ -18,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.jmc.backend.ventas.apirest.models.entity.statics.TipoProducto;
 
 @Entity
 @Table(name = "productos")
@@ -67,7 +66,7 @@ public class Producto implements Serializable {
 	private TipoProducto tipoProducto;
 	
 	
-
+	
 
 	public Producto() {
 		//prePersist();

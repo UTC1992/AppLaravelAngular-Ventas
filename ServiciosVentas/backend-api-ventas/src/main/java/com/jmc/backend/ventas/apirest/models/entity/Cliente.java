@@ -48,8 +48,7 @@ public class Cliente implements Serializable {
 	private Date updatedAt;
 
 	// relacion uno a mucho
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cliente_id")
+	@OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Venta> lsVentas;
 
 	@Column(name = "empresa_id")

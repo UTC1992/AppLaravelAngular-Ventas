@@ -84,14 +84,14 @@ public class ProvedorRestController {
 			exist = provedorService.findByEmail(provedor.getEmail(), provedor.getIdEmpresa());
 			if(exist!=null) {
 				response.put("mensaje",
-						"Provedor con  Email: ".concat(provedor.getCedula().toString().concat(" ya existe en la base de datos!")));
+						"Provedor con  Email: ".concat(provedor.getEmail().toString().concat(" ya existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 			exist=null;
 			exist = provedorService.findByRuc(provedor.getRuc(), provedor.getIdEmpresa());
 			if(exist!=null) {
 				response.put("mensaje",
-						"Provedor con  Ruc: ".concat(provedor.getCedula().toString().concat(" ya existe en la base de datos!")));
+						"Provedor con  Ruc: ".concat(provedor.getRuc().toString().concat(" ya existe en la base de datos!")));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 			Provedor newProvedor= provedorService.save(provedor);

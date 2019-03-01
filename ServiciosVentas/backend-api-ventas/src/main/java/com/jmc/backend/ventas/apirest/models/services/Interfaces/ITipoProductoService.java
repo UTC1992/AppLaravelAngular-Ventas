@@ -2,7 +2,7 @@ package com.jmc.backend.ventas.apirest.models.services.Interfaces;
 
 import java.util.List;
 
-import com.jmc.backend.ventas.apirest.models.entity.statics.TipoProducto;
+import com.jmc.backend.ventas.apirest.models.entity.TipoProducto;
 
 public interface ITipoProductoService {
 

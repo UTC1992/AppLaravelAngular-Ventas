@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,12 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tipo_documento")
@@ -37,28 +37,18 @@ public class TipoDocumento implements Serializable {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	// relacion
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "tipo_documento_id")
-	private List<Venta> ventas;
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tipo_documento_id")
-	private List<Compra> lsCompras;
 
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
-	
-	
 	public TipoDocumento() {
 		prePersist();
 	}
 
 	private void prePersist() {
-		this.createdAt= new Date();
+		this.createdAt = new Date();
 	}
-	
+
 	public Long getIdTipoDocumento() {
 		return idTipoDocumento;
 	}
@@ -99,21 +89,6 @@ public class TipoDocumento implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Venta> getVentas() {
-		return ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
-	}
-
-	public List<Compra> getLsCompras() {
-		return lsCompras;
-	}
-
-	public void setLsCompras(List<Compra> lsCompras) {
-		this.lsCompras = lsCompras;
-	}
 
 	public Long getIdEmpresa() {
 		return idEmpresa;

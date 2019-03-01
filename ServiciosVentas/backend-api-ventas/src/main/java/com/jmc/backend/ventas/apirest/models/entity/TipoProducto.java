@@ -1,4 +1,4 @@
-package com.jmc.backend.ventas.apirest.models.entity.statics;
+package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.jmc.backend.ventas.apirest.models.entity.Producto;
 
 @Entity
 @Table(name = "tipo_producto")

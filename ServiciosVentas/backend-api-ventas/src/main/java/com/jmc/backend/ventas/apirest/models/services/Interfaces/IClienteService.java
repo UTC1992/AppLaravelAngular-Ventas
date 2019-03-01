@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.jmc.backend.ventas.apirest.models.entity.Cliente;
+import com.jmc.backend.ventas.apirest.models.entity.Venta;
 
 public interface IClienteService {
 	
@@ -17,5 +18,13 @@ public interface IClienteService {
 	public Cliente findByEmail(String email, Long idEmpresa);
 	public Cliente findByCedula(String cedula, Long idEmpresa);
 	public Cliente findByRuc(String ruc, Long idEmpresa);
-
+	
+	/**	
+	 * metodos de facturas clientes
+	 */
+	
+	public Venta findVentaById(Long id);
+	public Venta saveVenta(Venta venta);
+	public void deleteVentaById(Long id);
+	
 }

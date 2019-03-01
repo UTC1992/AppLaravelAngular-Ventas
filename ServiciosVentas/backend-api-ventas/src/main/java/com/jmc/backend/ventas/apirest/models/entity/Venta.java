@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jmc.backend.ventas.apirest.models.entity.statics.TipoPago;
+
 @Entity
 @Table(name = "ventas")
 public class Venta implements Serializable {
@@ -37,7 +40,7 @@ public class Venta implements Serializable {
 	private Double subTotalVenta;
 	private Double ivaVenta;
 	private Double totalPagarVenta;
-	private Boolean estadoVenta;
+	private int estadoVenta;
 	private String observacion;
 
 	@Temporal(TemporalType.DATE)
@@ -49,17 +52,35 @@ public class Venta implements Serializable {
 	private Date updatedAt;
 
 	// relaciones
-	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties(value = { "", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_documento_id")
 	private TipoDocumento tipoDocumento;
-	private Long punto_venta_id;
+
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="tipo_pago_id")
+	private TipoPago tipoPago;
+	
+	@Column(name = "punto_venta_id")
+	private Long puntoVentaId;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "venta_id")
 	private List<DetalleVenta> detalleVenta;
 
+	@JsonIgnoreProperties(value = { "lsVentas", "roles", "lsCompras", "hibernateLazyInitializer",
+			"handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
+
+	@JsonIgnoreProperties(value = { "lsVentas", "lsCompras", "hibernateLazyInitializer",
+			"handler" }, allowSetters = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+
+	
+	private Long idEmpresa;
 
 	// pre persistencia de datos
 	@PrePersist
@@ -72,17 +93,33 @@ public class Venta implements Serializable {
 		this.detalleVenta = new ArrayList<>();
 	}
 
-	public Long getPunto_venta_id() {
-		return punto_venta_id;
+	public Long getIdEmpresa() {
+		return idEmpresa;
 	}
 
-	public void setPunto_venta_id(Long punto_venta_id) {
-		this.punto_venta_id = punto_venta_id;
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
+
+	public Long getPuntoVentaId() {
+		return puntoVentaId;
+	}
+
+	public void setPuntoVentaId(Long puntoVentaId) {
+		this.puntoVentaId = puntoVentaId;
 	}
 
 	// get and set
 	public Long getIdVenta() {
 		return IdVenta;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public void setIdVenta(Long idVenta) {
@@ -145,11 +182,11 @@ public class Venta implements Serializable {
 		this.totalPagarVenta = totalPagarVenta;
 	}
 
-	public Boolean getEstadoVenta() {
+	public int getEstadoVenta() {
 		return estadoVenta;
 	}
 
-	public void setEstadoVenta(Boolean estadoVenta) {
+	public void setEstadoVenta(int estadoVenta) {
 		this.estadoVenta = estadoVenta;
 	}
 

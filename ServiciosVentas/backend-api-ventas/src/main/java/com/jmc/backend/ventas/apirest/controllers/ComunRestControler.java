@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jmc.backend.ventas.apirest.models.entity.TipoProducto;
 import com.jmc.backend.ventas.apirest.models.entity.Usuario;
 import com.jmc.backend.ventas.apirest.models.entity.statics.Provincia;
-import com.jmc.backend.ventas.apirest.models.entity.statics.TipoProducto;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IProvinciaService;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.ITipoProductoService;
 
