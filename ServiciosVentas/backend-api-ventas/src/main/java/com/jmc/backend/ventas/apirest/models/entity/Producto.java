@@ -54,13 +54,13 @@ public class Producto implements Serializable {
 	//private String Imagen;
 
 	
-	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true ,allowGetters=true)
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="categoria_id")
 	private CategoriaProducto categoria;
 	
 	
-	@JsonIgnoreProperties(value={"lsProductos", "hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true,allowGetters=true)
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="tipo_producto_id")
 	private TipoProducto tipoProducto;
@@ -68,9 +68,6 @@ public class Producto implements Serializable {
 	
 	
 
-	public Producto() {
-		//prePersist();
-	}
 
 	@PrePersist
 	public void prePersist() {
@@ -212,6 +209,8 @@ public class Producto implements Serializable {
 		return (this.precioVentaProducto)-(this.precioCostoProducto);
 	}
 
+	
+	
 
 	/**
 	 * 

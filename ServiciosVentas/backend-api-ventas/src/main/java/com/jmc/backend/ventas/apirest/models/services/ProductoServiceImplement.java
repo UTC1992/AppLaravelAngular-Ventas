@@ -58,4 +58,10 @@ public class ProductoServiceImplement implements IProductoService {
 		return productoDao.findAll();
 	}
 
+	@Override
+	public List<Producto> findByProductoNameLike(String termn, Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return productoDao.findBynombreProductoLike(termn,idEmpresa);
+	}
+
 }

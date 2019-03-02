@@ -52,11 +52,13 @@ public class Venta implements Serializable {
 	private Date updatedAt;
 
 	// relaciones
-	@JsonIgnoreProperties(value = { "", "hibernateLazyInitializer", "handler" }, allowSetters = true)
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_documento_id")
 	private TipoDocumento tipoDocumento;
 
+	@JsonIgnoreProperties(value = {"hibernateLazyInitializer",
+	"handler" })	
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="tipo_pago_id")
 	private TipoPago tipoPago;
@@ -64,6 +66,9 @@ public class Venta implements Serializable {
 	@Column(name = "punto_venta_id")
 	private Long puntoVentaId;
 
+	
+	@JsonIgnoreProperties(value = {"hibernateLazyInitializer",
+	"handler" }, allowSetters = true)	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "venta_id")
 	private List<DetalleVenta> detalleVenta;
@@ -73,7 +78,7 @@ public class Venta implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 
-	@JsonIgnoreProperties(value = { "lsVentas", "lsCompras", "hibernateLazyInitializer",
+	@JsonIgnoreProperties(value = { "lsVentas", "hibernateLazyInitializer",
 			"handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
@@ -91,6 +96,14 @@ public class Venta implements Serializable {
 	// constructor
 	public Venta() {
 		this.detalleVenta = new ArrayList<>();
+	}
+
+	public TipoPago getTipoPago() {
+		return tipoPago;
+	}
+
+	public void setTipoPago(TipoPago tipoPago) {
+		this.tipoPago = tipoPago;
 	}
 
 	public Long getIdEmpresa() {
@@ -214,11 +227,6 @@ public class Venta implements Serializable {
 		this.observacion = observacion;
 	}
 
-	/*
-	 * public Cliente getCliente() { return cliente; }
-	 * 
-	 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
-	 */
 	public List<DetalleVenta> getDetalleVenta() {
 		return detalleVenta;
 	}
@@ -245,6 +253,15 @@ public class Venta implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	
+	public Double getTotal() {
+		Double total=0.00;
+		for (DetalleVenta item : detalleVenta) {
+			total+=item.getImporte();
+		}
+		return total;
 	}
 
 	/**

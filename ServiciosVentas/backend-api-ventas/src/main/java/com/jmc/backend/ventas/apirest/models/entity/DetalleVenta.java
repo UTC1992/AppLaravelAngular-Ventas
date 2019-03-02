@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="detalle_venta")
 public class DetalleVenta implements Serializable {
@@ -23,7 +25,7 @@ public class DetalleVenta implements Serializable {
 	private Double totalDetalle;
 	private Double ivaDetalle;
 
-	
+	@JsonIgnoreProperties(value={"categoria","tipoProducto","hibernateLazyInitializer", "handler"} ,allowSetters=true)
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="producto_id")
 	private Producto producto;
@@ -77,6 +79,7 @@ public class DetalleVenta implements Serializable {
 		this.producto = producto;
 	}
 
+	
 	// metodos de acciones 
 	public Double getImporte() {
 		return cantidad.doubleValue() * producto.getPrecioVentaProducto();

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
@@ -48,9 +50,11 @@ public class Cliente implements Serializable {
 	private Date updatedAt;
 
 	// relacion uno a mucho
+	@JsonIgnoreProperties(value={"cliente","usuario","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(mappedBy="cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Venta> lsVentas;
 
+	
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 

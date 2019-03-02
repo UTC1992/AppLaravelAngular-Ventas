@@ -12,9 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "detalle_compra")
@@ -36,9 +39,16 @@ public class DetalleCompra implements Serializable {
 
 	// relaciones
 
+	@JsonIgnoreProperties(value = { "categoria", "tipoProducto", "hibernateLazyInitializer",
+			"handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
 	private Producto Productos;
+
+	@PrePersist
+	private void prePersist() {
+		this.createdAt = new Date();
+	}
 
 	public Long getId() {
 		return id;

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "provedores")
 public class Provedor implements Serializable {
@@ -50,6 +52,7 @@ public class Provedor implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
+	@JsonIgnoreProperties(value={"","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "provedor_id")
 	private List<Compra> lsCompras;

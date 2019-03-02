@@ -13,9 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "punto_venta")
@@ -39,27 +42,23 @@ public class PuntoVenta implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
+	@JsonIgnoreProperties(value={"detalleVenta","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "punto_venta_id")
 	private List<Venta> lsVentas;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "punto_venta_id")
-	private List<Compra> lsCompras;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "punto_venta_id")
-	private List<Producto> lsProductos;
 
 	@Column(name = "empresa_id")
 	private Long idEmpresa;
 
 	
 	public PuntoVenta() {
-		this.lsProductos= new ArrayList<>();
-		this.lsCompras= new ArrayList<>();
-		prePersist();
+		this.lsVentas= new ArrayList<>();
+
 	}
+	
+	@PrePersist
 	private void prePersist() {
 		this.createdAt= new Date();
 	}
@@ -135,13 +134,6 @@ public class PuntoVenta implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Producto> getLsProductos() {
-		return lsProductos;
-	}
-
-	public void setLsProductos(List<Producto> lsProductos) {
-		this.lsProductos = lsProductos;
-	}
 
 	public Long getIdEmpresa() {
 		return idEmpresa;
@@ -159,13 +151,6 @@ public class PuntoVenta implements Serializable {
 		this.lsVentas = lsVentas;
 	}
 
-	public List<Compra> getLsCompras() {
-		return lsCompras;
-	}
-
-	public void setLsCompras(List<Compra> lsCompras) {
-		this.lsCompras = lsCompras;
-	}
 
 	/**
 	 * 

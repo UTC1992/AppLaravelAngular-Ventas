@@ -85,6 +85,10 @@ INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('
 INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('Nota de Venta', 'No necesita factura',1);
 INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('Retención', 'Retencion de impuesto',1);
 
-INSERT INTO `productos` (nombre_producto,observaciones,categoria_id,empresa_id,tipo_producto_id,punto_venta_id) VALUES ('Arroz','arros de mesa',1,1,1,1);
+INSERT INTO `productos` (nombre_producto,observaciones,categoria_id,empresa_id,tipo_producto_id,precio_venta_producto) VALUES ('Arroz','arros de mesa',1,1,1,12);
+INSERT INTO `productos` (nombre_producto,observaciones,categoria_id,empresa_id,tipo_producto_id,precio_venta_producto) VALUES ('Azucar','Azucar de mesa',1,1,1,123);
 
 INSERT INTO `ventas` (descuento_venta,estado_venta,id_empresa,numero_venta,observacion,punto_venta_id,tipo_documento_id,usuario_id,cliente_id) VALUES (12,1,1,1,'venta de arroz',1,1,1,1);
+
+INSERT INTO `detalle_venta` (cantidad,costo_detalle,iva_detalle,total_detalle,producto_id,venta_id) VALUES (12,12,0.12,123,1,1);
+INSERT INTO `detalle_venta` (cantidad,costo_detalle,iva_detalle,total_detalle,producto_id,venta_id) VALUES (12,12,0.12,123,2,1);

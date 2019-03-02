@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "modules")
 public class Modulos implements Serializable {
@@ -37,6 +39,7 @@ public class Modulos implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
+	@JsonIgnoreProperties(value={"","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "module_id")
 	private List<Menu> lsMenu;

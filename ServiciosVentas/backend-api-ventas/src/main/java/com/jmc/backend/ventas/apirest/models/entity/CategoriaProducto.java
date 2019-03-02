@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,17 +43,11 @@ public class CategoriaProducto implements Serializable {
 
 	
 
-	public CategoriaProducto() {
-		this.prePersist();
-		//this.lsProducto = new ArrayList<>();
-	}
-
-	
-	// constructor
 	
 	/// prepersistencia
 
-	public void prePersist() {
+	@PrePersist
+	private void prePersist() {
 		this.createdAt = new Date();
 	}
 
