@@ -1,6 +1,7 @@
 package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "compras")
@@ -29,8 +33,9 @@ public class Compra implements Serializable {
 	private String numeroCompra;
 	private Double subTotal;
 	private Double impuesto;
+	private Double descuento;
 	private Double total;
-	private String Estado;
+	private int Estado;
 
 	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
@@ -40,19 +45,39 @@ public class Compra implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
-	/// relaciones
-	private Long punto_venta_id;
-
+	@JsonIgnoreProperties(value = { "", "hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Provedor provedor;
 
+	@JsonIgnoreProperties(value = { "", "hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_documento_id")
 	private TipoDocumento tipoDocumento;
 
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "compra_id")
-	private List<DetalleCompra> lsDetaleCompra;
+	private List<DetalleCompra> lsDetalleCompra;
+
+	@Column(name = "empresa_id")
+	private Long idEmpresa;
+
+	public Compra() {
+		this.lsDetalleCompra = new ArrayList<>();
+	}
+
+	@PrePersist
+	private void prePersist() {
+		this.createdAt = new Date();
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,6 +93,14 @@ public class Compra implements Serializable {
 
 	public void setNumeroCompra(String numeroCompra) {
 		this.numeroCompra = numeroCompra;
+	}
+
+	public Double getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Double descuento) {
+		this.descuento = descuento;
 	}
 
 	public Double getSubTotal() {
@@ -94,11 +127,11 @@ public class Compra implements Serializable {
 		this.total = total;
 	}
 
-	public String getEstado() {
+	public int getEstado() {
 		return Estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(int estado) {
 		Estado = estado;
 	}
 
@@ -118,14 +151,6 @@ public class Compra implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getPunto_venta_id() {
-		return punto_venta_id;
-	}
-
-	public void setPunto_venta_id(Long punto_venta_id) {
-		this.punto_venta_id = punto_venta_id;
-	}
-
 	public Provedor getProvedor() {
 		return provedor;
 	}
@@ -142,12 +167,12 @@ public class Compra implements Serializable {
 		this.tipoDocumento = tipoDocumento;
 	}
 
-	public List<DetalleCompra> getLsDetaleCompra() {
-		return lsDetaleCompra;
+	public List<DetalleCompra> getLsDetalleCompra() {
+		return lsDetalleCompra;
 	}
 
-	public void setLsDetaleCompra(List<DetalleCompra> lsDetaleCompra) {
-		this.lsDetaleCompra = lsDetaleCompra;
+	public void setLsDetalleCompra(List<DetalleCompra> lsDetalleCompra) {
+		this.lsDetalleCompra = lsDetalleCompra;
 	}
 
 	/**

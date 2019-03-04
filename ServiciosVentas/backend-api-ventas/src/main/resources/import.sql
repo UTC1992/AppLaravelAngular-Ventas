@@ -9,6 +9,10 @@ INSERT INTO `users` (username, password, enabled, nombre, apellido, email,create
 INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at,empresa_id) VALUES('Andrés', 'Guzmán', 'profesor@bolsadeideas.com', '1721856776','quito','09766776655','2019-01-01',1);
 INSERT INTO clientes (nombres, apellidos, email, cedula,direccion,telefono,created_at,empresa_id) VALUES('mnauel', 'chimbo', 'profeso44@bolsadeideas.com', '1721856775','quito','09766776655','2019-01-01',1);
 
+INSERT INTO provedores (nombre, apellido, email, cedula,direccion1,telefono,created_at,empresa_id) VALUES('maria', 'Guzmán', 'maria@bolsadeideas.com', '1721856776','quito','09766776655','2019-01-01',1);
+INSERT INTO provedores (nombre, apellido, email, cedula,direccion1,telefono,created_at,empresa_id) VALUES('juan', 'chimbo', 'juan@bolsadeideas.com', '1721856775','quito','09766776655','2019-01-01',1);
+
+
 INSERT INTO `authorities` (authority) VALUES ('ROLE_USER');
 INSERT INTO `authorities` (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO `authorities` (authority) VALUES ('ROLE_ROOT');
@@ -76,3 +80,15 @@ INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Sangolqui',19);
 INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Latacunga',6);
 INSERT INTO `ciudades` (nombre,provincia_id) VALUES ('Salcedo',6);
 
+
+INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('Factura', 'Factura',1);
+INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('Nota de Venta', 'No necesita factura',1);
+INSERT INTO `tipo_documento` (nombre_documento,descripcion,empresa_id) VALUES ('Retención', 'Retencion de impuesto',1);
+
+INSERT INTO `productos` (nombre_producto,observaciones,categoria_id,empresa_id,tipo_producto_id,precio_venta_producto) VALUES ('Arroz','arros de mesa',1,1,1,12);
+INSERT INTO `productos` (nombre_producto,observaciones,categoria_id,empresa_id,tipo_producto_id,precio_venta_producto) VALUES ('Azucar','Azucar de mesa',1,1,1,123);
+
+INSERT INTO `ventas` (descuento_venta,estado_venta,id_empresa,numero_venta,observacion,punto_venta_id,tipo_documento_id,usuario_id,cliente_id) VALUES (12,1,1,1,'venta de arroz',1,1,1,1);
+
+INSERT INTO `detalle_venta` (cantidad,costo_detalle,iva_detalle,total_detalle,producto_id,venta_id) VALUES (12,12,0.12,123,1,1);
+INSERT INTO `detalle_venta` (cantidad,costo_detalle,iva_detalle,total_detalle,producto_id,venta_id) VALUES (12,12,0.12,123,2,1);

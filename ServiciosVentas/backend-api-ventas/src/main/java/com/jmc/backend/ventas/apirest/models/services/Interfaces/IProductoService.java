@@ -13,4 +13,6 @@ public interface IProductoService {
 	public Producto findByName(String nombre, Long id);
 	public List<Producto> findDemo();
 	
+	public List<Producto> findByProductoNameLike(String termn,Long idEmpresa);
+	
 }

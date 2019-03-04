@@ -147,5 +147,25 @@ public class ProductoRestController {
 		}
 	}
 	
+	@Secured({"ROLE_ROOT","ROLE_ADMIN","ROLE_USER"})
+	@GetMapping("/productos/filtro/{id}/{termn}")
+	public ResponseEntity<?> getAllByNameLike(@PathVariable Long id, @PathVariable String termn){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			List<Producto> lsProductos= productoService.findByProductoNameLike(termn, id);
+			if(lsProductos.isEmpty()) {
+				response.put("mensaje", "No existen registros en la base de datos");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<List<Producto>>(lsProductos,HttpStatus.OK);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
 	
 }

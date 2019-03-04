@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jmc.backend.ventas.apirest.models.dao.IClienteDao;
+import com.jmc.backend.ventas.apirest.models.dao.IVentaDao;
 import com.jmc.backend.ventas.apirest.models.entity.Cliente;
+import com.jmc.backend.ventas.apirest.models.entity.Venta;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IClienteService;
 
 
@@ -19,6 +21,8 @@ public class ClienteServiceImplement implements IClienteService {
 	@Autowired
 	private IClienteDao clienteDao;
 	
+	@Autowired
+	private IVentaDao ventaDao;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -74,6 +78,30 @@ public class ClienteServiceImplement implements IClienteService {
 	public Cliente findByRuc(String ruc, Long idEmpresa) {
 		// TODO Auto-generated method stub
 		return clienteDao.findByRucQuery(ruc, idEmpresa);
+	}
+
+	/**
+	 * metoods de ventas cliente
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public Venta findVentaById(Long id) {
+		// TODO Auto-generated method stub
+		return ventaDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Venta saveVenta(Venta venta) {
+		// TODO Auto-generated method stub
+		return ventaDao.save(venta);
+	}
+
+	@Override
+	@Transactional
+	public void deleteVentaById(Long id) {
+		// TODO Auto-generated method stub
+		ventaDao.deleteById(id);
 	}
 
 	

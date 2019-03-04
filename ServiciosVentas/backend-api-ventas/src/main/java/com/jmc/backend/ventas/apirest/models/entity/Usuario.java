@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users")
 public class Usuario implements Serializable {
@@ -69,14 +71,17 @@ public class Usuario implements Serializable {
 	private Date updatedAt;
 
 	/// RELACIONES
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL,CascadeType.MERGE})
 	@JoinTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "user_id", "role_id" }) })
 	private List<Role> roles;
 
+	@JsonIgnoreProperties(value = {"detalleVenta","hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Venta> lsVentas;
 
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "usuario_id")
 	private List<Compra> lsCompras;

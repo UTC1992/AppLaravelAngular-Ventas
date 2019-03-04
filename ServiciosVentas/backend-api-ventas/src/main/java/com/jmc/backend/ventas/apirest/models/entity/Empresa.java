@@ -16,10 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "empresas")
@@ -41,43 +44,57 @@ public class Empresa implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
 
+	@JsonIgnoreProperties(value={"lsVentas","detalleVenta","lsCompras","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<Usuario> usuarios;
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "empresa_modules", joinColumns = @JoinColumn(name = "empresa_id"), inverseJoinColumns = @JoinColumn(name = "module_id"), uniqueConstraints = {
 			@UniqueConstraint(columnNames = { "empresa_id", "module_id" }) })
 	private List<Modulos> lsModulos;
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<CategoriaProducto> lsCategoriasProductos;
 
+	@JsonIgnoreProperties(value={"lsCompras","lsProvedores","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<Provedor> lsProvedores;
 
+	@JsonIgnoreProperties(value={"categoria","tipoProducto","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<Producto> lsProductos;
 
+	@JsonIgnoreProperties(value={"lsProductos","lsVentas","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<PuntoVenta> lsPuntosVenta;
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<Configuracion> lsConfiguracion;
 
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<TipoDocumento> lsTipoDoc;
 	
+	@JsonIgnoreProperties(value={"lsVentas","hibernateLazyInitializer", "handler"}, allowSetters=true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "empresa_id")
 	private List<Cliente> lsClientes;
 	
+	
+	@JsonIgnoreProperties(value={"provedor","hibernateLazyInitializer", "handler"}, allowSetters=true)
+	@OneToMany(fetch= FetchType.LAZY,cascade= CascadeType.ALL)
+	@JoinColumn(name= "empresa_id")
+	private List<Compra> lsCompras;
 	
 
 	
@@ -92,11 +109,22 @@ public class Empresa implements Serializable {
 		this.lsConfiguracion = new ArrayList<>();
 		this.lsTipoDoc= new ArrayList<>();
 		this.lsClientes= new ArrayList<>();
+		this.lsCompras= new ArrayList<>();
 	}
 
-	// prepersistencia crea la fecha de ingreso
+	@PrePersist
 	public void prePersist() {
 		this.createdAt = new Date();
+	}
+
+
+	
+	public List<Compra> getLsCompras() {
+		return lsCompras;
+	}
+
+	public void setLsCompras(List<Compra> lsCompras) {
+		this.lsCompras = lsCompras;
 	}
 
 	public Long getId() {

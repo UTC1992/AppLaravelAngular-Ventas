@@ -1,35 +1,27 @@
-package com.jmc.backend.ventas.apirest.models.entity;
+package com.jmc.backend.ventas.apirest.models.entity.statics;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@Table(name = "modules")
-public class Modulos implements Serializable {
+@Table(name="tipo_pago")
+public class TipoPago implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nombre;
-
-	private String descripcion;
+	private String tipoPago;
 
 	@Column(name = "created_at")
 	@Temporal(TemporalType.DATE)
@@ -38,11 +30,11 @@ public class Modulos implements Serializable {
 	@Column(name = "updated_at")
 	@Temporal(TemporalType.DATE)
 	private Date updatedAt;
-
-	@JsonIgnoreProperties(value={"","hibernateLazyInitializer", "handler"}, allowSetters=true)
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "module_id")
-	private List<Menu> lsMenu;
+	
+	@PrePersist
+	private void prePersist(){
+		this.createdAt=new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -52,20 +44,12 @@ public class Modulos implements Serializable {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getTipoPago() {
+		return tipoPago;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setTipoPago(String tipoPago) {
+		this.tipoPago = tipoPago;
 	}
 
 	public Date getCreatedAt() {
@@ -82,14 +66,6 @@ public class Modulos implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public List<Menu> getLsMenu() {
-		return lsMenu;
-	}
-
-	public void setLsMenu(List<Menu> lsMenu) {
-		this.lsMenu = lsMenu;
 	}
 
 	/**
