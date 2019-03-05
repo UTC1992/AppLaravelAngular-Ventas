@@ -174,4 +174,57 @@ public class ClienteRestController {
 		}
 		
 	}
+	
+	
+	/**
+	 * busqueda en la base de datos por cédula
+	 * @param cedula
+	 * @param id
+	 * @return
+	 */
+	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
+	@GetMapping("/clientes/cedula/{cedula}/{id}")
+	public ResponseEntity<?> findByCedula(@PathVariable String cedula,@PathVariable Long id){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			Cliente cliente= clienteService.findByCedula(cedula, id);
+			if(cliente== null) {
+				response.put("mensaje",
+						"Cliente con  CÉDULA: ".concat(cedula.toString().concat(" no existe en la base de datos!")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	/**
+	 * Busqueda en la base  por ruc de cliente
+	 * @param ruc
+	 * @param id
+	 * @return
+	 */
+	@Secured({"ROLE_ADMIN","ROLE_ROOT","ROLE_USER"})
+	@GetMapping("/clientes/ruc/{ruc}/{id}")
+	public ResponseEntity<?> findByRuc(@PathVariable String ruc,@PathVariable Long id){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			Cliente cliente= clienteService.findByRuc(ruc, id);
+			if(cliente== null) {
+				response.put("mensaje",
+						"Cliente con  RUC: ".concat(ruc.toString().concat(" no existe en la base de datos!")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

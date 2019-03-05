@@ -57,8 +57,7 @@ public class Venta implements Serializable {
 	@JoinColumn(name = "tipo_documento_id")
 	private TipoDocumento tipoDocumento;
 
-	@JsonIgnoreProperties(value = {"hibernateLazyInitializer",
-	"handler" })	
+	@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler" })	
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="tipo_pago_id")
 	private TipoPago tipoPago;
@@ -67,8 +66,7 @@ public class Venta implements Serializable {
 	private Long puntoVentaId;
 
 	
-	@JsonIgnoreProperties(value = {"hibernateLazyInitializer",
-	"handler" }, allowSetters = true)	
+	@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler" }, allowSetters = true)	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "venta_id")
 	private List<DetalleVenta> detalleVenta;
@@ -263,6 +261,10 @@ public class Venta implements Serializable {
 		}
 		return total;
 	}
+	
+	/**	
+	 * consultar stock producto
+	 */
 
 	/**
 	 * 

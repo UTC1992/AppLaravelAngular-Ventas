@@ -2,7 +2,7 @@ package com.jmc.backend.ventas.apirest.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,8 +39,7 @@ public class DetalleCompra implements Serializable {
 
 	// relaciones
 
-	@JsonIgnoreProperties(value = { "categoria", "tipoProducto", "hibernateLazyInitializer",
-			"handler" }, allowSetters = true)
+	@JsonIgnoreProperties(value = { "categoria","tipoProducto","hibernateLazyInitializer","handler" }, allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "producto_id")
 	private Producto Productos;

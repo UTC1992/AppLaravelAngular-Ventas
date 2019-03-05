@@ -47,21 +47,31 @@ public class ProductoServiceImplement implements IProductoService {
 	}
 
 	@Override
+	@Transactional(readOnly= true)
 	public Producto findByName(String nombre, Long id) {
 		// TODO Auto-generated method stub
 		return productoDao.findByNameQuery(nombre, id);
 	}
 
 	@Override
+	@Transactional(readOnly= true)
 	public List<Producto> findDemo() {
 		// TODO Auto-generated method stub
 		return productoDao.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly= true)
 	public List<Producto> findByProductoNameLike(String termn, Long idEmpresa) {
 		// TODO Auto-generated method stub
 		return productoDao.findBynombreProductoLike(termn,idEmpresa);
+	}
+
+	@Override
+	@Transactional(readOnly= true)
+	public List<Producto> finByProductCodeLike(String code, Long id) {
+		// TODO Auto-generated method stub
+		return productoDao.findByCodigoProductoLike(code, id);
 	}
 
 }

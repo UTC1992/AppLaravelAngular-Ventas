@@ -14,5 +14,6 @@ public interface IProductoService {
 	public List<Producto> findDemo();
 	
 	public List<Producto> findByProductoNameLike(String termn,Long idEmpresa);
+	public List<Producto> finByProductCodeLike(String code, Long id);
 	
 }

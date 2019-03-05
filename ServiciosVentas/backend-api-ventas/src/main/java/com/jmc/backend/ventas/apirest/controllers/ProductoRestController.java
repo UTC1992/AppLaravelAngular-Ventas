@@ -148,8 +148,8 @@ public class ProductoRestController {
 	}
 	
 	@Secured({"ROLE_ROOT","ROLE_ADMIN","ROLE_USER"})
-	@GetMapping("/productos/filtro/{id}/{termn}")
-	public ResponseEntity<?> getAllByNameLike(@PathVariable Long id, @PathVariable String termn){
+	@GetMapping("/productos/nombre/{termn}/{id}")
+	public ResponseEntity<?> getAllByNameLike(@PathVariable String termn, @PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
 			List<Producto> lsProductos= productoService.findByProductoNameLike(termn, id);
@@ -165,6 +165,43 @@ public class ProductoRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	@Secured({"ROLE_ROOT","ROLE_ADMIN","ROLE_USER"})
+	@GetMapping("/productos/codigo/{code}/{id}")
+	public ResponseEntity<?> getAllByCodeLike(@PathVariable String code, @PathVariable Long id){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			List<Producto> lsProductos= productoService.finByProductCodeLike(code, id);
+			if(lsProductos.isEmpty()) {
+				response.put("mensaje", "No existen registros en la base de datos");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<List<Producto>>(lsProductos,HttpStatus.OK);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/productos/stock")
+	public ResponseEntity<?> getStockProducto(@PathVariable Long id){
+		Map<String, Object> response = new HashMap<>();
+		try {
+			Producto producto = productoService.findById(id);
+			response.put("mensaje", "El stock de producto con ID: "+id+" es:");
+			response.put("stock", producto.getStockProducto());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
 	
 	
 	
