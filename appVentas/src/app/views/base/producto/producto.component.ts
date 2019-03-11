@@ -52,7 +52,8 @@ export class ProductoComponent implements OnInit {
   ngOnInit() {
     this.subTitlePagina = "Productos";
     this.mostrarProductos();
-    //this.obtenerCategorias();
+    this.obtenerCategorias();
+    this.obtenerTipoProductos();
   }
 
   iniciarFormulario(){

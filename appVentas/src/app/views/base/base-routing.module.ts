@@ -10,6 +10,9 @@ import { ProductoComponent } from './producto/producto.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ClienteComponent } from './cliente/cliente.component';
 
+import { LoginGuard } from '../../guards/login.guard';
+import { RoleGuard } from '../../guards/role.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,6 +27,7 @@ const routes: Routes = [
       {
         path: 'inicio',
         component: InicioComponent,
+        canActivate: [LoginGuard],
         data: {
           title: 'Inicio'
         }
@@ -31,50 +35,64 @@ const routes: Routes = [
       {
         path: 'usuario',
         component: UsuarioComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Usuarios'
+          title: 'Usuarios',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'puntos-venta',
         component: PuntoVentaComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Puntos de Venta'
+          title: 'Puntos de Venta',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'categoria-producto',
         component: CategoriaProductoComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Categoría de productos'
+          title: 'Categoría de productos',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'tipo-documento',
         component: TipoDocumentoComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Tipo de documentos'
+          title: 'Tipo de documentos',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'producto',
         component: ProductoComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Productos'
+          title: 'Productos',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'proveedor',
         component: ProveedorComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Proveedores'
+          title: 'Proveedores',
+          role: 'ROLE_ADMIN'
         }
       },
       {
         path: 'cliente',
         component: ClienteComponent,
+        canActivate: [LoginGuard, RoleGuard],
         data: {
-          title: 'Clientes'
+          title: 'Clientes',
+          role: 'ROLE_ADMIN'
         }
       }
     ]
@@ -83,6 +101,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+  ]
 })
 export class BaseRoutingModule {}

@@ -54,20 +54,19 @@ public class Producto implements Serializable {
 	//private String Imagen;
 
 	
-	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true ,allowGetters=true)
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="categoria_id")
 	private CategoriaProducto categoria;
 	
 	
-	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"}, allowSetters=true,allowGetters=true)
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="tipo_producto_id")
 	private TipoProducto tipoProducto;
 	
 	
 	
-
 
 	@PrePersist
 	public void prePersist() {

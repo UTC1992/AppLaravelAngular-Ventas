@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jmc.backend.ventas.apirest.models.entity.Producto;
 import com.jmc.backend.ventas.apirest.models.entity.PuntoVenta;
 import com.jmc.backend.ventas.apirest.models.entity.Venta;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IClienteService;
+import com.jmc.backend.ventas.apirest.models.services.Interfaces.IProductoService;
 import com.jmc.backend.ventas.apirest.models.services.Interfaces.IVentaService;
 
 @CrossOrigin(origins = { "*" })
@@ -33,7 +35,10 @@ public class VentaRestController {
 	@Autowired 
 	private IVentaService ventaService;
 	
-	@GetMapping("/venta/{id}")
+	@Autowired
+	private IProductoService productoService;
+	
+	@GetMapping("/ventas/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -50,10 +55,12 @@ public class VentaRestController {
 		}
 	}
 	
-	@PostMapping("/venta")
+	@PostMapping("/ventas")
 	public ResponseEntity<?> create(@RequestBody Venta venta) {
 		Map<String, Object> response = new HashMap<>();
 		try {
+			
+			
 			Venta newVenta= clienteService.saveVenta(venta);
 			response.put("mensaje", "Venta generada con éxito!");
 			response.put("venta", newVenta);
@@ -65,7 +72,7 @@ public class VentaRestController {
 		}
 	}
 	
-	@DeleteMapping("/venta")
+	@DeleteMapping("/ventas")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -80,7 +87,7 @@ public class VentaRestController {
 	}
 	
 	
-	@GetMapping("/venta/empresa/{id}")
+	@GetMapping("/ventas/empresa/{id}")
 	public ResponseEntity<?> findAllByEmpresa(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -97,7 +104,7 @@ public class VentaRestController {
 		}
 	}
 	
-	@GetMapping("/venta/punto/{id}")
+	@GetMapping("/ventas/punto/{id}")
 	public ResponseEntity<?> fidAllPuntoVenta(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		try {

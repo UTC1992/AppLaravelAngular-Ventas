@@ -29,88 +29,71 @@ export class CategoriaProductoService {
 
   }
 
-  private agregarAuthorizationHeader(){
-    let token = this.loginService.token;
-    if(token != null){
-      return this.httpHeaders.append('Authorization', 'Bearer '+token);
-    }
-    else{
-      return this.httpHeaders;
-    }
-  }
-
-  private isNoAutorizado(e): boolean{
-    if(e.status == 401 || e.status == 403){
-      this.route.navigate(['/login']);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getCategorias(): Observable<CategoriaProducto[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<CategoriaProducto[]>(this.urlEndPoint +'/empresa/categorias/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<CategoriaProducto[]>(this.urlEndPoint +'/empresa/categorias/' + usuario.idEmpresa)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   create(punto: CategoriaProducto): Observable<CategoriaProducto>{
-    return this.http.post(this.urlEndPoint+'/categorias', punto, {headers: this.agregarAuthorizationHeader()})
+    return this.http.post(this.urlEndPoint+'/categorias', punto)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );
   }
 
   delete(id: number): Observable<CategoriaProducto>{
-    return this.http.delete<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.delete<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   getPuntoVentaById(id: number): Observable<CategoriaProducto>{
-    return this.http.get<CategoriaProducto>(this.urlEndPoint +'/categorias/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<CategoriaProducto>(this.urlEndPoint +'/categorias/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   edit(categoria: CategoriaProducto, id: number): Observable<CategoriaProducto>{
-    return this.http.put<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id, categoria, {headers: this.agregarAuthorizationHeader()})
+    return this.http.put<CategoriaProducto>(this.urlEndPoint+'/categorias/'+id, categoria)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );

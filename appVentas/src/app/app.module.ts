@@ -12,10 +12,12 @@ import {
 } from './shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { LoginInterceptor } from './interceptors/login.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
   ],
   providers: [
     HttpClient,
-    BsModalRef
+    BsModalRef,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

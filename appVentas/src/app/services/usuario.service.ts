@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
-import swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,8 @@ export class UsuarioService {
     private loginService: LoginService
   ) { }
 
+  
+  /*
   private agregarAuthorizationHeader(){
     let token = this.loginService.token;
     if(token != null){
@@ -36,71 +38,74 @@ export class UsuarioService {
     else{
       return this.httpHeaders;
     }
-  } 
+  }
 
   private isNoAutorizado(e): boolean{
-    if(e.status == 401 || e.status == 403){
+
+    if(e.status == 401){
+      if(this.loginService.isAuthenticated()){
+        this.loginService.logout();
+      }
       this.route.navigate(['/login']);
       return true;
-    } else {
-      return false;
     }
-  }
+
+    if(e.status == 403){
+      swal('Acceso denergado', `Hola ${this.loginService.usuario.username} no tienes acceso a este recurso!`, 'warning');
+      this.route.navigate(['/login']);
+      return true;
+    }
+    return false;
+    
+  }*/
 
   getUsuarios(): Observable<Usuario[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<Usuario[]>(this.urlEndPoint +'/empresa/empleado/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
-    .pipe(catchError( e => {
-      this.isNoAutorizado(e);
-      return throwError(e);
-    })
-    );
+    return this.http.get<Usuario[]>(this.urlEndPoint +'/empresa/empleado/' + usuario.idEmpresa);
   }
 
   create(usuario: Usuario): Observable<Usuario>{
-    return this.http.post(this.urlEndPoint+'/empleado', usuario, {headers: this.agregarAuthorizationHeader()})
+    return this.http.post(this.urlEndPoint+'/empleado', usuario)
     .pipe(
       map((response: any) => response.usuario as Usuario),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );
   }
 
   edit(usuario: Usuario, id: number): Observable<Usuario>{
-    return this.http.put<Usuario>(this.urlEndPoint+'/empleado/'+id, usuario, {headers: this.agregarAuthorizationHeader()})
+    return this.http.put<Usuario>(this.urlEndPoint+'/empleado/'+id, usuario)
     .pipe(
       map((response: any) => response.usuario as Usuario),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );
   }
 
   delete(id: number): Observable<Usuario>{
-    return this.http.delete<Usuario>(this.urlEndPoint+'/empleado/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.delete<Usuario>(this.urlEndPoint+'/empleado/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
@@ -108,27 +113,33 @@ export class UsuarioService {
 
   getUsuarioById(id: number): Observable<Usuario>{
     let usuario = this.loginService.usuario;
-    return this.http.get<Usuario>(this.urlEndPoint +'/empleado/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<Usuario>(this.urlEndPoint +'/empleado/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   addRol(rol: Rol, id: number): Observable<Usuario>{
-    return this.http.put<Usuario>(this.urlEndPoint+'/rol/asignar/'+id, rol, {headers: this.agregarAuthorizationHeader()})
+    return this.http.put<Usuario>(this.urlEndPoint+'/rol/asignar/'+id, rol)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   deleteRol(id: number): Observable<Usuario>{
-    return this.http.get<Usuario>(this.urlEndPoint+'/rol/eliminar/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<Usuario>(this.urlEndPoint+'/rol/eliminar/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );

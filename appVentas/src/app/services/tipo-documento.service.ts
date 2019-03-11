@@ -29,7 +29,7 @@ export class TipoDocumentoService {
 
   }
 
-  private agregarAuthorizationHeader(){
+  /*private agregarAuthorizationHeader(){
     let token = this.loginService.token;
     if(token != null){
       return this.httpHeaders.append('Authorization', 'Bearer '+token);
@@ -37,35 +37,26 @@ export class TipoDocumentoService {
     else{
       return this.httpHeaders;
     }
-  }
+  }*/
 
-  private isNoAutorizado(e): boolean{
-    if(e.status == 401 || e.status == 403){
-      this.route.navigate(['/login']);
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   getTipoDocumentos(): Observable<TipoDocumento[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<TipoDocumento[]>(this.urlEndPoint +'/empresa/tipo/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<TipoDocumento[]>(this.urlEndPoint +'/empresa/tipo/' + usuario.idEmpresa)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   create(documento: TipoDocumento): Observable<TipoDocumento>{
-    return this.http.post(this.urlEndPoint+'/tipo', documento, {headers: this.agregarAuthorizationHeader()})
+    return this.http.post(this.urlEndPoint+'/tipo', documento)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
@@ -79,38 +70,40 @@ export class TipoDocumentoService {
   }
 
   delete(id: number): Observable<TipoDocumento>{
-    return this.http.delete<TipoDocumento>(this.urlEndPoint+'/tipo/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.delete<TipoDocumento>(this.urlEndPoint+'/tipo/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   getTipoDocumentoById(id: number): Observable<TipoDocumento>{
-    return this.http.get<TipoDocumento>(this.urlEndPoint +'/tipo/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<TipoDocumento>(this.urlEndPoint +'/tipo/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   edit(documento: TipoDocumento, id: number): Observable<TipoDocumento>{
-    return this.http.put<TipoDocumento>(this.urlEndPoint+'/tipo/'+id, documento, {headers: this.agregarAuthorizationHeader()})
+    return this.http.put<TipoDocumento>(this.urlEndPoint+'/tipo/'+id, documento)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
-
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );

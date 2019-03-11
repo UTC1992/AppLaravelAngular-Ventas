@@ -16,6 +16,7 @@ import { ProductoComponent } from './producto/producto.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ClienteComponent } from './cliente/cliente.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -34,6 +35,8 @@ import { ClienteComponent } from './cliente/cliente.component';
     ProveedorComponent,
     ClienteComponent,
   ],
+  providers: [
+  ]
   
 })
 export class BaseModule { }

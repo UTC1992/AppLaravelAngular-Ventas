@@ -54,7 +54,7 @@ public class Compra implements Serializable {
 	@JoinColumn(name = "tipo_documento_id")
 	private TipoDocumento tipoDocumento;
 
-	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" }, allowSetters = true)
+	@JsonIgnoreProperties(value = { "producto","hibernateLazyInitializer", "handler" }, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "compra_id")
 	private List<DetalleCompra> lsDetalleCompra;

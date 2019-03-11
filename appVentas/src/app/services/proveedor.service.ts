@@ -29,97 +29,82 @@ export class ProveedorService {
     private loginService: LoginService
   ) { }
 
-  private agregarAuthorizationHeader(){
-    let token = this.loginService.token;
-    if(token != null){
-      return this.httpHeaders.append('Authorization', 'Bearer '+token);
-    }
-    else{
-      return this.httpHeaders;
-    }
-  }
-
-  private isNoAutorizado(e): boolean{
-    if(e.status == 401 || e.status == 403){
-      this.route.navigate(['/login']);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getProveedores(): Observable<Proveedor[]>{
     let usuario = this.loginService.usuario;
-    return this.http.get<Proveedor[]>(this.urlEndPoint +'/provedores/all/' + usuario.idEmpresa, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<Proveedor[]>(this.urlEndPoint +'/provedores/all/' + usuario.idEmpresa)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   create(proveedor: Proveedor): Observable<Proveedor>{
-    return this.http.post(this.urlEndPoint+'/provedores', proveedor, {headers: this.agregarAuthorizationHeader()})
+    return this.http.post(this.urlEndPoint+'/provedores', proveedor)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );
   }
 
   delete(id: number): Observable<Proveedor>{
-    return this.http.delete<Proveedor>(this.urlEndPoint+'/provedores/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.delete<Proveedor>(this.urlEndPoint+'/provedores/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   getProvincias(): Observable<any[]>{
-    return this.http.get<any[]>(this.urlEndPoint +'/provincias', {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<any[]>(this.urlEndPoint +'/provincias')
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   getProveedorById(id: number): Observable<Proveedor>{
-    return this.http.get<Proveedor>(this.urlEndPoint +'/provedores/'+id, {headers: this.agregarAuthorizationHeader()})
+    return this.http.get<Proveedor>(this.urlEndPoint +'/provedores/'+id)
     .pipe(catchError( e => {
-      this.isNoAutorizado(e);
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
       return throwError(e);
     })
     );
   }
 
   edit(proveedor: Proveedor, id: number): Observable<Proveedor>{
-    return this.http.put<Proveedor>(this.urlEndPoint+'/provedores/'+id, proveedor, {headers: this.agregarAuthorizationHeader()})
+    return this.http.put<Proveedor>(this.urlEndPoint+'/provedores/'+id, proveedor)
     .pipe(
       map((response: any) => response),
       catchError(e => {
-        if(this.isNoAutorizado(e)){
-          return throwError(e);
-        }
 
         if(e.status == 400){
           return throwError(e);
         }
 
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
         return throwError(e);
       })
     );
