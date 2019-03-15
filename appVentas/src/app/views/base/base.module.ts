@@ -15,6 +15,10 @@ import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.componen
 import { ProductoComponent } from './producto/producto.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { VentaComponent } from './venta/venta.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -23,7 +27,10 @@ import { ClienteComponent } from './cliente/cliente.component';
     FormsModule,
     BaseRoutingModule,
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   declarations: [
     InicioComponent,
@@ -34,6 +41,7 @@ import { ClienteComponent } from './cliente/cliente.component';
     ProductoComponent,
     ProveedorComponent,
     ClienteComponent,
+    VentaComponent,
   ],
   providers: [
   ]

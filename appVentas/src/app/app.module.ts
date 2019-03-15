@@ -19,6 +19,11 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { LoginInterceptor } from './interceptors/login.interceptor';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +39,11 @@ import { LoginInterceptor } from './interceptors/login.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule
     
   ],
   providers: [

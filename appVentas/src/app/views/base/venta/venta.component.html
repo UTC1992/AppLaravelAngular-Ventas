@@ -1,0 +1,205 @@
+<section class="content-header text-center">
+  <h1>
+      <b>XYZ</b>
+      <!--<small>Descripción</small>-->
+  </h1>
+  <h3>
+    {{ subTitlePagina }}
+  </h3>
+  <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+      <li class="active">Here</li>
+    </ol>
+</section>
+<button data-toggle="modal" data-target="#exampleModal" 
+class="btn btn-primary btn-ms" (click)="openModalCreate(template)"  id="" >Crear nueva venta</button>
+<br>
+<br>
+<div class="box">
+  <div class="box-header with-border">
+      <h3 class="box-title text-center"><b>Usuarios</b></h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+      <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-striped table-sm"style="font-family: calibri; font-size: 12pt;">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Detalle</th>
+                <th scope="col">SubTotal</th>
+                <th scope="col">Iva %</th>
+                <th scope="col">Total</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of clientes">
+                <!--
+                <td>{{item.idCliente}}</td>
+                <td>{{item.nombres}}</td>
+                <td>{{item.apellidos}}</td>
+                <td>{{item.ruc}}</td>
+                <td>{{item.cedula}}</td>
+                <td>{{item.telefono}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.provincia}}</td>
+                <td>{{item.ciudad}}</td>
+                <td>{{item.direccion}}</td>
+                <td>{{item.sitioWeb}}</td>
+                <td>{{item.observaciones}}</td>
+                -->
+                <td>
+                  <div style="width: 200px;">
+                      <button type="button" class="btn btn-info btn-xs" (click)="openModalEdit(template, item.idCliente)">Editar</button>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="confirmarEliminar(item.idCliente)">Eliminar</button>
+                  </div>  
+                </td>
+              </tr>
+            </tbody>
+          </table>  
+      </div>
+  </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>  
+              <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+          </div>
+
+          <div class="modal-body">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-md-2">Ruc / CI:</label>
+                  <div class="col-md-3">
+                      <input type="text" class="form-control" [(ngModel)]="cedulaRuc" placeholder="" autofocus> 
+                  </div>
+                  <label class="control-label col-md-2">Cliente:</label>
+                  <div class="col-md-3">
+                      <input type="text" class="form-control"  placeholder="" readonly> 
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Dirección:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control"  placeholder="" readonly> 
+                    </div>
+                    <label class="control-label col-md-2">Teléfono:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control"  placeholder="" readonly> 
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-2">Ciudad:</label>
+                  <div class="col-md-3">
+                      <input type="text" class="form-control"  placeholder="" readonly> 
+                  </div>
+                  <label class="control-label col-md-2">Fecha:</label>
+                  <div class="col-md-3">
+                      <input type="text" class="form-control"  placeholder="" readonly> 
+                  </div>
+                </div>
+              </div>
+          </div>
+          
+          <form>
+            <!--
+            <div class="form-horizontal">
+              <div class="form-group">
+                <mat-form-field>
+                  <label class="control-label col-md-3">Producto:</label>
+                  <input type="text" class="form-control" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
+                    <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
+                      {{producto.nombreProducto}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && facturaForm.submitted">
+                  La factura no puede no tener líneas!.
+                </div>
+              </div>
+            </div>
+            -->
+          </form>
+          <div class="modal-body">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-md-3">Código producto:</label>
+                  <div class="col-md-4">
+                      <input type="number" class="form-control" [(ngModel)]="codigoProducto"  placeholder=""> 
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn btn-success" (click)="buscarProducto(codigoProducto)">Buscar</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="box-body">
+              <div class="table-responsive">
+                <div class="alert alert-info my-4" *ngIf="venta.detalleVenta.length == 0">
+                  No hay líneas asignadas para la factura. Debe agregar al menos una!
+                </div>
+                <table class="table table-striped table-hover table-bordered table-sm  text-center" 
+                *ngIf="venta.detalleVenta.length > 0">
+                  <thead>
+                    <tr>
+                      <th style="width: 100px;">Cantidad</th>
+                      <th>Detalle</th>
+                      <th style="width: 100px;">Precio</th>
+                      <th style="width: 100px;">Total</th>
+                      <th style="width: 100px;">Eliminar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of venta.detalleVenta">
+                      <td>
+                        <input type="number" value="{{item.cantidad}}" class="form-control" (change)="actualizarCantidad(item.producto.idProducto, $event)">
+                      </td>                  
+                      <td>{{item.producto.nombreProducto}}</td>
+                      <td>{{item.producto.precioVentaProducto}}</td>
+                      <td>{{item.calcularImporte()}}</td>
+                      <td><button class="btn btn-danger btn-xs" type="button"
+                        (click)="eliminarItemFactura(item.producto.idProducto)">x</button></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td><b>SUBTOTAL</b></td>
+                      <td><span class="badge badge-secondary">{{ venta.subTotal() }}</span> $</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td><b>IVA 0%</b></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td><b>IVA %</b></td>
+                      <td><span class="badge badge-secondary">{{ venta.iva12() }}</span>$</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td><b>TOTAL</b></td>
+                      <td><span class="badge badge-secondary">{{ venta.totalFinal() }}</span>$</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              
+              </div>
+          </div>
+
+        </div>
+    </div>
+        
+</ng-template>

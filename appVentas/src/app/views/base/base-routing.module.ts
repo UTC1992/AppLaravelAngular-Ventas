@@ -9,6 +9,7 @@ import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.componen
 import { ProductoComponent } from './producto/producto.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { VentaComponent } from './venta/venta.component';
 
 import { LoginGuard } from '../../guards/login.guard';
 import { RoleGuard } from '../../guards/role.guard';
@@ -92,6 +93,15 @@ const routes: Routes = [
         canActivate: [LoginGuard, RoleGuard],
         data: {
           title: 'Clientes',
+          role: 'ROLE_ADMIN'
+        }
+      },
+      {
+        path: 'venta',
+        component: VentaComponent,
+        canActivate: [LoginGuard, RoleGuard],
+        data: {
+          title: 'Venta',
           role: 'ROLE_ADMIN'
         }
       }
