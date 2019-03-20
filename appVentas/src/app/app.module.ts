@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -11,18 +11,24 @@ import {
   LayoutComponent
 } from './shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+//INTERCEPTORS
 import { HttpClient, HttpHeaders, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: true });
+
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { LoginInterceptor } from './interceptors/login.interceptor';
-
+//MATERIAL DESIGNER
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule, MatToolbarModule, 
+  MatButtonModule, MatSidenavModule, MatIconModule, 
+  MatListModule, MatGridListModule, MatCardModule, 
+  MatMenuModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -43,15 +49,32 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     
   ],
   providers: [
+    MatDatepickerModule,
     HttpClient,
     BsModalRef,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
+  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

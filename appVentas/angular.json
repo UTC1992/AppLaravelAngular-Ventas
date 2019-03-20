@@ -27,22 +27,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
+              "node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
+              "node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+              "node_modules/angular-calendar/scss/angular-calendar.scss"
             ],
-            "scripts": [
-              "src/assets/bower_components/jquery/dist/jquery.min.js",
-              "src/assets/bower_components/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/plugins/iCheck/icheck.min.js",
-              "src/assets/bower_components/fastclick/lib/fastclick.js",
-              "src/assets/dist/js/adminlte.min.js",
-              "src/assets/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js",
-              "src/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js",
-              "src/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js",
-              "src/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
-              "src/assets/bower_components/chart.js/Chart.js",
-              "src/assets/dist/js/pages/dashboard2.js",
-              "src/assets/dist/js/demo.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -96,6 +92,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": [],

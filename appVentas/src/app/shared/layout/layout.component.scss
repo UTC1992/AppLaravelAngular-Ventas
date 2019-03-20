@@ -1,0 +1,45 @@
+.sidenav-container{
+    height: 100%;
+  }
+  
+  .sidenav{
+    width: 230px;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, .24)
+  }
+  
+  //ACTIVAR ITEMS DEL MENU LATERAL
+  .mat-nav-list a.active {
+    background: #97989E;
+    color: white;
+  }
+
+  .mat-toolbar.mat-primary{
+    position: sticky;
+    top: 0;
+  }
+  
+  .example-fill-remaining-space{
+    flex: 1 1 auto;
+  }
+
+  .logo{
+    margin-top: 5px;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .mat-divider{
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .barraDerecha{
+    background-color: #783384; 
+    color: white;
+  }
+
+  .menuLateral{
+    background-color: #5D0263; color: white;
+  }

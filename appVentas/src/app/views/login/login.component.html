@@ -1,43 +1,53 @@
-<div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Energy </b>VENTAS</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg">Inicie sesión para ingresar a su cuenta</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-4 mx-auto">
+      <br>
+      <br>
+      <div class="text-center">
+        <p class="h2 mb-3">Ventas App
+          <span><img class="img-responsive" src="" alt="" width="50" height="50"></span>
+        </p>
+      </div>
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <form class="form-signin">
+            
+            <div class="h3 text-center mb-3">
+              <p class="font-weight-normal">Ingreso</p>
+            </div>
 
-    <form>
-      <div class="form-group has-feedback">
-        <input type="email" [(ngModel)]="usuario.username" name="username" class="form-control" placeholder="email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control" placeholder="password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-xs-8">
-          <button class="btn btn-primary btn-block btn-flat" type="submit" (click)="login()">Ingresar</button>
+            <div class="form-group">
+              <input type="email" [(ngModel)]="usuario.username" name="username" class="form-control" placeholder="email">
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control" placeholder="password">
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="checkbox mb-3">
+              <input type="checkbox" class="custom-control-input" id="customCheck1">
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block text-uppercase"
+            (click)="login()" type="submit">Ingresar</button>
+
+          </form>
+
         </div>
-        <!-- /.col -->
       </div>
-    </form>
-    <!--
-    <div class="social-auth-links text-center">
-      <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>
     </div>
-    -->
-    <!-- /.social-auth-links -->
-
-    <!--
-    <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
-    -->
   </div>
-  <!-- /.login-box-body -->
 </div>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2019 Copyright
+    <a href="#"> By TS-Platform.</a> Todos los derechos reservados.
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+

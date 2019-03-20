@@ -1,7 +1,7 @@
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { InicioComponent } from './inicio/inicio.component';
 
@@ -20,6 +20,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+//MB bootstrap
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+//MATERIAL DESIGNER
+import { MatTableModule, MatToolbarModule, 
+  MatButtonModule, MatSidenavModule, MatIconModule, 
+  MatListModule, MatGridListModule, MatCardModule, 
+  MatMenuModule, MatDatepickerModule, MatNativeDateModule, MatTableDataSource } from '@angular/material';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
   imports: [
@@ -28,9 +38,27 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     BaseRoutingModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
+    MDBBootstrapModule.forRoot(),
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [
     InicioComponent,
@@ -44,6 +72,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     VentaComponent,
   ],
   providers: [
+  ],
+  exports: [
+    MDBBootstrapModule,
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA, 
+    CUSTOM_ELEMENTS_SCHEMA
   ]
   
 })
