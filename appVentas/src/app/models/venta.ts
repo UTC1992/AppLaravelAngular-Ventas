@@ -4,7 +4,7 @@ import { Cliente } from './cliente';
 import { DetalleVenta } from './detalle-venta';
 
 export class Venta{
-    public IdVenta: number;
+	public idVenta: number;
 	public serieVenta: string;
 	public numeroVenta: string;
 	public totalVenta: any;
@@ -13,11 +13,11 @@ export class Venta{
 	public ivaVenta: any;
 	public totalPagarVenta: any;
 	public estadoVenta: number;
-    public observacion: string;
-    public puntoVentaId: number;
-    public tipoDocumento: TipoDocumento;
-    public usuario: Usuario;
-    public cliente: Cliente;
+	public observacion: string;
+	public puntoVentaId: number;
+	public tipoDocumento: TipoDocumento;
+	public usuario: Usuario;
+	public cliente: Cliente;
 	public idEmpresa: number;
 	public detalleVenta: DetalleVenta[] = [];
 	public total: any;

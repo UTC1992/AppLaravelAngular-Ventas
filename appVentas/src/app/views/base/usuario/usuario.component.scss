@@ -1,3 +1,42 @@
 button{
-    //margin-right:5px;
+    margin-right:5px;
+}
+
+table {
+    width: 100%;
+  }
+  
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-cell {
+  padding: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.mat-header-cell{
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  color: white;
+  font-size: 10pt;
+  background-color: #2B388E;
+}
+
+.example-container {
+    display: flexbox;
+    flex-direction: column;
+  }
+  
+.example-container > * {
+    width: 100%;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.tabla-datos{
+  height: 400px;
+  overflow: auto;
 }

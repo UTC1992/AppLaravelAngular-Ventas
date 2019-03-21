@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ModuleWithProviders, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -27,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule, MatToolbarModule, 
   MatButtonModule, MatSidenavModule, MatIconModule, 
   MatListModule, MatGridListModule, MatCardModule, 
-  MatMenuModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+  MatMenuModule, MatDatepickerModule, MatNativeDateModule, 
+  MatRadioModule, MatChipsModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
@@ -65,6 +66,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatRadioModule,
+    MatChipsModule
     
   ],
   providers: [
@@ -74,7 +77,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent],
-  schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

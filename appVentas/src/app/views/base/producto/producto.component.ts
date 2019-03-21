@@ -13,12 +13,26 @@ import { CategoriaProducto } from '../../../models/categoria-producto';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.scss']
 })
 export class ProductoComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'codigoProducto', 
+    'nombreProducto', 'descripcionProducto',
+    'stockProducto', 'stockMinProducto', 
+    'precioCostoProducto', 
+    'precioVentaProducto', 'utilidadProducto', 
+    'estadoProducto', 
+    'nombreCategoria', 
+    'tipoProducto', 'acciones' 
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreate: FormGroup;
   formEdit: FormGroup;
@@ -54,6 +68,10 @@ export class ProductoComponent implements OnInit {
     this.mostrarProductos();
     this.obtenerCategorias();
     this.obtenerTipoProductos();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   iniciarFormulario(){
@@ -95,7 +113,8 @@ export class ProductoComponent implements OnInit {
   mostrarProductos(){
     this.productoServices.getProductos().subscribe(response => {
       console.log(response);
-      this.productos = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.productos = response;
     }, error => {
       this.productos = [];
       console.log(error.error.mensaje);

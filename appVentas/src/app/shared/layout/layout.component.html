@@ -12,9 +12,9 @@
     <mat-nav-list>
       <a mat-menu-item >Menú</a>
       <mat-divider></mat-divider>
-      <a mat-menu-item [routerLink]="['/base/inicio']" routerLinkActive="active" >Gestión de Cortes</a>
+      <a mat-menu-item [routerLink]="['/base/inicio']" routerLinkActive="active" >Inicio</a>
       <a mat-menu-item [routerLink]="['/base/venta']" routerLinkActive="active">Ventas</a>
-      <a mat-menu-item [routerLink]="['/base/usuario']" routerLinkActive="active">usuarios</a>
+      <a mat-menu-item [routerLink]="['/base/usuario']" routerLinkActive="active">Usuarios</a>
       <a mat-menu-item [routerLink]="['/base/puntos-venta']" routerLinkActive="active">Puntos de venta</a>
       <a mat-menu-item [routerLink]="['/base/categoria-producto']" routerLinkActive="active">Categoría de productos</a>
       <a mat-menu-item [routerLink]="['/base/tipo-documento']" routerLinkActive="active">Documento para facturar</a>
@@ -46,9 +46,7 @@
     </mat-toolbar>
 
     <!-- Add Content Here -->
-
-    <router-outlet></router-outlet>
-    
+        <router-outlet></router-outlet>
     <!-- Add Content Here -->
 
   </mat-sidenav-content>

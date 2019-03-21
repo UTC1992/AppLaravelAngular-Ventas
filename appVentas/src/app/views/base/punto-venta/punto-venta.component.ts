@@ -10,12 +10,20 @@ import { PuntoVenta } from '../../../models/punto-venta';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-punto-venta',
   templateUrl: './punto-venta.component.html',
   styleUrls: ['./punto-venta.component.scss']
 })
 export class PuntoVentaComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'id', 'nombre', 'telefono', 'descripcion', 'direccion',  
+    'provincia','ciudad', 'acciones'
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreate: FormGroup;
   formEdit: FormGroup;
@@ -47,6 +55,10 @@ export class PuntoVentaComponent implements OnInit {
     this.mostrarPuntosVenta();
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   iniciarFormulario(){
     this.formCreate = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -74,7 +86,8 @@ export class PuntoVentaComponent implements OnInit {
   mostrarPuntosVenta(){
     this.puntosService.getPustosVenta().subscribe(response => {
       console.log(response);
-      this.sucursales = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.sucursales = response;
     }, error => {
       this.sucursales = [];
       console.log(error.error.mensaje);

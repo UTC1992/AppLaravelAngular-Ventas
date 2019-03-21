@@ -10,6 +10,8 @@ import { TipoDocumento } from '../../../models/tipo-documento';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-tipo-documento',
   templateUrl: './tipo-documento.component.html',
@@ -17,6 +19,13 @@ import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 })
 export class TipoDocumentoComponent implements OnInit {
   
+  displayedColumns: string[] = [
+    'id', 'nombreDocumento', 
+    'descripcion',  
+    'acciones'
+  ];
+  dataSource = new MatTableDataSource();
+
   formCreate: FormGroup;
   formEdit: FormGroup;
   public tiposDocumentos: TipoDocumento[];
@@ -47,6 +56,10 @@ export class TipoDocumentoComponent implements OnInit {
     this.mostrarTiposDocumento();
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   iniciarFormulario(){
     this.formCreate = this.formBuilder.group({
       nombreDocumento: ['', Validators.required],
@@ -66,7 +79,8 @@ export class TipoDocumentoComponent implements OnInit {
   mostrarTiposDocumento(){
     this.tipoDocService.getTipoDocumentos().subscribe(response => {
       console.log(response);
-      this.tiposDocumentos = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.tiposDocumentos = response;
     }, error => {
       this.tiposDocumentos = [];
       console.log(error.error.mensaje);

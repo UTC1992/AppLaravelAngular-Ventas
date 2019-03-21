@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { map, flatMap, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-venta',
@@ -29,6 +30,17 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
   styleUrls: ['./venta.component.scss']
 })
 export class VentaComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'idVenta', 'serieVenta', 'numeroVenta',
+    'totalVenta', 'descuentoVenta',
+    'subTotalVenta', 'ivaVenta', 
+    'totalPagarVenta', 'estadoVenta',
+    'puntoVentaId', 'tipoDocumento',
+    'usuario', 'cliente', 'detalleVenta',
+    'total', 'acciones'
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreate: FormGroup;
   formEdit: FormGroup;
@@ -82,6 +94,10 @@ export class VentaComponent implements OnInit {
       );
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  
   buscarProducto(codigo: string){
     this.productoService.filtrarProductos(codigo).subscribe(res =>{
       console.log(res[0]);
@@ -177,7 +193,8 @@ export class VentaComponent implements OnInit {
   mostrarVentas(){
     this.ventaService.getVentas().subscribe(response => {
       console.log(response);
-      this.ventas = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.ventas = response;
     }, error => {
       this.ventas = [];
       console.log(error.error.mensaje);

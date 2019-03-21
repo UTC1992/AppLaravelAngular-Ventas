@@ -10,12 +10,21 @@ import { Cliente } from '../../../models/cliente';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'id', 'ruc','cedula', 'cliente',  
+    'telefono', 'email', 'provincia', 
+    'ciudad', 'direccion', 'acciones'
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreate: FormGroup;
   formEdit: FormGroup;
@@ -25,8 +34,8 @@ export class ClienteComponent implements OnInit {
   idEmpresa: any;
   usuario: Usuario;
 
-  tipoAccion: string;
-  titleModal: string;
+  tipoAccion: string; //permite identidicar si se va a crear o editar
+  titleModal: string; //titulo del modal
 
   subTitlePagina: string;
 
@@ -48,6 +57,10 @@ export class ClienteComponent implements OnInit {
     this.subTitlePagina = "Clientes";
     this.mostrarClientes();
     this.obtenerProvincias();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   iniciarFormulario(){
@@ -87,7 +100,8 @@ export class ClienteComponent implements OnInit {
   mostrarClientes(){
     this.clienteService.getClientes().subscribe(response => {
       console.log(response);
-      this.clientes = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.clientes = response;
     }, error => {
       this.clientes = [];
       console.log(error.error.mensaje);

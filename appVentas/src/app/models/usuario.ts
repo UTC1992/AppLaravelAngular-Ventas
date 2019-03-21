@@ -12,4 +12,5 @@ export class Usuario {
     public direccion: string;
     public cedula: string;
     public telefono: string;
+    public celular: string;
 }

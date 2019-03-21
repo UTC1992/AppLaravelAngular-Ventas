@@ -10,6 +10,7 @@ import { Proveedor } from '../../../models/proveedor';
 import swal from 'sweetalert2';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-proveedor',
@@ -17,6 +18,14 @@ import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
   styleUrls: ['./proveedor.component.scss']
 })
 export class ProveedorComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'id', 'ruc','cedula', 'nombre',  
+    'telefono', 'celular', 'email', 
+    'provincia', 
+    'ciudad', 'direccion1', 'cuenta1', 'acciones'
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreate: FormGroup;
   formEdit: FormGroup;
@@ -50,6 +59,10 @@ export class ProveedorComponent implements OnInit {
     this.subTitlePagina = "Proveedores";
     this.mostrarProveedores();
     this.obtenerProvincias();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   iniciarFormulario(){
@@ -99,7 +112,8 @@ export class ProveedorComponent implements OnInit {
   mostrarProveedores(){
     this.proveedorServices.getProveedores().subscribe(response => {
       console.log(response);
-      this.proveedores = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.proveedores = response;
     }, error => {
       this.proveedores = [];
       console.log(error.error.mensaje);

@@ -1,7 +1,7 @@
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { InicioComponent } from './inicio/inicio.component';
 
@@ -20,14 +20,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-//MB bootstrap
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-
 //MATERIAL DESIGNER
 import { MatTableModule, MatToolbarModule, 
   MatButtonModule, MatSidenavModule, MatIconModule, 
   MatListModule, MatGridListModule, MatCardModule, 
-  MatMenuModule, MatDatepickerModule, MatNativeDateModule, MatTableDataSource } from '@angular/material';
+  MatMenuModule, MatDatepickerModule, MatNativeDateModule, 
+  MatRadioModule, MatChipsModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 
@@ -38,7 +36,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     BaseRoutingModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    MDBBootstrapModule.forRoot(),
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
@@ -59,6 +56,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatRadioModule,
+    MatChipsModule
   ],
   declarations: [
     InicioComponent,
@@ -74,12 +73,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
   providers: [
   ],
   exports: [
-    MDBBootstrapModule,
+    
   ],
-  schemas: [
-    NO_ERRORS_SCHEMA, 
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
   
 })
 export class BaseModule { }

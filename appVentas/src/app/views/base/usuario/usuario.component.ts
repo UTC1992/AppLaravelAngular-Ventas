@@ -10,12 +10,21 @@ import { Rol } from '../../../models/rol';
 import {BsModalRef, BsModalService,  } from 'ngx-bootstrap/modal';
 import swal from 'sweetalert2';
 
+import {MatTableDataSource} from '@angular/material';
+
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss']
 })
 export class UsuarioComponent implements OnInit {
+
+  displayedColumns: string[] = [
+    'id', 'dni', 'nombre',
+    'celular', 'email',
+    'username', 'roles', 'acciones'
+  ];
+  dataSource = new MatTableDataSource();
 
   formCreateUser: FormGroup;
   formRol: FormGroup;
@@ -27,6 +36,8 @@ export class UsuarioComponent implements OnInit {
   usuario: Usuario;
   usuarioEdit: Usuario;
   idUsuario: number;
+
+  subTitlePagina: string;
 
   tipoAccion: string;
   titleRol: any;
@@ -52,10 +63,15 @@ export class UsuarioComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.subTitlePagina = "Usuarios";
     this.mostrarUsers();
     this.llenarRoles();
   }
-  
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   openModalCreate(template: TemplateRef<any>) {
     this.iniciarFormulario();
     this.tipoAccion = "create";
@@ -80,7 +96,8 @@ export class UsuarioComponent implements OnInit {
   mostrarUsers(){
     this.usuarioService.getUsuarios().subscribe(response => {
       console.log(response);
-      this.usuarios = response;
+      this.dataSource = new MatTableDataSource(response);
+      //this.usuarios = response;
     }, error => {
       this.usuarios = [];
       console.log(error.error.mensaje);
@@ -92,10 +109,11 @@ export class UsuarioComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       dni: ['', Validators.required],
-      telefono: ['', Validators.required],
+      celular: ['', Validators.required],
+      telefono: [''],
       direccion: ['', Validators.required],
       email: ['', Validators.required],
-      enabled:['', Validators.required],
+      enabled:['', Validators.requiredTrue],
       username:['', Validators.required],
       password:['', Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
@@ -107,7 +125,8 @@ export class UsuarioComponent implements OnInit {
       nombre: [this.usuarioEdit.nombre, Validators.required],
       apellido: [this.usuarioEdit.apellido, Validators.required],
       dni: [this.usuarioEdit.dni, Validators.required],
-      telefono: [this.usuarioEdit.telefono, Validators.required],
+      celular: [this.usuarioEdit.celular, Validators.required],
+      telefono: [this.usuarioEdit.telefono],
       direccion: [this.usuarioEdit.direccion, Validators.required],
       email: [this.usuarioEdit.email, Validators.required],
       enabled:[this.usuarioEdit.enabled, Validators.required],
