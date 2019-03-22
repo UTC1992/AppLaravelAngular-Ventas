@@ -84,7 +84,6 @@ export class VentaComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.iniciarFormulario();
     this.usuario = this.loginService.usuario;
     this.idEmpresa = this.usuario.idEmpresa;
   }
@@ -92,100 +91,6 @@ export class VentaComponent implements OnInit {
   ngOnInit() {
     this.subTitlePagina = "Ventas";
     this.mostrarVentas();
-    
-    this.productosFiltrados = this.autocompleteControl.valueChanges
-      .pipe(
-        map(value => typeof value === 'string' ? value : value.nombre),
-        flatMap(value => value ? this._filter(value) : [])
-      );
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  private _filter(value: string): Observable<Producto[]> {
-    const filterValue = value.toLowerCase();
-
-    return this.productoService.filtrarProductosNombre(filterValue);
-  }
-
-  mostrarNombre(producto?: Producto): string | undefined {
-    return producto ? producto.nombreProducto : undefined;
-  }
-
-  seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
-    let producto = event.option.value as Producto;
-    console.log(producto);
-
-    if (this.existeItem(producto.idProducto)) {
-      this.incrementaCantidad(producto.idProducto);
-    } else {
-      let nuevoItem = new DetalleVenta();
-      nuevoItem.producto = producto;
-      nuevoItem.cantidad = 1;
-      console.log(nuevoItem);
-      this.venta.detalleVenta.push(nuevoItem);
-    }
-
-    this.autocompleteControl.setValue('');
-    event.option.focus();
-    event.option.deselect();
-
-  }
-
-  actualizarCantidad(id: number, event: any): void {
-    let cantidad: number = event.target.value as number;
-
-    if (cantidad == 0) {
-      return this.eliminarItemFactura(id);
-    }
-
-    this.venta.detalleVenta = this.venta.detalleVenta.map((item: DetalleVenta) => {
-      if (id === item.producto.idProducto) {
-        item.cantidad = cantidad;
-      }
-      return item;
-    });
-  }
-
-  existeItem(id: number): boolean {
-    let existe = false;
-    this.venta.detalleVenta.forEach((item: DetalleVenta) => {
-      if (id === item.producto.idProducto) {
-        existe = true;
-      }
-    });
-    return existe;
-  }
-
-  incrementaCantidad(id: number): void {
-    this.venta.detalleVenta = this.venta.detalleVenta.map((item: DetalleVenta) => {
-      if (id === item.producto.idProducto) {
-        ++item.cantidad;
-      }
-      return item;
-    });
-  }
-
-  eliminarItemFactura(id: number): void {
-    this.venta.detalleVenta = this.venta.detalleVenta.filter((item: DetalleVenta) => id !== item.producto.idProducto);
-  }
-
-  iniciarFormulario(){
-    this.formCreate = this.formBuilder.group({
-      serieVenta: ['', Validators.required],
-      numeroVenta: ['', Validators.required],
-      totalVenta: ['', Validators.required],
-      cedula:['', Validators.required],
-      descuentoVenta:['', Validators.required],
-      subTotalVenta:['', Validators.required],
-      ivaVenta:['', Validators.required],
-      totalPagarVenta:['', Validators.required],
-      estadoVenta:['', ],
-      observacion:['', Validators.required],
-      idEmpresa:[this.idEmpresa, Validators.required]
-    });
   }
 
   mostrarVentas(){
@@ -198,52 +103,16 @@ export class VentaComponent implements OnInit {
       console.log(error.error.mensaje);
     });
   }
-
-  openModalEdit(template: TemplateRef<any>) {
-    this.tipoAccion = "create";
-    this.titleModal = "Nueva Venta";
-    this.modalRef = this.modalService.show(template);
-  }
   
-  buscarCliente(cedula: string){
-    console.log("Cambio");
-    this.clienteService.getClienteByCedula(cedula).subscribe(res =>{
+  mostrarFormEdit(id: number): void{
+    this.ventaService.getVentaById(id).subscribe(res => {
       console.log(res);
-      this.clienteFactura = res;
-      this.clienteNombreCompleto = this.clienteFactura.nombres + " " + this.clienteFactura.apellidos;
-    },error => {
-      //console.log(error);
-      this.clienteFactura = this.clienteAuxiliar;
-      this.clienteNombreCompleto = "";
+      this.venta = res;
+      this.router.navigate(['/base/inicio'], { queryParams : { venta : id } } );
+
+    }, error =>{
+      console.log(error);
     });
-  }
-
-  buscarProductoCodigo(codigo: string){
-    console.log("Cambio");
-    this.productoService.filtrarProductosCodigo(codigo).subscribe(res =>{
-      console.log(res);
-      this.insertarProducto(res[0]);
-    },error => {
-      //console.log(error);
-      this.clienteFactura = this.clienteAuxiliar;
-    });
-  }
-
-  insertarProducto(item: Producto): void {
-    let producto = item;
-    console.log(producto);
-
-    if (this.existeItem(producto.idProducto)) {
-      this.incrementaCantidad(producto.idProducto);
-    } else {
-      let nuevoItem = new DetalleVenta();
-      nuevoItem.producto = producto;
-      nuevoItem.cantidad = 1;
-      console.log(nuevoItem);
-      this.venta.detalleVenta.push(nuevoItem);
-    }
-
-    this.autocompleteControl.setValue('');
   }
 
 }

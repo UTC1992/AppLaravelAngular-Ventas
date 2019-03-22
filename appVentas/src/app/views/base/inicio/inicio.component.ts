@@ -87,6 +87,13 @@ export class InicioComponent {
     this.iniciarFormulario();
     this.usuario = this.loginService.usuario;
     this.idEmpresa = this.usuario.idEmpresa;
+
+    this.activatedRoute.queryParams.subscribe(res =>{
+      console.log(res.venta);
+      if(res.venta > 0){
+        this.obtenerDatosVenta(parseInt(res.venta));
+      }
+    });
   }
 
   ngOnInit() {
@@ -99,6 +106,15 @@ export class InicioComponent {
       );
   }
 
+  //EDITAR VENTA INICIO
+  obtenerDatosVenta(id: number): void{
+    this.ventaService.getVentaById(id).subscribe(res =>{
+      console.log(res);
+      this.ventaEdit = res;
+    });
+  }
+  //EDITAR VENTA FIN
+  
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

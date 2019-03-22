@@ -35,4 +35,16 @@ export class VentaService {
     })
     );
   }
+
+  getVentaById(id: number): Observable<Venta>{
+    return this.http.get<Venta>(this.urlEndPoint +'/ventas/'+id)
+    .pipe(catchError( e => {
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
+      return throwError(e);
+    })
+    );
+  }
+
 }

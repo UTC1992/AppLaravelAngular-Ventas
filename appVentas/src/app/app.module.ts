@@ -28,7 +28,8 @@ import { MatTableModule, MatToolbarModule,
   MatButtonModule, MatSidenavModule, MatIconModule, 
   MatListModule, MatGridListModule, MatCardModule, 
   MatMenuModule, MatDatepickerModule, MatNativeDateModule, 
-  MatRadioModule, MatChipsModule, MatSelectModule, MatTabsModule } from '@angular/material';
+  MatRadioModule, MatChipsModule, MatSelectModule, 
+  MatTabsModule, MatDialogModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
@@ -69,7 +70,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatRadioModule,
     MatChipsModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
     
   ],
   providers: [
