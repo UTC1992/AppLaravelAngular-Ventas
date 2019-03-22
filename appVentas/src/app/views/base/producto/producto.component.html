@@ -116,108 +116,99 @@
 <!--MODAL CRUD-->
 <ng-template #template>
   <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>
       <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-      </button>  
-      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+      </button> 
   </div>
   
   <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
     <div class="modal-body">
         <div class="form-horizontal">
-          <div class="form-group">
-              <label class="control-label col-md-3">Código:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="codigoProducto"> 
-              </div>
+
+          <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Código" formControlName="codigoProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('codigoProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group">
-              <label  class="control-label col-md-3">Nombre:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" value="" formControlName="nombreProducto">
-              </div>
+          <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Producto" formControlName="nombreProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('nombreProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group">
-              <label class="control-label col-md-3">Descripción:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"   placeholder="" formControlName="descripcionProducto"> 
-              </div>
+          <div class="input-formulario">
+                <mat-form-field>
+                    <textarea  type="text" matInput placeholder="Descripción" formControlName="descripcionProducto" autocomplete="off"></textarea>
+                    <mat-error *ngIf="formCreate.get('descripcionProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label  class="control-label col-md-3">Stock:</label>
-              <div class="col-md-7">
-                  <input type="number" class="form-control"  placeholder="" formControlName="stockProducto"> 
-              </div>
-              
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Stock" formControlName="stockProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('stockProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label  class="control-label col-md-3">Stock mínimo:</label>
-              <div class="col-md-7">
-                  <input type="number" class="form-control"  placeholder="" formControlName="stockMinProducto"> 
-              </div>
-              
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="number" matInput placeholder="Stock Minimo" formControlName="stockMinProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('stockMinProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label class="control-label col-md-3">Costo:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="precioCostoProducto"> 
-              </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Costo" formControlName="precioCostoProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('precioCostoProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">P.V.P.:</label>
-            <div class="col-md-7">
-                <input type="text" class="form-control"  placeholder="" formControlName="precioVentaProducto"> 
-            </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="PVP" formControlName="precioVentaProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('precioVentaProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">Utilidad:</label>
-            <div class="col-md-7">
-                <input type="text" class="form-control"  placeholder="" formControlName="utilidadProducto"> 
-            </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Ganancia" formControlName="utilidadProducto" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('utilidadProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">Estado:</label>
-            <div class="col-md-7">
-                <label class="form-check-inline">
-                    Activo
-                    <input class="form-check-input" type="radio" formControlName="estadoProducto" [value]="true" >
-                </label>
-                <label class="form-check-inline">
-                    Inactivo
-                    <input class="form-check-input" type="radio" formControlName="estadoProducto" [value]="false">
-                </label> 
-            </div>
+          <div class="input-formulario" >
+                <mat-radio-group formControlName="estadoProducto">
+                    <mat-radio-button [value]="true">Activo</mat-radio-button>
+                    <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="formCreate.get('estadoProducto').hasError('requiredTrue')">Requerido</mat-error>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">Observaciones:</label>
-            <div class="col-md-7">
-                <textarea rows="3" class="form-control"  placeholder="" formControlName="observaciones"></textarea>
-            </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <textarea type="text" matInput placeholder="Observaciones" formControlName="observaciones" autocomplete="off"></textarea>
+                    <mat-error *ngIf="formCreate.get('observaciones').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">Categoría:</label>
-            <div class="col-md-7">
-              <label class="form-control col-lg-3" *ngFor="let item of categorias">
-                  {{ item.nombreCategoria }}
-                  <input class="form-check-input" type="radio" formControlName="categoria" [checked]="item.elegido" [value]="item">
-              </label>
-            </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <mat-select matNativeControl placeholder="Categoría" formControlName="categoria">
+                        <mat-option *ngFor="let item of categorias" [value]="item">{{ item.nombreCategoria }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formCreate.get('categoria').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-            <label class="control-label col-md-3">Tipo de producto:</label>
-            <div class="col-md-7">
-              <label class="form-control col-lg-3" *ngFor="let item of tipoProductos">
-                  {{ item.nombre }}
-                  <input class="form-check-input" type="radio" formControlName="tipoProducto" [checked]="item.elegido" [value]="item">
-              </label>
-            </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <mat-select matNativeControl placeholder="Tipo" formControlName="tipoProducto">
+                        <mat-option *ngFor="let item of tipoProductos" [value]="item">{{ item.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formCreate.get('tipoProducto').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
         </div>
     </div>
       <div class="modal-footer">
-      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
       <button type="submit" [disabled]="formCreate.invalid"
-      class="btn btn-success" >Guardar</button>
+      class="btn btn-primary btn-sm" >Guardar</button>
       </div>
   </form>
         

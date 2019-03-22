@@ -24,12 +24,12 @@ table {
 }
 
 .input-formulario {
-    display: flexbox;
-    flex-direction: column;
-  }
-  
+  display: flexbox;
+  flex-direction: column;
+}
+
 .input-formulario > * {
-    width: 100%;
+  width: 100%;
 }
 
 .mat-radio-button ~ .mat-radio-button {
@@ -40,3 +40,26 @@ table {
   height: 400px;
   overflow: auto;
 }
+
+.input-formulario-factura {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.input-formulario-factura > * {
+  width:40%;
+  height: 50px;
+  margin-left: 10px;
+}
+
+.buscador {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.buscador > * {
+  width:40%;
+  height: 50px;
+  margin-left: 10px;
+}
+

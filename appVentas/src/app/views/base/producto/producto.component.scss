@@ -23,13 +23,13 @@ table {
   background-color: #2B388E;
 }
 
-.example-container {
-    display: flexbox;
-    flex-direction: column;
-  }
-  
-.example-container > * {
-    width: 100%;
+.input-formulario {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.input-formulario > * {
+  width: 100%;
 }
 
 .mat-radio-button ~ .mat-radio-button {

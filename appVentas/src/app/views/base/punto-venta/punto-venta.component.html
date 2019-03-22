@@ -87,59 +87,61 @@
 
 <ng-template #template>
   <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+    <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>  
+    <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-      </button>  
-      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+    </button>
   </div>
   
   <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
     <div class="modal-body">
         <div class="form-horizontal">
-          <div class="form-group">
-              <label class="control-label col-md-3">Nombre:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="nombre"> 
-              </div>
+
+        
+          <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Nombre" formControlName="nombre" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('nombre').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group">
-              <label  class="control-label col-md-3">Descripción:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" value="" formControlName="descripcion">
-              </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Teléfono" formControlName="telefono" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('telefono').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group">
-              <label class="control-label col-md-3">Dirección:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"   placeholder="" formControlName="direccion"> 
-              </div>
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <mat-select matNativeControl placeholder="Provincia" formControlName="provincia">
+                        <mat-option *ngFor="let item of provincias" [value]="item.nombre">{{ item.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formCreate.get('provincia').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label  class="control-label col-md-3">Provincia:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="provincia"> 
-              </div>
-              
+          <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Ciudad" formControlName="ciudad" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('ciudad').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label  class="control-label col-md-3">Ciudad:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="ciudad"> 
-              </div>
-              
+          <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Dirección" formControlName="direccion" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('direccion').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
-          <div class="form-group" >
-              <label class="control-label col-md-3">Teléfono:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="telefono"> 
-              </div>
+          <div class="input-formulario">
+                <mat-form-field>
+                    <textarea type="text" matInput placeholder="Descripción" formControlName="descripcion" autocomplete="off"></textarea>
+                    <mat-error *ngIf="formCreate.get('descripcion').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
           </div>
         </div>
     </div>
       <div class="modal-footer">
-      <button type="button" class="btn btn-danger" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
       <button type="submit" [disabled]="formCreate.invalid"
-      class="btn btn-success" >Guardar</button>
+      class="btn btn-primary btn-sm" >Guardar</button>
       </div>
   </form>
         

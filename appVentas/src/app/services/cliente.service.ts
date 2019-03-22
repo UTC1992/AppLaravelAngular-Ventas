@@ -108,4 +108,16 @@ export class ClienteService {
     );
   }
 
+  getClienteByCedula(cedula: string): Observable<Cliente>{
+    let usuario = this.loginService.usuario;
+    return this.http.get<Cliente>(this.urlEndPoint +'/clientes/cedula/'+cedula+'/'+usuario.idEmpresa)
+    .pipe(catchError( e => {
+      if(e.error.mensaje){
+        //console.error(e.error.mensaje);
+      }
+      return throwError(e);
+    })
+    );
+  }
+
 }

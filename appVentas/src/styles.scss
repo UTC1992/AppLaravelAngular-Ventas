@@ -4,3 +4,15 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 */
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }
+
+ @for $i from 1 through 300{
+    .iconsize-#{$i}{
+      font-size: $i+unquote('px') !important;
+      height: $i+unquote('px') !important;
+      width: $i+unquote('px') !important;
+    };
+  }

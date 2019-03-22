@@ -129,7 +129,7 @@ export class UsuarioComponent implements OnInit {
       telefono: [this.usuarioEdit.telefono],
       direccion: [this.usuarioEdit.direccion, Validators.required],
       email: [this.usuarioEdit.email, Validators.required],
-      enabled:[this.usuarioEdit.enabled, Validators.required],
+      enabled:[this.usuarioEdit.enabled, Validators.requiredTrue],
       username:[this.usuarioEdit.username, Validators.required],
       password:["", Validators.required],
       idEmpresa:[this.usuarioEdit.idEmpresa, Validators.required]

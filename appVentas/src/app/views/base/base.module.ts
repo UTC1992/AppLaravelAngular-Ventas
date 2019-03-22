@@ -1,7 +1,7 @@
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { InicioComponent } from './inicio/inicio.component';
 
@@ -25,7 +25,7 @@ import { MatTableModule, MatToolbarModule,
   MatButtonModule, MatSidenavModule, MatIconModule, 
   MatListModule, MatGridListModule, MatCardModule, 
   MatMenuModule, MatDatepickerModule, MatNativeDateModule, 
-  MatRadioModule, MatChipsModule } from '@angular/material';
+  MatRadioModule, MatChipsModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 
@@ -37,8 +37,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     MatAutocompleteModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatInputModule,
     MatFormFieldModule,
     MatToolbarModule,
@@ -57,7 +55,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSelectModule,
+    MatTabsModule
   ],
   declarations: [
     InicioComponent,
@@ -75,6 +75,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
   exports: [
     
   ],
+  schemas: [
+    NO_ERRORS_SCHEMA, 
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
   
 })
 export class BaseModule { }

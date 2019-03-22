@@ -23,13 +23,13 @@ table {
   background-color: #2B388E;
 }
 
-.example-container {
-    display: flexbox;
-    flex-direction: column;
-  }
-  
-.example-container > * {
-    width: 100%;
+.input-formulario {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.input-formulario > * {
+  width: 100%;
 }
 
 .mat-radio-button ~ .mat-radio-button {
@@ -40,3 +40,22 @@ table {
   height: 400px;
   overflow: auto;
 }
+
+.input-formulario-factura {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.input-formulario-factura > * {
+  width:50%;
+}
+
+.buscador {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.buscador > * {
+  width:40%;
+}
+

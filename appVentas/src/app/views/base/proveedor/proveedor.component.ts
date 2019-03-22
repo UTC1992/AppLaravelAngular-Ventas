@@ -81,7 +81,7 @@ export class ProveedorComponent implements OnInit {
       email:['', Validators.required],
       cuenta1:['', Validators.required],
       cuenta2:['',],
-      estado:['', Validators.required],
+      estado:['', Validators.requiredTrue],
       observacion:['', Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
@@ -103,7 +103,7 @@ export class ProveedorComponent implements OnInit {
       email:[this.proveedorEdit.email, Validators.required],
       cuenta1:[this.proveedorEdit.cuenta1, Validators.required],
       cuenta2:[this.proveedorEdit.cuenta2,],
-      estado:[this.proveedorEdit.estado, Validators.required],
+      estado:[this.proveedorEdit.estado, Validators.requiredTrue],
       observacion:[this.proveedorEdit.observacion, Validators.required],
       idEmpresa:[this.idEmpresa, Validators.required]
     });

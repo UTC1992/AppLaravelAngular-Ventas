@@ -48,6 +48,9 @@ export class VentaComponent implements OnInit {
   ventaEdit: Venta;
   venta: Venta = new Venta();
 
+  clienteFactura: Cliente = new Cliente();
+  clienteAuxiliar: Cliente = new Cliente();
+
   idEmpresa: any;
   usuario: Usuario;
 
@@ -62,8 +65,12 @@ export class VentaComponent implements OnInit {
   productosFiltrados: Observable<Producto[]>;
 
   cedulaRuc: any;
+  clienteNombreCompleto: any;
 
   codigoProducto: string;
+
+  fecha = new Date();
+  fechaActual = this.fecha.getDate()+"-"+(this.fecha.getMonth() +1)+"-"+this.fecha.getFullYear();
 
   constructor(
     private ventaService: VentaService,
@@ -88,8 +95,7 @@ export class VentaComponent implements OnInit {
     
     this.productosFiltrados = this.autocompleteControl.valueChanges
       .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.codigoProducto),
+        map(value => typeof value === 'string' ? value : value.nombre),
         flatMap(value => value ? this._filter(value) : [])
       );
   }
@@ -97,27 +103,19 @@ export class VentaComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
-  buscarProducto(codigo: string){
-    this.productoService.filtrarProductos(codigo).subscribe(res =>{
-      console.log(res[0]);
-      this.seleccionarProducto(res[0]);
-      
-    });
-  }
 
   private _filter(value: string): Observable<Producto[]> {
-    const filterValue = value;
-    console.log(filterValue);
-    return this.productoService.filtrarProductos(filterValue);
+    const filterValue = value.toLowerCase();
+
+    return this.productoService.filtrarProductosNombre(filterValue);
   }
 
   mostrarNombre(producto?: Producto): string | undefined {
     return producto ? producto.nombreProducto : undefined;
   }
 
-  seleccionarProducto(item: Producto): void {
-    let producto = item;
+  seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
+    let producto = event.option.value as Producto;
     console.log(producto);
 
     if (this.existeItem(producto.idProducto)) {
@@ -131,8 +129,8 @@ export class VentaComponent implements OnInit {
     }
 
     this.autocompleteControl.setValue('');
-    //event.option.focus();
-    //event.option.deselect();
+    event.option.focus();
+    event.option.deselect();
 
   }
 
@@ -201,14 +199,51 @@ export class VentaComponent implements OnInit {
     });
   }
 
-  openModalCreate(template: TemplateRef<any>) {
+  openModalEdit(template: TemplateRef<any>) {
     this.tipoAccion = "create";
     this.titleModal = "Nueva Venta";
     this.modalRef = this.modalService.show(template);
   }
   
-  buscarCliente(){
+  buscarCliente(cedula: string){
     console.log("Cambio");
+    this.clienteService.getClienteByCedula(cedula).subscribe(res =>{
+      console.log(res);
+      this.clienteFactura = res;
+      this.clienteNombreCompleto = this.clienteFactura.nombres + " " + this.clienteFactura.apellidos;
+    },error => {
+      //console.log(error);
+      this.clienteFactura = this.clienteAuxiliar;
+      this.clienteNombreCompleto = "";
+    });
+  }
+
+  buscarProductoCodigo(codigo: string){
+    console.log("Cambio");
+    this.productoService.filtrarProductosCodigo(codigo).subscribe(res =>{
+      console.log(res);
+      this.insertarProducto(res[0]);
+    },error => {
+      //console.log(error);
+      this.clienteFactura = this.clienteAuxiliar;
+    });
+  }
+
+  insertarProducto(item: Producto): void {
+    let producto = item;
+    console.log(producto);
+
+    if (this.existeItem(producto.idProducto)) {
+      this.incrementaCantidad(producto.idProducto);
+    } else {
+      let nuevoItem = new DetalleVenta();
+      nuevoItem.producto = producto;
+      nuevoItem.cantidad = 1;
+      console.log(nuevoItem);
+      this.venta.detalleVenta.push(nuevoItem);
+    }
+
+    this.autocompleteControl.setValue('');
   }
 
 }

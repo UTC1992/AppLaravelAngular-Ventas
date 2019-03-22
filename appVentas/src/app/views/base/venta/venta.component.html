@@ -1,250 +1,226 @@
 <div class="container">
-<br>
-<section class="content-header text-center">
-    <ol class="breadcrumb">
-        <li><a [routerLink]="['/base/venta']" routerLinkActive="active">{{ subTitlePagina }}</a></li>
-        <mat-icon>keyboard_arrow_right</mat-icon>
-        <li class="active">Aquí</li>
-    </ol>
-</section>
-<mat-card>
-    <h5 class="text-center">
-        <b>{{ subTitlePagina }}</b>
-    </h5>
-    <mat-grid-list cols="2" rowHeight="1:0.2">
-        <mat-grid-tile>
-            <button data-toggle="modal" data-target="#exampleModal" 
-            class="btn btn-primary btn-sm" (click)="openModalCreate(template)"  id="" >Crear venta</button>
-            <br>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field class="col-lg-6">
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
-            </mat-form-field>
-        </mat-grid-tile>
-    </mat-grid-list>
-    
-    <div class="table-responsive tabla-datos">
-        <table mat-table [dataSource]="dataSource" class="table table-sm table-striped">
-            
-            <ng-container matColumnDef="idVenta">
-                <th mat-header-cell *matHeaderCellDef> Código </th>
-                <td mat-cell *matCellDef="let item"> {{item.idVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="serieVenta">
-                <th mat-header-cell *matHeaderCellDef> Serie </th>
-                <td mat-cell *matCellDef="let item">
-                      {{item.serieVenta}}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="numeroVenta">
-                <th mat-header-cell *matHeaderCellDef> # Venta</th>
-                <td mat-cell *matCellDef="let item"> {{item.numeroVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="totalVenta">
-                <th mat-header-cell *matHeaderCellDef> Total Venta </th>
-                <td mat-cell *matCellDef="let item"> {{item.totalVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="descuentoVenta">
-                <th mat-header-cell *matHeaderCellDef> Descuento </th>
-                <td mat-cell *matCellDef="let item"> {{item.descuentoVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="subTotalVenta">
-                <th mat-header-cell *matHeaderCellDef> Sub Total </th>
-                <td mat-cell *matCellDef="let item"> {{item.subTotalVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="ivaVenta">
-                <th mat-header-cell *matHeaderCellDef> IVA </th>
-                <td mat-cell *matCellDef="let item"> {{item.ivaVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="totalPagarVenta">
-                <th mat-header-cell *matHeaderCellDef> Total Pagar </th>
-                <td mat-cell *matCellDef="let item"> {{item.totalPagarVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="estadoVenta">
-                <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let item"> {{item.estadoVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="puntoVentaId">
-                <th mat-header-cell *matHeaderCellDef> Sucursal </th>
-                <td mat-cell *matCellDef="let item"> {{item.puntoVentaId}} </td>
-            </ng-container>
-            <ng-container matColumnDef="tipoDocumento">
-                <th mat-header-cell *matHeaderCellDef> Documento </th>
-                <td mat-cell *matCellDef="let item"> {{item.tipoDocumento.nombreDocumento}} </td>
-            </ng-container>
-            <ng-container matColumnDef="usuario">
-                <th mat-header-cell *matHeaderCellDef> Usuario </th>
-                <td mat-cell *matCellDef="let item"> {{item.usuario.username}} </td>
-            </ng-container>
-            <ng-container matColumnDef="cliente">
-                <th mat-header-cell *matHeaderCellDef> Cliente </th>
-                <td mat-cell *matCellDef="let item"> {{item.cliente.cedula}} </td>
-            </ng-container>
-            <ng-container matColumnDef="detalleVenta">
-                <th mat-header-cell *matHeaderCellDef> Detalle</th>
-                <td mat-cell *matCellDef="let item"> {{item.detalleVenta}} </td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef> Total</th>
-                <td mat-cell *matCellDef="let item"> {{item.total}} </td>
-            </ng-container>
+  <br>
+  <section class="content-header text-center">
+      <ol class="breadcrumb">
+          <li><a [routerLink]="['/base/venta']" routerLinkActive="active">{{ subTitlePagina }}</a></li>
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <li class="active">Aquí</li>
+      </ol>
+  </section>
+  <mat-card>
+      <h5 class="text-center">
+          <b>{{ subTitlePagina }}</b>
+      </h5>
+      <mat-grid-list cols="2" rowHeight="1:0.2">
+          <mat-grid-tile>
+              <button class="btn btn-primary btn-sm" [routerLink]="['/base/inicio']">Crear venta</button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <mat-form-field class="col-lg-6">
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+              </mat-form-field>
+          </mat-grid-tile>
+      </mat-grid-list>
+      
+      <div class="table-responsive tabla-datos">
+          <table mat-table [dataSource]="dataSource" class="table table-sm table-striped">
+              
+              <ng-container matColumnDef="idVenta">
+                  <th mat-header-cell *matHeaderCellDef> Código </th>
+                  <td mat-cell *matCellDef="let item"> {{item.idVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="serieVenta">
+                  <th mat-header-cell *matHeaderCellDef> Serie </th>
+                  <td mat-cell *matCellDef="let item">
+                        {{item.serieVenta}}
+                  </td>
+              </ng-container>
+              <ng-container matColumnDef="numeroVenta">
+                  <th mat-header-cell *matHeaderCellDef> # Venta</th>
+                  <td mat-cell *matCellDef="let item"> {{item.numeroVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="totalVenta">
+                  <th mat-header-cell *matHeaderCellDef> Total Venta </th>
+                  <td mat-cell *matCellDef="let item"> {{item.totalVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="descuentoVenta">
+                  <th mat-header-cell *matHeaderCellDef> Descuento </th>
+                  <td mat-cell *matCellDef="let item"> {{item.descuentoVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="subTotalVenta">
+                  <th mat-header-cell *matHeaderCellDef> Sub Total </th>
+                  <td mat-cell *matCellDef="let item"> {{item.subTotalVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="ivaVenta">
+                  <th mat-header-cell *matHeaderCellDef> IVA </th>
+                  <td mat-cell *matCellDef="let item"> {{item.ivaVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="totalPagarVenta">
+                  <th mat-header-cell *matHeaderCellDef> Total Pagar </th>
+                  <td mat-cell *matCellDef="let item"> {{item.totalPagarVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="estadoVenta">
+                  <th mat-header-cell *matHeaderCellDef> Estado </th>
+                  <td mat-cell *matCellDef="let item"> {{item.estadoVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="puntoVentaId">
+                  <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+                  <td mat-cell *matCellDef="let item"> {{item.puntoVentaId}} </td>
+              </ng-container>
+              <ng-container matColumnDef="tipoDocumento">
+                  <th mat-header-cell *matHeaderCellDef> Documento </th>
+                  <td mat-cell *matCellDef="let item"> {{item.tipoDocumento.nombreDocumento}} </td>
+              </ng-container>
+              <ng-container matColumnDef="usuario">
+                  <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                  <td mat-cell *matCellDef="let item"> {{item.usuario.username}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cliente">
+                  <th mat-header-cell *matHeaderCellDef> Cliente </th>
+                  <td mat-cell *matCellDef="let item"> {{item.cliente.cedula}} </td>
+              </ng-container>
+              <ng-container matColumnDef="detalleVenta">
+                  <th mat-header-cell *matHeaderCellDef> Detalle</th>
+                  <td mat-cell *matCellDef="let item"> {{item.detalleVenta}} </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef> Total</th>
+                  <td mat-cell *matCellDef="let item"> {{item.total}} </td>
+              </ng-container>
 
-            <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let item">
-                    <div style="width: 140px;">
-                        <button type="button" class="btn btn-info btn-sm" (click)="openModalEdit(template, item.idCliente)">Editar</button>
-                      <button type="button" class="btn btn-danger btn-sm" (click)="confirmarEliminar(item.idCliente)">Eliminar</button>
-                    </div>
-                </td>
-            </ng-container>
+              <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                  <td mat-cell *matCellDef="let item">
+                      <div style="width: 140px;">
+                          <button type="button" class="btn btn-info btn-sm" (click)="openModalEdit(template, item.idCliente)">Editar</button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="confirmarEliminar(item.idCliente)">Eliminar</button>
+                      </div>
+                  </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>  
-    </div>
-</mat-card>
-<br>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>  
+      </div>
+  </mat-card>
 </div>
+
 
 <!--MODAL PARA CRUD-->
 <ng-template #template>
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>  
-              <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
-          </div>
-
-          <div class="modal-body">
-              <div class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-md-2">Ruc / CI:</label>
-                  <div class="col-md-3">
-                      <input type="text" class="form-control" [(ngModel)]="cedulaRuc" placeholder="" autofocus> 
-                  </div>
-                  <label class="control-label col-md-2">Cliente:</label>
-                  <div class="col-md-3">
-                      <input type="text" class="form-control"  placeholder="" readonly> 
-                  </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Dirección:</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control"  placeholder="" readonly> 
-                    </div>
-                    <label class="control-label col-md-2">Teléfono:</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control"  placeholder="" readonly> 
-                    </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-2">Ciudad:</label>
-                  <div class="col-md-3">
-                      <input type="text" class="form-control"  placeholder="" readonly> 
-                  </div>
-                  <label class="control-label col-md-2">Fecha:</label>
-                  <div class="col-md-3">
-                      <input type="text" class="form-control"  placeholder="" readonly> 
-                  </div>
-                </div>
-              </div>
-          </div>
-          
-          <form>
-            <!--
-            <div class="form-horizontal">
-              <div class="form-group">
-                <mat-form-field>
-                  <label class="control-label col-md-3">Producto:</label>
-                  <input type="text" class="form-control" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
-                    <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
-                      {{producto.nombreProducto}}
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-                <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && facturaForm.submitted">
-                  La factura no puede no tener líneas!.
-                </div>
-              </div>
-            </div>
-            -->
-          </form>
-          <div class="modal-body">
-              <div class="form-horizontal">
-                <div class="form-group">
-                  <label class="control-label col-md-3">Código producto:</label>
-                  <div class="col-md-4">
-                      <input type="number" class="form-control" [(ngModel)]="codigoProducto"  placeholder=""> 
-                  </div>
-                  <div class="col-md-4">
-                    <button class="btn btn-success" (click)="buscarProducto(codigoProducto)">Buscar</button>
-                  </div>
-                </div>
-              </div>
-          </div>
-          <div class="box-body">
-              <div class="table-responsive">
-                <div class="alert alert-info my-4" *ngIf="venta.detalleVenta.length == 0">
-                  No hay líneas asignadas para la factura. Debe agregar al menos una!
-                </div>
-                <table class="table table-striped table-hover table-bordered table-sm  text-center" 
-                *ngIf="venta.detalleVenta.length > 0">
-                  <thead>
-                    <tr>
-                      <th style="width: 100px;">Cantidad</th>
-                      <th>Detalle</th>
-                      <th style="width: 100px;">Precio</th>
-                      <th style="width: 100px;">Total</th>
-                      <th style="width: 100px;">Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of venta.detalleVenta">
-                      <td>
-                        <input type="number" value="{{item.cantidad}}" class="form-control" (change)="actualizarCantidad(item.producto.idProducto, $event)">
-                      </td>                  
-                      <td>{{item.producto.nombreProducto}}</td>
-                      <td>{{item.producto.precioVentaProducto}}</td>
-                      <td>{{item.calcularImporte()}}</td>
-                      <td><button class="btn btn-danger btn-xs" type="button"
-                        (click)="eliminarItemFactura(item.producto.idProducto)">x</button></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td><b>SUBTOTAL</b></td>
-                      <td><span class="badge badge-secondary">{{ venta.subTotal() }}</span> $</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td><b>IVA 0%</b></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td><b>IVA %</b></td>
-                      <td><span class="badge badge-secondary">{{ venta.iva12() }}</span>$</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"></td>
-                      <td><b>TOTAL</b></td>
-                      <td><span class="badge badge-secondary">{{ venta.totalFinal() }}</span>$</td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
-              
-              </div>
-          </div>
-
-        </div>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> 
     </div>
-        
+    <div class="modal-body">
+      <mat-card>
+        <div class="input-formulario-factura text-center">
+          <mat-form-field>
+              <input type="text" matInput placeholder="Cédula" autofocus 
+              [(ngModel)]="cedulaRuc" autocomplete="off" (ngModelChange)="buscarCliente(cedulaRuc)">
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" [(ngModel)]="clienteNombreCompleto" matInput placeholder="Nombre" readonly>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" [(ngModel)]="clienteFactura.direccion" matInput placeholder="Dirección" readonly>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" [(ngModel)]="clienteFactura.telefono" matInput placeholder="Teléfono" readonly>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" [(ngModel)]="clienteFactura.ciudad" matInput placeholder="Ciudad" readonly>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" [(ngModel)]="fechaActual" matInput placeholder="Fecha" readonly>
+          </mat-form-field>
+        </div>
+        <div class="buscador text-center">
+          <mat-form-field>
+            <input type="text" placeholder="Buscar por NOMBRE" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="seleccionarProducto($event)">
+              <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
+                {{producto.nombreProducto}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+              <input type="text" matInput placeholder="Buscar por CÓDIGO" autofocus 
+              [(ngModel)]="codigoProducto" autocomplete="off" 
+              (ngModelChange)="buscarProductoCodigo(codigoProducto)">
+          </mat-form-field>
+        </div>
+        <div class="alert alert-danger" *ngIf="autocompleteControl.invalid && facturaForm.submitted">
+          La factura no puede no tener líneas!.
+        </div>
+        <div class="table-responsive">
+          <div class="alert alert-primary my-4" *ngIf="venta.detalleVenta.length == 0">
+            No hay productos ingresados en la factura. Debe agregar al menos uno!
+          </div>
+          <table class="table table-striped table-hover table-bordered table-sm  text-center" 
+          *ngIf="venta.detalleVenta.length > 0">
+            <thead>
+              <tr>
+                <th style="width: 100px;">Cantidad</th>
+                <th>Detalle</th>
+                <th style="width: 100px;">Precio</th>
+                <th style="width: 100px;">Total</th>
+                <th style="width: 100px;">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of venta.detalleVenta">
+                <td>
+                  <input type="number" value="{{item.cantidad}}" class="form-control" (change)="actualizarCantidad(item.producto.idProducto, $event)">
+                </td>                  
+                <td>{{item.producto.nombreProducto}}</td>
+                <td>{{item.producto.precioVentaProducto}}</td>
+                <td>{{item.calcularImporte()}}</td>
+                <td><button class="btn btn-danger btn-sm"
+                  (click)="eliminarItemFactura(item.producto.idProducto)">
+                  <mat-icon class="iconsize-20">delete</mat-icon></button></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td><b>SUBTOTAL</b></td>
+                <td><span class="badge badge-secondary">{{ venta.subTotal() }}</span> $</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td><b>IVA 0%</b></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td><b>IVA %</b></td>
+                <td><span class="badge badge-secondary">{{ venta.iva12() }}</span>$</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td><b>TOTAL</b></td>
+                <td><span class="badge badge-secondary">{{ venta.totalFinal() }}</span>$</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="4"></td>
+                <td>
+                  <input type="submit" (click)="create(facturaForm)" 
+                  value="Crear Factura" class="btn btn-primary btn-sm">      
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="modalRef.hide()" data-dismiss="modal">Cerrar</button>
+      <button type="submit" [disabled]="formCreate.invalid"
+      class="btn btn-primary btn-sm" >Guardar</button>
+    </div>
 </ng-template>

@@ -97,56 +97,58 @@
     <form [formGroup]="formCreateUser"  (ngSubmit)="enviarDatosUsuario()" autocomplete="off">
         <div class="modal-body">
             <div class="form-horizontal">
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="text" matInput placeholder="Cédula" formControlName="dni" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('dni').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="text" matInput placeholder="Nombre" formControlName="nombre" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('nombre').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="text" matInput placeholder="Apellido" formControlName="apellido" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('apellido').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="text" matInput placeholder="Celular" formControlName="celular" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('celular').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="text" matInput placeholder="Dirección" formControlName="direccion" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('direccion').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="email" matInput placeholder="Email" formControlName="email" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('email').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
+                    <label>Estado</label>
                     <mat-radio-group formControlName="enabled">
                         <mat-radio-button [value]="true">Activo</mat-radio-button>
                         <mat-radio-button [value]="false">Inactivo</mat-radio-button>
                     </mat-radio-group>
+                    <mat-error *ngIf="formCreateUser.get('enabled').hasError('requiredTrue')">Requerido</mat-error>
 
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="email" matInput placeholder="Username" formControlName="username" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('username').hasError('required')">Requerido</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="example-container">
+                <div class="input-formulario">
                     <mat-form-field>
                         <input type="password" matInput placeholder="Password" formControlName="password" autocomplete="off">
                         <mat-error *ngIf="formCreateUser.get('password').hasError('required')">Requerido</mat-error>

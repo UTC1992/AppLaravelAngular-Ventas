@@ -111,9 +111,21 @@ export class ProductoService {
     );
   }
 
-  filtrarProductos(texto: string): Observable<Producto[]>{
+  filtrarProductosCodigo(texto: string): Observable<Producto[]>{
     let usuario = this.loginService.usuario;
     return this.http.get<Producto[]>(this.urlEndPoint +'/productos/codigo/' + texto + '/'+ usuario.idEmpresa)
+    .pipe(catchError( e => {
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
+      return throwError(e);
+    })
+    );
+  }
+
+  filtrarProductosNombre(texto: string): Observable<Producto[]>{
+    let usuario = this.loginService.usuario;
+    return this.http.get<Producto[]>(this.urlEndPoint +'/productos/nombre/' + texto + '/'+ usuario.idEmpresa)
     .pipe(catchError( e => {
       if(e.error.mensaje){
         console.error(e.error.mensaje);

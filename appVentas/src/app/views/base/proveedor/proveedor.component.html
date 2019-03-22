@@ -110,120 +110,115 @@
                 
 <ng-template #template>
   <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>
+        <button type="button" class="close" data-dismiss="modal" (click)="modalRef.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-      </button>  
-      <h4 class="modal-title" id="exampleModalLabel"><b>{{ titleModal }}</b></h4>
+        </button>  
   </div>
   
   <form [formGroup]="formCreate"  (ngSubmit)="enviarDatos()" >
       <div class="modal-body">
           <div class="form-horizontal">
-            <div class="form-group">
-              <label class="control-label col-md-3">Ruc:</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="ruc"> 
-              </div>
+
+            <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Ruc" formControlName="ruc" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('ruc').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group">
-                <label class="control-label col-md-3">Cédula:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="cedula"> 
-                </div>
+            <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Cedula" formControlName="cedula" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('cedula').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group">
-                <label  class="control-label col-md-3">Nombre:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" value="" formControlName="nombre">
-                </div>
+            <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Nombre" formControlName="nombre" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('nombre').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group">
-                <label class="control-label col-md-3">Apellido:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"   placeholder="" formControlName="apellido"> 
-                </div>
+            <div class="input-formulario">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Apellido" formControlName="apellido" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('apellido').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-                <label  class="control-label col-md-3">Dirección principal:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="direccion1"> 
-                </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Teléfono" formControlName="telefono" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('telefono').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label  class="control-label col-md-3">Dirección secundaria (opcional):</label>
-              <div class="col-md-7">
-                  <input type="text" class="form-control"  placeholder="" formControlName="direccion2"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Celular" formControlName="celular" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('celular').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-                <label  class="control-label col-md-3">Teléfono:</label>
-                <div class="col-md-7">
-                    <input type="text" class="form-control"  placeholder="" formControlName="telefono"> 
-                </div>
-                
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Email" formControlName="email" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('email').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-                <label class="control-label col-md-3">Provincia:</label>
-                <div class="col-md-7">
-                    <select class="form-control"  placeholder="" formControlName="provincia">
-                      <option *ngFor="let item of provincias" value="{{ item.nombre }}">{{ item.nombre }}</option>
-                    </select>
-                </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <mat-select matNativeControl placeholder="Provincia" formControlName="provincia">
+                        <mat-option *ngFor="let item of provincias" [value]="item.nombre">{{ item.nombre }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formCreate.get('provincia').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Ciudad:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="ciudad"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Ciudad" formControlName="ciudad" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('ciudad').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Sitio Web:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="sitioWeb"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Dirección principal" formControlName="direccion1" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('direccion1').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Celular:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="celular"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Dirección secundaria" formControlName="direccion2" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('direccion2').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Email:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="email"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Cuenta principal" formControlName="cuenta1" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('cuenta1').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Cuenta principal:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="cuenta1"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Cuenta secundaria" formControlName="cuenta2" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('cuenta2').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Cuenta secundaria:</label>
-              <div class="col-md-7">
-                  <input type="email" class="form-control"  placeholder="" formControlName="cuenta2"> 
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Sitio Web" formControlName="sitioWeb" autocomplete="off">
+                    <mat-error *ngIf="formCreate.get('sitioWeb').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-              <label class="control-label col-md-3">Observación:</label>
-              <div class="col-md-7">
-                  <textarea rows="3" class="form-control"  placeholder="" formControlName="observacion"></textarea>
-              </div>
+            <div class="input-formulario" >
+                <mat-form-field>
+                    <textarea type="text" matInput placeholder="Observacion" formControlName="observacion" autocomplete="off"></textarea>
+                    <mat-error *ngIf="formCreate.get('observacion').hasError('required')">Requerido</mat-error>
+                </mat-form-field>
             </div>
-            <div class="form-group" >
-                <label class="control-label col-md-3">Estado:</label>
-                <div class="col-md-7">
-                    <label class="form-check-inline">
-                        Activo
-                        <input class="form-check-input" type="radio" formControlName="estado" [value]="true" >
-                    </label>
-                    <label class="form-check-inline">
-                        Inactivo
-                        <input class="form-check-input" type="radio" formControlName="estado" [value]="false">
-                    </label> 
-                </div>
+            <div class="input-formulario" >
+                <label>Estado</label>
+                <mat-radio-group formControlName="estado">
+                    <mat-radio-button [value]="true">Activo</mat-radio-button>
+                    <mat-radio-button [value]="false">Inactivo</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="formCreate.get('estado').hasError('requiredTrue')">Requerido</mat-error>
             </div>
           </div>
       </div>

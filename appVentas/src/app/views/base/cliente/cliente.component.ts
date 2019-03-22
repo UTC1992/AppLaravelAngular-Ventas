@@ -75,7 +75,7 @@ export class ClienteComponent implements OnInit {
       ciudad:['', Validators.required],
       sitioWeb:['', ],
       email:['', Validators.required],
-      observaciones:['', Validators.required],
+      observaciones:['',],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
   }
@@ -92,7 +92,7 @@ export class ClienteComponent implements OnInit {
       ciudad:[this.clientesEdit.ciudad, Validators.required],
       sitioWeb:[this.clientesEdit.sitioWeb, ],
       email:[this.clientesEdit.email, Validators.required],
-      observaciones:[this.clientesEdit.observaciones, Validators.required],
+      observaciones:[this.clientesEdit.observaciones, ],
       idEmpresa:[this.idEmpresa, Validators.required]
     });
   }
