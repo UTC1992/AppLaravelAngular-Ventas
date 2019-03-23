@@ -1,6 +1,13 @@
 <br>
 <div class="container">
   <mat-card>
+    <div class="input-tipoDoc" >
+        <mat-form-field>
+            <mat-select matNativeControl [(ngModel)]="documentoFactura" placeholder="Tipo de Documento" >
+                <mat-option *ngFor="let item of tipoDocumentos" [value]="item">{{ item.nombreDocumento }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
     <div class="input-formulario-factura text-center">
       <mat-form-field>
           <input type="text" matInput placeholder="Cédula" autofocus 
@@ -41,11 +48,11 @@
       La factura no puede no tener líneas!.
     </div>
     <div class="table-responsive">
-      <div class="alert alert-primary my-4" *ngIf="venta.detalleVenta.length == 0">
+      <div class="alert alert-primary my-4" *ngIf="detalleVenta.length == 0">
         No hay productos ingresados en la factura. Debe agregar al menos uno!
       </div>
       <table class="table table-striped table-hover table-bordered table-sm  text-center" 
-      *ngIf="venta.detalleVenta.length > 0">
+      *ngIf="detalleVenta.length > 0">
         <thead>
           <tr>
             <th style="width: 100px;">Cantidad</th>
@@ -56,17 +63,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of venta.detalleVenta">
+          <tr *ngFor="let item of detalleVenta">
             <td>
               <input type="number" value="{{item.cantidad}}" class="form-control" (change)="actualizarCantidad(item.producto.idProducto, $event)">
             </td>                  
             <td>{{item.producto.nombreProducto}}</td>
             <td>{{item.producto.precioVentaProducto}}</td>
-            <td>{{item.calcularImporte()}}</td>
+            <!--<td>{{item.calcularImporte()}}</td>-->
             <td><button class="btn btn-danger btn-sm"
               (click)="eliminarItemFactura(item.producto.idProducto)">
-              <mat-icon class="iconsize-20">delete</mat-icon></button></td>
+              x</button></td>
           </tr>
+          <!--
           <tr>
             <td colspan="2"></td>
             <td><b>SUBTOTAL</b></td>
@@ -91,6 +99,7 @@
             <td><span class="badge badge-secondary">{{ venta.totalFinal() }}</span>$</td>
             <td></td>
           </tr>
+          -->
           <tr>
             <td colspan="4"></td>
             <td>

@@ -7,6 +7,7 @@ import { LoginService } from '../../../services/login.service';
 import { ProductoService } from '../../../services/producto.service';
 import { TipoDocumentoService } from '../../../services/tipo-documento.service';
 import { VentaService } from '../../../services/venta.service';
+import { UsuarioService } from '../../../services/usuario.service';
 
 import { Usuario } from 'src/app/models/usuario';
 import { Cliente } from '../../../models/cliente';
@@ -47,9 +48,13 @@ export class InicioComponent {
   public ventas: Venta[];
   ventaEdit: Venta;
   venta: Venta = new Venta();
+  tipoDocumentos: TipoDocumento[];
+  detalleVenta: DetalleVenta[] = [];
 
   clienteFactura: Cliente = new Cliente();
   clienteAuxiliar: Cliente = new Cliente();
+  usuarioFactura: Usuario = new Usuario();
+  documentoFactura: TipoDocumento = new TipoDocumento();
 
   idEmpresa: any;
   usuario: Usuario;
@@ -82,7 +87,8 @@ export class InicioComponent {
     private modalService: BsModalService,
     public modalRef: BsModalRef,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private usuarioService: UsuarioService
   ) {
     this.iniciarFormulario();
     this.usuario = this.loginService.usuario;
@@ -98,22 +104,15 @@ export class InicioComponent {
 
   ngOnInit() {
     this.subTitlePagina = "Ventas";
-    
+    this.obtenerTiposDocumento();
+    this.obtenerUsuario();
+
     this.productosFiltrados = this.autocompleteControl.valueChanges
       .pipe(
         map(value => typeof value === 'string' ? value : value.nombre),
         flatMap(value => value ? this._filter(value) : [])
       );
   }
-
-  //EDITAR VENTA INICIO
-  obtenerDatosVenta(id: number): void{
-    this.ventaService.getVentaById(id).subscribe(res =>{
-      console.log(res);
-      this.ventaEdit = res;
-    });
-  }
-  //EDITAR VENTA FIN
   
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -139,10 +138,14 @@ export class InicioComponent {
       let nuevoItem = new DetalleVenta();
       nuevoItem.producto = producto;
       nuevoItem.cantidad = 1;
+      nuevoItem.costoDetalle = producto.precioVentaProducto;
+      nuevoItem.totalDetalle = producto.precioVentaProducto * nuevoItem.cantidad;
+      nuevoItem.ivaDetalle = parseFloat(nuevoItem.totalDetalle) * 0.12;
       console.log(nuevoItem);
-      this.venta.detalleVenta.push(nuevoItem);
+      this.detalleVenta.push(nuevoItem);
     }
 
+    this.iniciarFormulario();
     this.autocompleteControl.setValue('');
     event.option.focus();
     event.option.deselect();
@@ -156,26 +159,30 @@ export class InicioComponent {
       return this.eliminarItemFactura(id);
     }
 
-    this.venta.detalleVenta = this.venta.detalleVenta.map((item: DetalleVenta) => {
+    this.detalleVenta = this.detalleVenta.map((item: DetalleVenta) => {
       if (id === item.producto.idProducto) {
-        item.cantidad = cantidad;
+        item.cantidad = parseInt(cantidad+'');
+        item.costoDetalle = item.producto.precioVentaProducto;
+        item.totalDetalle = item.producto.precioVentaProducto * item.cantidad;
+        item.ivaDetalle = parseFloat(item.totalDetalle) * 0.12;
       }
+      this.iniciarFormulario();
       return item;
     });
   }
 
   existeItem(id: number): boolean {
     let existe = false;
-    this.venta.detalleVenta.forEach((item: DetalleVenta) => {
-      if (id === item.producto.idProducto) {
+    for(let i=0; i < this.detalleVenta.length; i++ ){
+      if (id === this.detalleVenta[i].producto.idProducto) {
         existe = true;
       }
-    });
+    }
     return existe;
   }
 
   incrementaCantidad(id: number): void {
-    this.venta.detalleVenta = this.venta.detalleVenta.map((item: DetalleVenta) => {
+    this.detalleVenta = this.detalleVenta.map((item: DetalleVenta) => {
       if (id === item.producto.idProducto) {
         ++item.cantidad;
       }
@@ -184,22 +191,15 @@ export class InicioComponent {
   }
 
   eliminarItemFactura(id: number): void {
-    this.venta.detalleVenta = this.venta.detalleVenta.filter((item: DetalleVenta) => id !== item.producto.idProducto);
+    this.detalleVenta = this.detalleVenta.filter((item: DetalleVenta) => id !== item.producto.idProducto);
   }
 
-  iniciarFormulario(){
-    this.formCreate = this.formBuilder.group({
-      serieVenta: ['', Validators.required],
-      numeroVenta: ['', Validators.required],
-      totalVenta: ['', Validators.required],
-      cedula:['', Validators.required],
-      descuentoVenta:['', Validators.required],
-      subTotalVenta:['', Validators.required],
-      ivaVenta:['', Validators.required],
-      totalPagarVenta:['', Validators.required],
-      estadoVenta:['', ],
-      observacion:['', Validators.required],
-      idEmpresa:[this.idEmpresa, Validators.required]
+  obtenerTiposDocumento(){
+    this.tipoDocService.getTipoDocumentos().subscribe(res =>{
+      console.log(res);
+      this.tipoDocumentos = res;
+    }, error =>{
+      this.tipoDocumentos = [];
     });
   }
   
@@ -240,19 +240,98 @@ export class InicioComponent {
       nuevoItem.producto = producto;
       nuevoItem.cantidad = 1;
       console.log(nuevoItem);
-      this.venta.detalleVenta.push(nuevoItem);
+      this.detalleVenta.push(nuevoItem);
     }
 
     this.autocompleteControl.setValue('');
   }
 
+  obtenerUsuario(){
+    this.usuarioService.getUsuarioById(this.usuario.id).subscribe(response =>{
+      this.usuarioFactura = response;
+    });
+  }
+
+  iniciarFormulario(){
+    this.venta.detalleVenta = this.detalleVenta;
+    this.formCreate = this.formBuilder.group({
+      cliente: [this.clienteFactura, Validators.required],
+      idEmpresa: [this.idEmpresa, Validators.required],
+      ivaVenta: [parseFloat(this.venta.iva12()), Validators.required],
+      subTotalVenta: [parseFloat(this.venta.subTotal()), Validators.required],
+      totalVenta: [parseFloat(this.venta.iva12()) + parseFloat(this.venta.subTotal()), Validators.required],
+      serieVenta: ['101', Validators.required],
+      numeroVenta: ['001', Validators.required],
+      descuentoVenta: [0, Validators.required],
+      totalPagarVenta: [parseFloat(this.venta.iva12()) + parseFloat(this.venta.subTotal()), Validators.required],
+      estadoVenta: [1, Validators.required],
+      observacion: ["N/A", Validators.required],
+      puntoVentaId: [1, Validators.required],
+      usuario: [this.usuarioFactura, Validators.required],
+      tipoDocumento: [this.documentoFactura, Validators.required],
+      detalleVenta: [this.detalleVenta, Validators.required],
+    });
+  }
+
+  iniciarFormularioEdit(){
+    this.formCreate = this.formBuilder.group({
+      cliente: [this.ventaEdit.cliente, Validators.required],
+      idEmpresa: [this.venta.idEmpresa, Validators.required],
+      ivaVenta: [this.venta.iva12, Validators.required],
+      subTotalVenta: [this.venta.subTotalVenta, Validators.required],
+      totalVenta: [this.venta.totalVenta, Validators.required],
+      serieVenta: [this.venta.serieVenta, Validators.required],
+      numeroVenta: [this.venta.numeroVenta, Validators.required],
+      descuentoVenta: [this.venta.descuentoVenta, ],
+      totalPagarVenta: [this.venta.totalPagarVenta, Validators.required],
+      estadoVenta: [this.venta.estadoVenta, Validators.required],
+      observacion: [this.venta.observacion, ],
+      puntoVentaId: [this.venta.puntoVentaId, Validators.required],
+      usuario: [this.venta.usuario, Validators.required],
+      tipoDocumento: [this.venta.tipoDocumento, Validators.required],
+      detalleVenta: [this.detalleVenta, Validators.required],
+    });
+  }
+
   crearVenta(): void{
     this.venta.cliente = this.clienteFactura;
-    this.venta.usuario = this.usuario;
+    this.venta.ivaVenta = parseFloat(this.venta.iva12());
+    this.venta.subTotalVenta = parseFloat(this.venta.subTotal());
+    this.venta.totalVenta = parseFloat(this.venta.iva12()) + parseFloat(this.venta.subTotal());
+    this.venta.serieVenta = '101';
+    this.venta.numeroVenta = '001';
+    this.venta.descuentoVenta = 0;
+    this.venta.totalPagarVenta = parseFloat(this.venta.iva12()) + parseFloat(this.venta.subTotal());
+    this.venta.estadoVenta = 1;
+    this.venta.observacion = "N/A";
+    this.venta.puntoVentaId = 1;
     this.venta.idEmpresa = this.usuario.idEmpresa;
-    this.venta.ivaVenta = this.venta.iva12();
-    this.venta.subTotalVenta = this.venta.subTotal()
-    console.log(this.venta);
+    this.venta.usuario = this.usuarioFactura;
+    this.venta.tipoDocumento = this.documentoFactura;
+    
+    this.iniciarFormulario();
+    console.log(this.formCreate.value);
+
+    this.ventaService.create(this.formCreate.value).subscribe(res =>{
+      console.log(res);
+    }, error => {
+      console.log(error);
+    });
+
   }
+
+  //EDITAR VENTA INICIO
+  obtenerDatosVenta(id: number): void{
+    this.ventaService.getVentaById(id).subscribe(res =>{
+      console.log(res);
+      this.venta = res;
+      this.clienteFactura = this.venta.cliente;
+      this.cedulaRuc = this.clienteFactura.cedula;
+      this.clienteNombreCompleto = this.clienteFactura.nombres + " " + this.clienteFactura.apellidos;
+      this.documentoFactura = this.venta.tipoDocumento;
+      this.detalleVenta = this.venta.detalleVenta;
+    });
+  }
+  //EDITAR VENTA FIN
 
 }

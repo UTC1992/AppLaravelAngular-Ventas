@@ -63,3 +63,13 @@ table {
   margin-left: 10px;
 }
 
+.input-tipoDoc{
+  display: flexbox;
+  flex-direction: column;
+}
+
+.input-tipoDoc > * {
+  width:30%;
+  height: 50px;
+  margin-left: 10px;
+}

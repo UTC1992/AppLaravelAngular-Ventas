@@ -47,4 +47,32 @@ export class VentaService {
     );
   }
 
+  create(venta: Venta): Observable<Venta>{
+    return this.http.post(this.urlEndPoint+'/ventas', venta)
+    .pipe(
+      map((response: any) => response),
+      catchError(e => {
+        if(e.status == 400){
+          return throwError(e);
+        }
+
+        if(e.error.mensaje){
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    );
+  }
+
+  delete(id: number): Observable<Venta>{
+    return this.http.delete<Venta>(this.urlEndPoint+'/ventas/'+id)
+    .pipe(catchError( e => {
+      if(e.error.mensaje){
+        console.error(e.error.mensaje);
+      }
+      return throwError(e);
+    })
+    );
+  }
+
 }

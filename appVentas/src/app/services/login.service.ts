@@ -65,6 +65,7 @@ export class LoginService {
     this._usuario.idEmpresa = datosToken.empresa;
     this._usuario.username = datosToken.user_name;
     this._usuario.roles = datosToken.authorities;
+    this._usuario.id = datosToken.user_id;
 
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario));
   }

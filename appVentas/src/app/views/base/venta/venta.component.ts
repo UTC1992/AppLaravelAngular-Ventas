@@ -47,6 +47,7 @@ export class VentaComponent implements OnInit {
   public ventas: Venta[];
   ventaEdit: Venta;
   venta: Venta = new Venta();
+  detalleVenta: DetalleVenta;
 
   clienteFactura: Cliente = new Cliente();
   clienteAuxiliar: Cliente = new Cliente();
@@ -82,7 +83,6 @@ export class VentaComponent implements OnInit {
     private modalService: BsModalService,
     public modalRef: BsModalRef,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {
     this.usuario = this.loginService.usuario;
     this.idEmpresa = this.usuario.idEmpresa;
@@ -100,6 +100,7 @@ export class VentaComponent implements OnInit {
       //this.ventas = response;
     }, error => {
       this.ventas = [];
+      this.dataSource = new MatTableDataSource();
       console.log(error.error.mensaje);
     });
   }
@@ -113,6 +114,43 @@ export class VentaComponent implements OnInit {
     }, error =>{
       console.log(error);
     });
+  }
+
+  confirmarEliminar(id){
+    swal({
+      title: '¿Está seguro?',
+      text: "Se eliminará la venta",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+    }).then((result) => {
+      if (result.value) {
+        this.eliminarVenta(id);
+      }
+    });
+  }
+
+  eliminarVenta(id){
+    this.ventaService.delete(id).subscribe(response => {
+      console.log(response);
+      if(response){
+        swal(
+          'Eliminado!',
+          'La venta a sido eliminada.',
+          'success'
+        )
+        this.mostrarVentas();
+      }
+    });
+  }
+
+  openMostrarDetalle(detalle: DetalleVenta, template: TemplateRef<any>) {
+    this.tipoAccion = "create";
+    this.titleModal = "Detalles de factura";
+    this.detalleVenta = detalle;
+    this.modalRef = this.modalService.show(template);
   }
 
 }
