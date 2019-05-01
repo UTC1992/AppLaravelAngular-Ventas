@@ -5,9 +5,11 @@
 @section('new_button')
 @permission('create-incomes-invoices')
 <span class="new-button"><a href="{{ url('incomes/invoices/create') }}" class="btn btn-success btn-sm"><span class="fa fa-plus"></span> &nbsp;{{ trans('general.add_new') }}</a></span>
-<span><a href="{{ url('common/import/incomes/invoices') }}" class="btn btn-default btn-sm"><span class="fa fa-download"></span> &nbsp;{{ trans('import.import') }}</a></span>
+<!--<span><a href="{{ url('common/import/incomes/invoices') }}" class="btn btn-default btn-sm"><span class="fa fa-download"></span> &nbsp;{{ trans('import.import') }}</a></span>
+-->
 @endpermission
-<span><a href="{{ route('invoices.export', request()->input()) }}" class="btn btn-default btn-sm"><span class="fa fa-upload"></span> &nbsp;{{ trans('general.export') }}</a></span>
+<!--<span><a href="{{ route('invoices.export', request()->input()) }}" class="btn btn-default btn-sm"><span class="fa fa-upload"></span> &nbsp;{{ trans('general.export') }}</a></span>
+-->
 @endsection
 
 @section('content')

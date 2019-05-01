@@ -31,11 +31,11 @@ return [
     'mark_sent'             => 'Marcar Como Enviada',
     'download_pdf'          => 'Descargar archivo PDF',
     'send_mail'             => 'Enviar Correo Electrónico',
-    'all_invoices'          => 'Login to view all invoices',
-    'create_invoice'        => 'Create Invoice',
-    'send_invoice'          => 'Send Invoice',
-    'get_paid'              => 'Get Paid',
-    'accept_payments'       => 'Accept Online Payments',
+    'all_invoices'          => 'Inicie sesión para ver todas las facturas',
+    'create_invoice'        => 'Crear factura',
+    'send_invoice'          => 'Enviar factura',
+    'get_paid'              => 'Recibir el pago',
+    'accept_payments'       => 'Aceptar pagos en línea',
 
     'status' => [
         'draft'             => 'Borrador',
@@ -50,16 +50,16 @@ return [
         'email_sent'        => '¡El correo electrónico de la factura se ha enviado correctamente!',
         'marked_sent'       => '¡Factura marcada como enviada con éxito!',
         'email_required'    => 'No se encontró una dirección de correo para este cliente!',
-        'draft'             => 'This is a <b>DRAFT</b> invoice and will be reflected to charts after it gets sent.',
+        'draft'             => 'Esta es una factura <b>BORRADOR</b> y se reflejará en los gráficos una vez que se haya enviado.',
 
         'status' => [
-            'created'       => 'Created on :date',
+            'created'       => 'Creado en :date',
             'send' => [
-                'draft'     => 'Not sent',
-                'sent'      => 'Sent on :date',
+                'draft'     => 'No enviado',
+                'sent'      => 'Enviado en :date',
             ],
             'paid' => [
-                'await'     => 'Awaiting payment',
+                'await'     => 'En espera de pago',
             ],
         ],
     ],

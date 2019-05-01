@@ -16,13 +16,7 @@
     <link rel="stylesheet" href="{{ asset('public/css/ionicons.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/almasaeed2010/adminlte/dist/css/AdminLTE.min.css') }}">
-    <!-- AdminLTE Skins -->
-    @if (setting('general.admin_theme', 'skin-green-light') == 'skin-green-light')
-        <link rel="stylesheet" href="{{ asset('vendor/almasaeed2010/adminlte/dist/css/skins/skin-green-light.min.css') }}">
-    @else
-        <link rel="stylesheet" href="{{ asset('vendor/almasaeed2010/adminlte/dist/css/skins/skin-black.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('public/css/skin-black.css?v=' . version('short')) }}">
-    @endif
+    
     <!-- Data Tables -->
     <link rel="stylesheet" href="{{ asset('vendor/almasaeed2010/adminlte/plugins/datatables/dataTables.bootstrap.css') }}">
     <!-- Select2 -->

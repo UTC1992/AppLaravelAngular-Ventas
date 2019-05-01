@@ -260,7 +260,7 @@ div.required .control-label:not(span):after, td.required:after {
 }
 
 .login-logo img {
-    width: 70px;
+    width: 100px;
 }
 
 .user-panel {
@@ -530,11 +530,11 @@ ul.add-new.nav.navbar-nav.pull-left {
 
 /*
 .tooltip > .tooltip-inner {
-    background-color: #6da252;
+    background-color: #EE7A13;
 }
 
 .tooltip.right .tooltip-arrow {
-    border-right-color: #6da252 !important;
+    border-right-color: #EE7A13 !important;
 }
 
 .content-wrapper {
@@ -551,7 +551,7 @@ ul.add-new.nav.navbar-nav.pull-left {
 */
 
 .progress-bar-green, .progress-bar-success {
-    background-color: #6da252;
+    background-color: #EE7A13;
 }
 
 #chart .row {
@@ -766,7 +766,7 @@ input[type="number"] {
 }
 
 #items .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-color: #6da252;
+    border-color: #EE7A13;
     border-radius: 0;
 }
 
