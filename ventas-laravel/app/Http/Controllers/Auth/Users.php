@@ -22,12 +22,12 @@ class Users extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->collect();
-
+       $users = User::with('roles')->collect();
+      $users_comany= User::getUsersCompany(session('company_id'));
         $roles = collect(Role::all()->pluck('display_name', 'id'))
             ->prepend(trans('general.all_type', ['type' => trans_choice('general.roles', 2)]), '');
 
-        return view('auth.users.index', compact('users', 'roles'));
+        return view('auth.users.index', compact('users', 'roles','users_comany'));
     }
 
     /**

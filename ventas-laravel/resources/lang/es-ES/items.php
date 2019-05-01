@@ -5,6 +5,8 @@ return [
     'quantities'            => 'Cantidad | Cantidades',
     'sales_price'           => 'Precio de Venta',
     'purchase_price'        => 'Precio de Compra',
+    'stock'                 =>'stock',
+    'stock_min'             =>'Stock Minimo',
     'sku'                   => 'SKU',
 
     'notification' => [

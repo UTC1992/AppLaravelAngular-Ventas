@@ -12,6 +12,8 @@ return [
     'net_profit'            => 'Ganancia Neta',
     'total_expenses'        => 'Total de gastos',
     'net'                   => 'Neto',
+    'daily_summary'         => 'Resumen Diario',
+    'product_summary'       => 'Resumen Ventas',
 
     'summary' => [
         'income'            => 'Resumen de Ingresos',
