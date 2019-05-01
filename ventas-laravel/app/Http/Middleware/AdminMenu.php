@@ -121,6 +121,8 @@ class AdminMenu
                 'read-reports-income-expense-summary',
                 'read-reports-tax-summary',
                 'read-reports-profit-loss',
+                'read-reports-daily-summary',
+                'read-reports-most-salled'
             ])) {
                 $menu->dropdown(trans_choice('general.reports', 2), function ($sub) use($user, $attr) {
                     if ($user->can('read-reports-income-summary')) {
@@ -142,7 +144,13 @@ class AdminMenu
                     if ($user->can('read-reports-profit-loss')) {
                         $sub->url('reports/profit-loss', trans('reports.profit_loss'), 5, $attr);
                     }
-                }, 6, [
+                    if ($user->can('read-reports-daily-summary')) {
+                        $sub->url('reports/daily',trans('reports.daily_summary'), 6, $attr);
+                    }
+                    if($user->can('read-reports-most-salled')){
+                        $sub->url('reports/salled','mas vendidos', 7, $attr);
+                    }
+                }, 8, [
                     'title' => trans_choice('general.reports', 2),
                     'icon' => 'fa fa-bar-chart',
                 ]);
@@ -191,7 +199,7 @@ class AdminMenu
                     'icon' => 'fa fa-gears',
                 ]);
             }
-
+            /*
             // Apps
             if ($user->can('read-modules-home')) {
                 $menu->add([
@@ -200,7 +208,7 @@ class AdminMenu
                     'icon' => 'fa fa-rocket',
                     'order' => 8,
                 ]);
-            }
+            }*/
 
             // Fire the event to extend the menu
             event(new AdminMenuCreated($menu));

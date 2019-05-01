@@ -29,7 +29,7 @@ class ProfitLoss extends Controller
 
         $status = request('status');
         $year = request('year', Date::now()->year);
-        
+
         // check and assign year start
         $financial_start = $this->getFinancialStart();
 
@@ -50,7 +50,7 @@ class ProfitLoss extends Controller
         // Dates
         for ($j = 1; $j <= 12; $j++) {
             $ym_string = is_array($year) ? $financial_start->addQuarter()->format('Y-m') : $year . '-' . $j;
-            
+
             $dates[$j] = Date::parse($ym_string)->quarter;
 
             // Totals
@@ -154,7 +154,7 @@ class ProfitLoss extends Controller
                 $this->setAmount($totals, $compares, $bills, 'bill', 'billed_at');
                 break;
         }
-        
+
         // Payments
         if ($status != 'upcoming') {
             $payments = Payment::monthsOfYear('paid_at')->isNotTransfer()->get();

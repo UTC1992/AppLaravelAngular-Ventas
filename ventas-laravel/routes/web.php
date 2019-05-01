@@ -142,12 +142,17 @@ Route::group(['middleware' => 'language'], function () {
             });
 
             Route::group(['prefix' => 'reports'], function () {
+
                 Route::resource('income-summary', 'Reports\IncomeSummary');
                 Route::resource('expense-summary', 'Reports\ExpenseSummary');
                 Route::resource('income-expense-summary', 'Reports\IncomeExpenseSummary');
                 Route::resource('tax-summary', 'Reports\TaxSummary');
                 Route::resource('profit-loss', 'Reports\ProfitLoss');
+                Route::resource('daily','Reports\DailySummary');
+                Route::get('salled','Reports\MostSalledSummary@getMostSelledProducts');
             });
+
+            Route::get('test/test', 'Test\TestController@test');
 
             Route::group(['prefix' => 'settings'], function () {
                 Route::post('categories/category', 'Settings\Categories@category');
@@ -268,3 +273,5 @@ Route::group(['middleware' => 'language'], function () {
         });
     });
 });
+
+Route::get('test/test', 'Reports\MostSalledSummary@test');
