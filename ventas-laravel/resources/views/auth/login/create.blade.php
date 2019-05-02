@@ -50,7 +50,8 @@
     </div>
 </form>
 
-<a href="{{ url('auth/forgot') }}">{{ trans('auth.forgot_password') }}</a><br>
+<!--<a href="{{ url('auth/forgot') }}">{{ trans('auth.forgot_password') }}</a><br>
+-->
 @endsection
 
 @push('js')
