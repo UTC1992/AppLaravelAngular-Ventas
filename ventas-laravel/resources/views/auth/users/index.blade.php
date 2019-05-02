@@ -40,56 +40,64 @@
                 </thead>
                 <tbody>
                 @foreach($users as $item)
-                    <tr>
-                        <td>
-                            <a href="{{ url('auth/users/' . $item->id . '/edit') }}">
-                                @if (setting('general.use_gravatar', '0') == '1')
-                                    <img src="{{ $item->picture }}" class="users-image" alt="{{ $item->name }}" title="{{ $item->name }}">
-                                @else
-                                @if ($item->picture)
-                                    <img src="{{ Storage::url($item->picture->id) }}" class="users-image" alt="{{ $item->name }}" title="{{ $item->name }}">
-                                @endif
-                                @endif
-                                {{ $item->name }}
-                            </a>
-                        </td>
-                        <td>{{ $item->email }}</td>
-                        <td class="hidden-xs" style="vertical-align: middle;">
-                            @foreach($item->roles as $role)
-                                <label class="label label-default">{{ $role->display_name }}</label>
-                            @endforeach
-                        </td>
-                        <td class="hidden-xs">
-                            @if ($item->enabled)
-                                <span class="label label-success">{{ trans('general.enabled') }}</span>
-                            @else
-                                <span class="label label-danger">{{ trans('general.disabled') }}</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
-                                    <i class="fa fa-ellipsis-h"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="{{ url('auth/users/' . $item->id . '/edit') }}">{{ trans('general.edit') }}</a></li>@if ($item->enabled)
-                                    <li><a href="{{ route('users.disable', $item->id) }}">{{ trans('general.disable') }}</a></li>
-                                    @else
-                                    <li><a href="{{ route('users.enable', $item->id) }}">{{ trans('general.enable') }}</a></li>
-                                    @endif
-                                    @permission('delete-auth-users')
-                                    <li class="divider"></li>
-                                    <li>{!! Form::deleteLink($item, 'auth/users') !!}</li>
-                                    @endpermission
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                  @foreach ($users_comany as $key => $value)
+
+                    @if ($item->id===$value->user_id)
+                      <tr>
+                          <td>
+                              <a href="{{ url('auth/users/' . $item->id . '/edit') }}">
+                                  @if (setting('general.use_gravatar', '0') == '1')
+                                      <img src="{{ $item->picture }}" class="users-image" alt="{{ $item->name }}" title="{{ $item->name }}">
+                                  @else
+                                  @if ($item->picture)
+                                      <img src="{{ Storage::url($item->picture->id) }}" class="users-image" alt="{{ $item->name }}" title="{{ $item->name }}">
+                                  @endif
+                                  @endif
+                                  {{ $item->name }}
+                              </a>
+                          </td>
+                          <td>{{ $item->email }}</td>
+                          <td class="hidden-xs" style="vertical-align: middle;">
+                              @foreach($item->roles as $role)
+                                  <label class="label label-default">{{ $role->display_name }}</label>
+                              @endforeach
+                          </td>
+                          <td class="hidden-xs">
+                              @if ($item->enabled)
+                                  <span class="label label-success">{{ trans('general.enabled') }}</span>
+                              @else
+                                  <span class="label label-danger">{{ trans('general.disabled') }}</span>
+                              @endif
+                          </td>
+                          <td class="text-center">
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-toggle-position="left" aria-expanded="false">
+                                      <i class="fa fa-ellipsis-h"></i>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                      <li><a href="{{ url('auth/users/' . $item->id . '/edit') }}">{{ trans('general.edit') }}</a></li>@if ($item->enabled)
+                                      <li><a href="{{ route('users.disable', $item->id) }}">{{ trans('general.disable') }}</a></li>
+                                      @else
+                                      <li><a href="{{ route('users.enable', $item->id) }}">{{ trans('general.enable') }}</a></li>
+                                      @endif
+                                      @permission('delete-auth-users')
+                                      <li class="divider"></li>
+                                      <li>{!! Form::deleteLink($item, 'auth/users') !!}</li>
+                                      @endpermission
+                                  </ul>
+                              </div>
+                          </td>
+                      </tr>
+                    @endif
+
+                    @endforeach
                 @endforeach
                 </tbody>
             </table>
         </div>
+
     </div>
+
     <!-- /.box-body -->
     <div class="box-footer">
         @include('partials.admin.pagination', ['items' => $users, 'type' => 'users'])
@@ -98,4 +106,3 @@
 </div>
 <!-- /.box -->
 @endsection
-

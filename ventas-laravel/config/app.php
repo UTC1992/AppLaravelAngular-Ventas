@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Guayaquil',
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     */
 
     'locale' => env('APP_LOCALE', 'en-GB'),
-
+    //'locale' => 'en',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -91,7 +91,7 @@ return [
     */
 
     'fallback_locale' => 'en-GB',
-
+    //'fallback_locale' => 'en',
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

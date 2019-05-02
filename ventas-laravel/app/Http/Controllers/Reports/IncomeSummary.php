@@ -29,7 +29,7 @@ class IncomeSummary extends Controller
 
         $status = request('status');
         $year = request('year', Date::now()->year);
-        
+
         // check and assign year start
         $financial_start = $this->getFinancialStart();
 
@@ -56,7 +56,7 @@ class IncomeSummary extends Controller
         // Dates
         for ($j = 1; $j <= 12; $j++) {
             $ym_string = is_array($year) ? $financial_start->addMonth()->format('Y-m') : $year . '-' . $j;
-            
+
             $dates[$j] = Date::parse($ym_string)->format('F');
 
             $incomes_graph[Date::parse($ym_string)->format('F-Y')] = 0;

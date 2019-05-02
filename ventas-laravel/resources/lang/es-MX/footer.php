@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versión',
-    'powered'               => 'Powered By Akaunting',
-    'link'                  => 'https://akaunting.com',
-    'software'              => 'Software de Contabilidad Libre',
+    'powered'               => 'Creado por TS-Platform',
+    'link'                  => 'https://www.tecnosolutionscorp.com/',
+    'software'              => 'Software de Ventas',
 
 ];

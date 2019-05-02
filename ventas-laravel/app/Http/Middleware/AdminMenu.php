@@ -121,28 +121,38 @@ class AdminMenu
                 'read-reports-income-expense-summary',
                 'read-reports-tax-summary',
                 'read-reports-profit-loss',
+                'read-reports-daily-summary',
+                'read-reports-most-salled'
             ])) {
                 $menu->dropdown(trans_choice('general.reports', 2), function ($sub) use($user, $attr) {
+                    if ($user->can('read-reports-daily-summary')) {
+                        $sub->url('reports/daily',trans('reports.daily_summary'), 1, $attr);
+                    }
+                    if($user->can('read-reports-most-salled')){
+                        $sub->url('reports/salled',trans('reports.most_salled'), 2, $attr);
+                    }
+
                     if ($user->can('read-reports-income-summary')) {
-                        $sub->url('reports/income-summary', trans('reports.summary.income'), 1, $attr);
+                        $sub->url('reports/income-summary', trans('reports.summary.income'), 3, $attr);
                     }
 
                     if ($user->can('read-reports-expense-summary')) {
-                        $sub->url('reports/expense-summary', trans('reports.summary.expense'), 2, $attr);
+                        $sub->url('reports/expense-summary', trans('reports.summary.expense'), 4, $attr);
                     }
 
                     if ($user->can('read-reports-income-expense-summary')) {
-                        $sub->url('reports/income-expense-summary', trans('reports.summary.income_expense'), 3, $attr);
+                        $sub->url('reports/income-expense-summary', trans('reports.summary.income_expense'), 5, $attr);
                     }
 
                     if ($user->can('read-reports-tax-summary')) {
-                        $sub->url('reports/tax-summary', trans('reports.summary.tax'), 4, $attr);
+                        $sub->url('reports/tax-summary', trans('reports.summary.tax'), 6, $attr);
                     }
 
                     if ($user->can('read-reports-profit-loss')) {
-                        $sub->url('reports/profit-loss', trans('reports.profit_loss'), 5, $attr);
+                        $sub->url('reports/profit-loss', trans('reports.profit_loss'), 7, $attr);
                     }
-                }, 6, [
+                    
+                }, 8, [
                     'title' => trans_choice('general.reports', 2),
                     'icon' => 'fa fa-bar-chart',
                 ]);
@@ -191,7 +201,7 @@ class AdminMenu
                     'icon' => 'fa fa-gears',
                 ]);
             }
-
+            /*
             // Apps
             if ($user->can('read-modules-home')) {
                 $menu->add([
@@ -200,7 +210,7 @@ class AdminMenu
                     'icon' => 'fa fa-rocket',
                     'order' => 8,
                 ]);
-            }
+            }*/
 
             // Fire the event to extend the menu
             event(new AdminMenuCreated($menu));

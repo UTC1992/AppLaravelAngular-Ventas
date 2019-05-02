@@ -40,6 +40,12 @@
     width: inherit;
 }
 
+.input-filter-date{
+    display: inline;
+    width: inherit;
+    
+}
+
 .title-filter {
     margin-right: 10px;
 }

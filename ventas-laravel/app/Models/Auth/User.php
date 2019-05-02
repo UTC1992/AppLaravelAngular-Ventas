@@ -14,6 +14,7 @@ use Kyslik\ColumnSortable\Sortable;
 use App\Traits\Media;
 use Request;
 use Route;
+use DB;
 
 class User extends Authenticatable
 {
@@ -190,4 +191,14 @@ class User extends Authenticatable
     {
         return $query->where('enabled', 1);
     }
+
+    public static function getUsersCompany($company){
+      return $actividad = DB::table('users as T0')
+            ->join('user_companies as T1','T1.user_id','=','T0.id')
+            ->select('*')
+            ->where('T1.company_id',$company)
+            ->get();
+    }
+
+
 }
