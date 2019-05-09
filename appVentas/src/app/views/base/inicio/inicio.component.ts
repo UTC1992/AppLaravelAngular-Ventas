@@ -154,11 +154,11 @@ export class InicioComponent {
 
   actualizarCantidad(id: number, event: any): void {
     let cantidad: number = event.target.value as number;
-
+    /*
     if (cantidad == 0) {
       return this.eliminarItemFactura(id);
     }
-
+    */
     this.detalleVenta = this.detalleVenta.map((item: DetalleVenta) => {
       if (id === item.producto.idProducto) {
         item.cantidad = parseInt(cantidad+'');

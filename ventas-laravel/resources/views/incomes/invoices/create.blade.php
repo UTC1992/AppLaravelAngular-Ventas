@@ -26,7 +26,7 @@
 
         {{ Form::textGroup('invoiced_at', trans('invoices.invoice_date'), 'calendar',['id' => 'invoiced_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => '', 'autocomplete' => 'off'], Date::now()->toDateString()) }}
 
-        {{ Form::textGroup('due_at', trans('invoices.due_date'), 'calendar',['id' => 'due_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => '', 'autocomplete' => 'off']) }}
+        {{ Form::textGroup('due_at', trans('invoices.due_date'), 'calendar',['id' => 'due_at', 'class' => 'form-control', 'required' => 'required', 'data-inputmask' => '\'alias\': \'yyyy/mm/dd\'', 'data-mask' => '', 'autocomplete' => 'off'], Date::now()->toDateString()) }}
 
         {{ Form::textGroup('invoice_number', trans('invoices.invoice_number'), 'file-text-o', ['required' => 'required'], $number) }}
 
@@ -340,13 +340,16 @@
             });
         });
 
-        $(document).on('click', '.form-control.typeahead', function() {
+        $(document).on('focus', '.form-control.typeahead', function() {
             input_id = $(this).attr('id').split('-');
 
             item_id = parseInt(input_id[input_id.length-1]);
 
             $(this).typeahead({
-                minLength: 3,
+                minLength: 1,
+                order: "asc",
+                accent: true,
+                hint: true,
                 displayText:function (data) {
                     return data.name + ' (' + data.sku + ')';
                 },
@@ -357,13 +360,14 @@
                         dataType: 'JSON',
                         data: 'query=' + query + '&type=invoice&currency_code=' + $('#currency_code').val(),
                         success: function(data) {
+                            console.log(data);
                             return process(data);
                         }
                     });
                 },
                 afterSelect: function (data) {
                     $('#item-id-' + item_id).val(data.item_id);
-                    $('#item-quantity-' + item_id).val('1');
+                    $('#item-quantity-' + item_id).val('');
                     $('#item-price-' + item_id).val(data.sale_price);
                     $('#item-tax-' + item_id).val(data.tax_id);
 
@@ -440,6 +444,16 @@
                 totalItem();
             }
         });
+
+        $(document).on('keyup', '.cantidad-items', function(){
+            if($(this).val() != ''){
+                hola();
+            }
+        });
+
+        function hola(){
+            console.log("hola mundoooo");
+        }
 
         $(document).on('change', '#customer_id', function (e) {
             $.ajax({
@@ -542,6 +556,7 @@
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                     if (data) {
+                        //console.log(data);
                         $.each( data.items, function( key, value ) {
                             $('#item-total-' + key).html(value);
                         });

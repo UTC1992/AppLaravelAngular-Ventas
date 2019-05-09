@@ -98,12 +98,12 @@
                 @permission('read-notifications')
                 <!-- Notifications: style can be found in dropdown.less -->
                 <li class="dropdown notifications-menu">
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         @if ($notifications)
                         <span class="label label-warning">{{ $notifications }}</span>
                         @endif
-                    </a>-->
+                    </a>
                     <ul class="dropdown-menu">
                         <li class="header">{{ trans_choice('header.notifications.counter', $notifications, ['count' => $notifications]) }}</li>
                         <li>
